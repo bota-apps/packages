@@ -1,0 +1,67 @@
+{
+  "name": "@bota-apps/tailwind-preset",
+  "version": "0.5.0",
+  "description": "The @bota-apps Tailwind preset (design tokens), a ready-made PostCSS config, and the theme CSS variables (light + dark) that the components render against.",
+  "keywords": [
+    "bota-apps",
+    "typescript",
+    "tailwind",
+    "tailwindcss",
+    "preset",
+    "design-tokens",
+    "postcss",
+    "theme"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Bota Apps",
+    "url": "https://github.com/bota-apps"
+  },
+  "type": "module",
+  "files": [
+    "preset.js",
+    "preset.d.ts",
+    "postcss.js",
+    "postcss.d.ts",
+    "brand.js",
+    "brand.d.ts",
+    "theme.css",
+    "brands"
+  ],
+  "exports": {
+    "./preset": "./preset.js",
+    "./postcss": "./postcss.js",
+    "./brand": "./brand.js",
+    "./theme.css": "./theme.css",
+    "./brands/*.css": "./brands/*.css"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bota-apps/packages.git",
+    "directory": "packages/tailwind-preset"
+  },
+  "homepage": "https://github.com/bota-apps/packages/tree/main/packages/tailwind-preset#readme",
+  "bugs": {
+    "url": "https://github.com/bota-apps/packages/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@tailwindcss/typography": "catalog:",
+    "tailwindcss-animate": "catalog:"
+  },
+  "peerDependencies": {
+    "tailwindcss": "catalog:"
+  },
+  "devDependencies": {
+    "postcss": "catalog:",
+    "tailwindcss": "catalog:"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

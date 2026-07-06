@@ -1,0 +1,76 @@
+{
+  "name": "@bota-apps/utils",
+  "version": "0.3.0",
+  "description": "Framework-free utility modules for @bota-apps packages, one subpath per concern: type-level helpers (./type), date/time formatting (./time), number formatting (./number), and subdomain URL utilities (./url).",
+  "keywords": [
+    "bota-apps",
+    "typescript",
+    "utilities",
+    "date",
+    "time",
+    "number",
+    "formatting",
+    "url"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Bota Apps",
+    "url": "https://github.com/bota-apps"
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./type": {
+      "types": "./dist/type/index.d.ts",
+      "default": "./dist/type/index.js"
+    },
+    "./time": {
+      "types": "./dist/time/index.d.ts",
+      "default": "./dist/time/index.js"
+    },
+    "./number": {
+      "types": "./dist/number/index.d.ts",
+      "default": "./dist/number/index.js"
+    },
+    "./url": {
+      "types": "./dist/url/index.d.ts",
+      "default": "./dist/url/index.js"
+    }
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc && node ../../scripts/fixExtensions.mjs",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bota-apps/packages.git",
+    "directory": "packages/utils"
+  },
+  "homepage": "https://github.com/bota-apps/packages/tree/main/packages/utils#readme",
+  "bugs": {
+    "url": "https://github.com/bota-apps/packages/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "date-fns": "catalog:"
+  },
+  "devDependencies": {
+    "typescript": "catalog:"
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  }
+}

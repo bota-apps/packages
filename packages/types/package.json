@@ -1,0 +1,64 @@
+{
+  "name": "@bota-apps/types",
+  "version": "0.10.0",
+  "description": "Framework-free TypeScript contracts shared across @bota-apps packages: schema-driven form/detail/domain types, Money, feature-management (fm) boundary types, config shapes, and the minimal constraints expected on API-owned types. Zero runtime, zero dependencies.",
+  "keywords": [
+    "bota-apps",
+    "typescript",
+    "types",
+    "contracts",
+    "type-safety",
+    "schema",
+    "money"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Bota Apps",
+    "url": "https://github.com/bota-apps"
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./fm": {
+      "types": "./dist/fm/index.d.ts",
+      "default": "./dist/fm/index.js"
+    },
+    "./auth": {
+      "types": "./dist/auth/index.d.ts",
+      "default": "./dist/auth/index.js"
+    }
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc && node ../../scripts/fixExtensions.mjs",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bota-apps/packages.git",
+    "directory": "packages/types"
+  },
+  "homepage": "https://github.com/bota-apps/packages/tree/main/packages/types#readme",
+  "bugs": {
+    "url": "https://github.com/bota-apps/packages/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "typescript": "catalog:"
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "name": "@bota-apps/eslint-config",
+  "version": "0.3.0",
+  "description": "Shared flat ESLint config, Prettier config, and base tsconfig for @bota-apps repos and generated apps. Owns its lint plugins so consumers install one dev dependency.",
+  "keywords": [
+    "bota-apps",
+    "typescript",
+    "eslint",
+    "eslint-config",
+    "prettier",
+    "tsconfig",
+    "flat-config"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Bota Apps",
+    "url": "https://github.com/bota-apps"
+  },
+  "type": "module",
+  "main": "./index.js",
+  "files": [
+    "index.js",
+    "prettier.json",
+    "tsconfig.json"
+  ],
+  "exports": {
+    ".": "./index.js",
+    "./prettier": "./prettier.json",
+    "./tsconfig.json": "./tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bota-apps/packages.git",
+    "directory": "packages/eslint-config"
+  },
+  "homepage": "https://github.com/bota-apps/packages/tree/main/packages/eslint-config#readme",
+  "bugs": {
+    "url": "https://github.com/bota-apps/packages/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@eslint/js": "^9.17.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-unicorn": "^56.0.1",
+    "eslint-plugin-unused-imports": "^4.1.4",
+    "typescript-eslint": "^8.18.2"
+  },
+  "peerDependencies": {
+    "eslint": "^9.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
