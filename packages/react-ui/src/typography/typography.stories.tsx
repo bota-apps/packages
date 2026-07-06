@@ -74,3 +74,19 @@ export const Truncation: Story = {
     </div>
   ),
 };
+
+export const NumericFigures: Story = {
+  render: () => (
+    <div className="space-y-1">
+      <Text as="span" mono tabular>
+        1,000 — 25,000 ETB
+      </Text>
+      <Text as="span" mono tabular>
+        900 — 24,900 ETB
+      </Text>
+      <Text as="span" tabular tone="muted">
+        Tabular figures keep digits aligned across rows without the monospace face.
+      </Text>
+    </div>
+  ),
+};

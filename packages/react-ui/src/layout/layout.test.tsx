@@ -46,6 +46,40 @@ describe("Layout primitives", () => {
     expect(gridVariants({ columns: 2 })).toContain("md:grid-cols-2");
   });
 
+  it("renders Stack as a fixed-width, non-shrinking column", () => {
+    render(
+      <Stack width="md" shrink="0" data-testid="fixed">
+        <span>Date</span>
+      </Stack>,
+    );
+    const fixed = screen.getByTestId("fixed");
+    expect(fixed.className).toContain("w-32");
+    expect(fixed.className).toContain("shrink-0");
+  });
+
+  it("renders Inline as a selectable row with padding, border, background, and indent", () => {
+    render(
+      <Inline
+        paddingX="md"
+        paddingY="md"
+        borderBottom
+        background="muted"
+        indent="md"
+        data-testid="row"
+      >
+        <span>Row</span>
+      </Inline>,
+    );
+    const row = screen.getByTestId("row");
+    expect(row.className).toContain("px-4");
+    expect(row.className).toContain("py-2");
+    expect(row.className).toContain("border-b");
+    expect(row.className).toContain("bg-muted/20");
+    // paddingX emits px-4 and indent emits pl-10; both survive twMerge and the
+    // CSS cascade lets pl-10 win the left side (same as the raw-className original).
+    expect(row.className).toContain("pl-10");
+  });
+
   it("renders Center, Container, and Box with their variants and polymorphic tags", () => {
     render(
       <Container as="main" padding="md" data-testid="container">

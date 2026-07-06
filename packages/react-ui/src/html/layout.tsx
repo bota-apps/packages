@@ -85,6 +85,18 @@ export const stackVariants = cva("flex flex-col", {
       true: "flex-1 min-w-0",
       false: "",
     },
+    // Fixed-width leading column (e.g. a labeled row's date/label column). Pair
+    // with `shrink="0"` so it holds its width inside a flex row.
+    width: {
+      xs: "w-16",
+      sm: "w-24",
+      md: "w-32",
+      lg: "w-40",
+      xl: "w-48",
+    },
+    shrink: {
+      "0": "shrink-0",
+    },
   },
   defaultVariants: {
     gap: "none",
@@ -99,11 +111,18 @@ export function Stack<T extends ElementType = "div">({
   gap,
   align,
   grow,
+  width,
+  shrink,
   className,
   ...props
 }: StackProps<T>) {
   const Component = as ?? "div";
-  return <Component className={cn(stackVariants({ gap, align, grow }), className)} {...props} />;
+  return (
+    <Component
+      className={cn(stackVariants({ gap, align, grow, width, shrink }), className)}
+      {...props}
+    />
+  );
 }
 
 /* ------------------------------------------------------------------ */
@@ -136,6 +155,36 @@ export const inlineVariants = cva("flex", {
     inset: {
       topRight: "top-0 right-0",
     },
+    // Row chrome — turns Inline into a proper list/selectable row without raw
+    // Tailwind. For nested/hierarchical rows, combine `paddingX` with `indent`:
+    // both classes render (px-* + pl-*) and the CSS cascade lets the deeper
+    // pl-* win the left side, matching the original raw-className behavior.
+    paddingX: {
+      none: "",
+      sm: "px-2",
+      md: "px-4",
+      lg: "px-6",
+    },
+    paddingY: {
+      none: "",
+      sm: "py-1",
+      md: "py-2",
+      lg: "py-3",
+    },
+    borderBottom: {
+      true: "border-b",
+      false: "",
+    },
+    background: {
+      none: "",
+      muted: "bg-muted/20",
+    },
+    indent: {
+      none: "",
+      sm: "pl-6",
+      md: "pl-10",
+      lg: "pl-14",
+    },
   },
   defaultVariants: {
     gap: "none",
@@ -154,13 +203,33 @@ export function Inline<T extends ElementType = "div">({
   wrap,
   position,
   inset,
+  paddingX,
+  paddingY,
+  borderBottom,
+  background,
+  indent,
   className,
   ...props
 }: InlineProps<T>) {
   const Component = as ?? "div";
   return (
     <Component
-      className={cn(inlineVariants({ gap, align, justify, wrap, position, inset }), className)}
+      className={cn(
+        inlineVariants({
+          gap,
+          align,
+          justify,
+          wrap,
+          position,
+          inset,
+          paddingX,
+          paddingY,
+          borderBottom,
+          background,
+          indent,
+        }),
+        className,
+      )}
       {...props}
     />
   );

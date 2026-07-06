@@ -94,6 +94,16 @@ export const textVariants = cva("", {
       2: "line-clamp-2",
       3: "line-clamp-3",
     },
+    // Monospace font — for code, IDs, and aligned numeric columns.
+    mono: {
+      true: "font-mono",
+      false: "",
+    },
+    // Tabular (fixed-width) figures — keeps digits aligned across rows/ranges.
+    tabular: {
+      true: "tabular-nums",
+      false: "",
+    },
   },
   defaultVariants: {
     tone: "inherit",
@@ -102,6 +112,8 @@ export const textVariants = cva("", {
     align: "inherit",
     truncate: false,
     lineClamp: "none",
+    mono: false,
+    tabular: false,
   },
 });
 
@@ -119,6 +131,8 @@ export function Text<T extends ElementType = "p">({
   align = "inherit",
   truncate = false,
   lineClamp = "none",
+  mono = false,
+  tabular = false,
   className,
   children,
   ...props
@@ -126,7 +140,10 @@ export function Text<T extends ElementType = "p">({
   const Component = as ?? "p";
   return (
     <Component
-      className={cn(textVariants({ tone, size, weight, align, truncate, lineClamp }), className)}
+      className={cn(
+        textVariants({ tone, size, weight, align, truncate, lineClamp, mono, tabular }),
+        className,
+      )}
       {...props}
     >
       {children}
