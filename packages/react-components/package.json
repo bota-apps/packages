@@ -1,0 +1,81 @@
+{
+  "name": "@bota-apps/react-components",
+  "version": "0.8.1",
+  "description": "The app-runtime React layer for @bota-apps apps: theme/toast/error-boundary providers, the AppShell chrome, page containers with unified page state, typed route links, breadcrumbs, feature-tree navigation, the feature bridge (FeaturePageGuard/FeatureCard), a generic entity audit log, and createAppRoot — the shared provider stack wiring auth, data, and feature management around @bota-apps/react-ui primitives.",
+  "keywords": [
+    "bota-apps",
+    "typescript",
+    "react",
+    "app-runtime",
+    "app-shell",
+    "providers",
+    "routing",
+    "navigation",
+    "breadcrumbs",
+    "error-boundary"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Bota Apps",
+    "url": "https://github.com/bota-apps"
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc && node ../../scripts/fixExtensions.mjs",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bota-apps/packages.git",
+    "directory": "packages/react-components"
+  },
+  "homepage": "https://github.com/bota-apps/packages/tree/main/packages/react-components#readme",
+  "bugs": {
+    "url": "https://github.com/bota-apps/packages/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@bota-apps/auth-client": "workspace:^",
+    "@bota-apps/fm": "workspace:^",
+    "@bota-apps/gql-client": "workspace:^",
+    "@bota-apps/hooks": "workspace:^",
+    "@bota-apps/react-ui": "workspace:^",
+    "@bota-apps/schema-utils": "workspace:^",
+    "@bota-apps/types": "workspace:^",
+    "@tanstack/react-router": "catalog:",
+    "class-variance-authority": "catalog:",
+    "lucide-react": "catalog:"
+  },
+  "peerDependencies": {
+    "@tanstack/react-query": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@tanstack/react-query": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "typescript": "catalog:"
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  }
+}

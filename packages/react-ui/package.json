@@ -1,0 +1,125 @@
+{
+  "name": "@bota-apps/react-ui",
+  "version": "0.4.3",
+  "description": "Context-free React UI building blocks: 70+ Tailwind + Radix primitives, schema-driven DynamicForm/DynamicDetail, charts, and design tokens.",
+  "keywords": [
+    "bota-apps",
+    "typescript",
+    "react",
+    "ui",
+    "components",
+    "tailwind",
+    "radix",
+    "design-system",
+    "charts",
+    "forms"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Bota Apps",
+    "url": "https://github.com/bota-apps"
+  },
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist",
+    "tailwind"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./charts": {
+      "types": "./dist/charts/index.d.ts",
+      "default": "./dist/charts/index.js"
+    },
+    "./form": {
+      "types": "./dist/form/index.d.ts",
+      "default": "./dist/form/index.js"
+    },
+    "./preset": "./tailwind/preset.js",
+    "./postcss": "./tailwind/postcss.js",
+    "./theme.css": "./tailwind/theme.css"
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc && node ../../scripts/fixExtensions.mjs",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bota-apps/packages.git",
+    "directory": "packages/react-ui"
+  },
+  "homepage": "https://github.com/bota-apps/packages/tree/main/packages/react-ui#readme",
+  "bugs": {
+    "url": "https://github.com/bota-apps/packages/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@bota-apps/schema-utils": "workspace:^",
+    "@bota-apps/tailwind-preset": "workspace:^",
+    "@bota-apps/types": "workspace:^",
+    "@bota-apps/utils": "workspace:^",
+    "@hookform/resolvers": "catalog:",
+    "@radix-ui/react-accordion": "^1.1.2",
+    "@radix-ui/react-alert-dialog": "^1.1.7",
+    "@radix-ui/react-avatar": "^1.0.4",
+    "@radix-ui/react-checkbox": "^1.0.4",
+    "@radix-ui/react-collapsible": "^1.1.12",
+    "@radix-ui/react-context-menu": "^2.1.5",
+    "@radix-ui/react-dialog": "^1.1.7",
+    "@radix-ui/react-dropdown-menu": "^2.1.7",
+    "@radix-ui/react-label": "^2.0.2",
+    "@radix-ui/react-navigation-menu": "^1.1.4",
+    "@radix-ui/react-popover": "^1.1.6",
+    "@radix-ui/react-progress": "^1.0.3",
+    "@radix-ui/react-radio-group": "^1.2.4",
+    "@radix-ui/react-scroll-area": "^1.1.0",
+    "@radix-ui/react-select": "^2.0.0",
+    "@radix-ui/react-separator": "^1.1.0",
+    "@radix-ui/react-slider": "^1.1.2",
+    "@radix-ui/react-slot": "^1.2.0",
+    "@radix-ui/react-switch": "^1.2.2",
+    "@radix-ui/react-tabs": "^1.1.4",
+    "@radix-ui/react-toast": "^1.2.7",
+    "@radix-ui/react-toggle": "^1.1.1",
+    "@radix-ui/react-toggle-group": "^1.1.1",
+    "@radix-ui/react-tooltip": "^1.2.8",
+    "@tanstack/react-table": "catalog:",
+    "class-variance-authority": "catalog:",
+    "clsx": "catalog:",
+    "date-fns": "catalog:",
+    "dompurify": "catalog:",
+    "lucide-react": "catalog:",
+    "react-day-picker": "catalog:",
+    "react-hook-form": "catalog:",
+    "recharts": "catalog:",
+    "tailwind-merge": "catalog:",
+    "zod": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "tailwindcss": "^3.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "typescript": "catalog:"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
