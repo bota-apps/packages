@@ -14,8 +14,12 @@ const preview: Preview = {
       matchers: { color: /(background|color)$/i, date: /Date$/i },
     },
     docs: {
-      // Show the story's actual JSX in the Source / "Show code" block.
-      source: { type: "dynamic", language: "tsx" },
+      // "auto": show a story's written source when it has a custom `render`
+      // (dynamic serialization would collapse component names to their minified
+      // identifiers in the production build — e.g. a RouterProvider-wrapped
+      // render becomes `<ko router={[object Object]} />`), and fall back to
+      // dynamic JSX (from the component's name in meta) for simple arg stories.
+      source: { type: "auto", language: "tsx" },
     },
   },
   // Toolbar toggle that flips the `.dark` class the design tokens key off of,
