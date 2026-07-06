@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    // Colocated stories live under packages/*/src, where pnpm's strict
+    // linking hides this app's Storybook deps — resolve them from here.
+    "paths": {
+      "@storybook/react": ["./node_modules/@storybook/react"]
+    }
+  },
+  "include": [".storybook", "src", "../../packages/*/src/**/*.stories.tsx"]
+}

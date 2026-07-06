@@ -1,0 +1,42 @@
+{
+  "name": "@bota-apps/storybook",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Workspace Storybook — live playground for the component packages. Stories are colocated with components (packages/*/src/**/*.stories.tsx); this app hosts and builds them from source.",
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "typecheck": "tsc --noEmit",
+    "test-storybook": "test-storybook",
+    "test-storybook:ci": "concurrently -k -s first -n SB,TEST \"http-server storybook-static --port 6006 --silent\" \"wait-on tcp:127.0.0.1:6006 && test-storybook --url http://127.0.0.1:6006 --maxWorkers=2\""
+  },
+  "dependencies": {
+    "@bota-apps/react-ui": "workspace:^",
+    "@bota-apps/schema-utils": "workspace:^",
+    "@bota-apps/tailwind-preset": "workspace:^",
+    "@bota-apps/types": "workspace:^",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^8.6.14",
+    "@storybook/addon-themes": "^8.6.14",
+    "@storybook/react": "^8.6.14",
+    "@storybook/react-vite": "^8.6.14",
+    "@storybook/test-runner": "^0.24.4",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "autoprefixer": "catalog:",
+    "concurrently": "^10.0.3",
+    "http-server": "^14.1.1",
+    "playwright": "^1.61.1",
+    "postcss": "catalog:",
+    "storybook": "^8.6.14",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "wait-on": "^9.0.10"
+  }
+}

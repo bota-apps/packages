@@ -1,0 +1,4 @@
+/* The whole point of the example: style everything via the package's shipped
+   theme. This single import provides the @tailwind base/components/utilities
+   layers plus the light/dark CSS variables. */
+@import "@bota-apps/react-ui/theme.css";
