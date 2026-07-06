@@ -85,7 +85,8 @@
   {
     "name": "mocks",
     "path": "mocks/dist/index.js",
-    "limit": "1.5 kB"
+    "limit": "1.5 kB",
+    "ignore": ["graphql", "graphql-request"]
   },
   {
     "name": "fm",
@@ -129,5 +130,39 @@
     "path": "packages/extension-sdk/dist/index.js",
     "limit": "42 kB",
     "ignore": ["react", "react-dom"]
+  },
+  {
+    "name": "app-config",
+    "path": "packages/app-config/dist/index.js",
+    "limit": "15 kB"
+  },
+  {
+    "name": "export (barrel)",
+    "path": "packages/export/dist/index.js",
+    "limit": "2 kB",
+    "ignore": ["xlsx", "jspdf", "jspdf-autotable"]
+  },
+  {
+    "name": "schema-utils/localize",
+    "path": "packages/schema-utils/dist/localize.js",
+    "limit": "1 kB"
+  },
+  {
+    "name": "translations/coverage",
+    "path": "packages/translations/dist/coverage/index.js",
+    "limit": "1 kB",
+    "ignore": ["node:fs", "node:path", "node:os", "node:util", "node:child_process"]
+  },
+  {
+    "name": "translations/testing",
+    "path": "packages/translations/dist/testing/index.js",
+    "limit": "1 kB",
+    "ignore": ["node:fs", "node:path", "node:os", "node:util", "node:child_process"]
+  },
+  {
+    "name": "translations/review",
+    "path": "packages/translations/dist/review/index.js",
+    "limit": "3 kB",
+    "ignore": ["node:fs", "node:path", "node:os", "node:util", "node:child_process"]
   }
 ]
