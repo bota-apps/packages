@@ -1,0 +1,66 @@
+{
+  "name": "@bota-apps/gql-codegen",
+  "version": "0.6.2",
+  "description": "SDL-first code generator: derives domain definitions, form/detail schemas, enum display metadata, Zod input validators, and typed GraphQL documents from an annotated GraphQL SDL. Node-side build tool — pairs with @graphql-codegen/typescript for the base types.",
+  "keywords": [
+    "bota-apps",
+    "typescript",
+    "graphql",
+    "codegen",
+    "code-generation",
+    "sdl",
+    "zod",
+    "schema",
+    "cli"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Bota Apps",
+    "url": "https://github.com/bota-apps"
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "bota-gql-codegen": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc && node ../../scripts/fixExtensions.mjs",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bota-apps/packages.git",
+    "directory": "packages/gql-codegen"
+  },
+  "homepage": "https://github.com/bota-apps/packages/tree/main/packages/gql-codegen#readme",
+  "bugs": {
+    "url": "https://github.com/bota-apps/packages/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@bota-apps/types": "workspace:^",
+    "graphql": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  }
+}

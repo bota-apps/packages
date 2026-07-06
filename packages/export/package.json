@@ -1,0 +1,74 @@
+{
+  "name": "@bota-apps/export",
+  "version": "0.1.0",
+  "description": "Framework-free client-side data export: turn header + row arrays into a downloaded CSV, XLSX, or PDF. One subpath per format (./csv is dependency-free; ./excel pulls xlsx, ./pdf pulls jspdf) plus an exportTable() format dispatcher on the barrel.",
+  "keywords": [
+    "bota-apps",
+    "typescript",
+    "csv",
+    "xlsx",
+    "excel",
+    "pdf",
+    "data-export",
+    "download"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Bota Apps",
+    "url": "https://github.com/bota-apps"
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./csv": {
+      "types": "./dist/csv.d.ts",
+      "default": "./dist/csv.js"
+    },
+    "./excel": {
+      "types": "./dist/excel.d.ts",
+      "default": "./dist/excel.js"
+    },
+    "./pdf": {
+      "types": "./dist/pdf.d.ts",
+      "default": "./dist/pdf.js"
+    }
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc && node ../../scripts/fixExtensions.mjs",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bota-apps/packages.git",
+    "directory": "packages/export"
+  },
+  "homepage": "https://github.com/bota-apps/packages/tree/main/packages/export#readme",
+  "bugs": {
+    "url": "https://github.com/bota-apps/packages/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "jspdf": "^4.2.1",
+    "jspdf-autotable": "^5.0.7",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "typescript": "catalog:"
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  }
+}

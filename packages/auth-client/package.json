@@ -1,0 +1,64 @@
+{
+  "name": "@bota-apps/auth-client",
+  "version": "0.6.1",
+  "description": "Cookie-based auth client for @bota-apps apps: a session endpoint, an external auth store, a root-route guard, and React bindings — composed via createAuthClient.",
+  "keywords": [
+    "bota-apps",
+    "typescript",
+    "auth",
+    "authentication",
+    "session",
+    "cookies",
+    "react"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Bota Apps",
+    "url": "https://github.com/bota-apps"
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc && node ../../scripts/fixExtensions.mjs",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bota-apps/packages.git",
+    "directory": "packages/auth-client"
+  },
+  "homepage": "https://github.com/bota-apps/packages/tree/main/packages/auth-client#readme",
+  "bugs": {
+    "url": "https://github.com/bota-apps/packages/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@bota-apps/types": "workspace:^"
+  },
+  "peerDependencies": {
+    "react": "catalog:"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "react": "catalog:",
+    "typescript": "catalog:"
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "name": "@bota-apps/translations",
+  "version": "0.3.2",
+  "description": "Shared translation runtime: preconfigured singleton + TranslationProvider, createAppTranslations for registering app-local locale bundles with a typed hook, useTranslations, translateEnum, a scoped translator context, imperative language helpers, and a server-side translator.",
+  "keywords": [
+    "bota-apps",
+    "typescript",
+    "i18n",
+    "translations",
+    "i18next",
+    "localization",
+    "react"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Bota Apps",
+    "url": "https://github.com/bota-apps"
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./coverage": {
+      "types": "./dist/coverage/index.d.ts",
+      "default": "./dist/coverage/index.js"
+    },
+    "./testing": {
+      "types": "./dist/testing/index.d.ts",
+      "default": "./dist/testing/index.js"
+    },
+    "./review": {
+      "types": "./dist/review/index.d.ts",
+      "default": "./dist/review/index.js"
+    }
+  },
+  "bin": {
+    "bota-translation-review": "./dist/review/cli.js"
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc && node ../../scripts/fixExtensions.mjs",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bota-apps/packages.git",
+    "directory": "packages/translations"
+  },
+  "homepage": "https://github.com/bota-apps/packages/tree/main/packages/translations#readme",
+  "bugs": {
+    "url": "https://github.com/bota-apps/packages/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@bota-apps/schema-utils": "workspace:^",
+    "@bota-apps/types": "workspace:^",
+    "i18next": "catalog:",
+    "i18next-browser-languagedetector": "catalog:",
+    "react-i18next": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "react": "catalog:",
+    "typescript": "catalog:"
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  }
+}

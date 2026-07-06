@@ -1,0 +1,49 @@
+{
+  "name": "@bota-apps/mocks",
+  "version": "0.2.0",
+  "description": "In-memory test/story doubles for @bota-apps packages, organized by module (./auth, …). Every mock conforms to the real client type it stands in for.",
+  "license": "MIT",
+  "author": "bota-apps",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc && node ../scripts/fixExtensions.mjs",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bota-apps/packages.git",
+    "directory": "mocks"
+  },
+  "homepage": "https://github.com/bota-apps/packages/tree/main/mocks#readme",
+  "bugs": {
+    "url": "https://github.com/bota-apps/packages/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@bota-apps/types": "workspace:^",
+    "graphql": "catalog:",
+    "graphql-request": "catalog:"
+  },
+  "devDependencies": {
+    "typescript": "catalog:"
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  }
+}

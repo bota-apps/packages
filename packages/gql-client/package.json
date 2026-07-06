@@ -1,0 +1,61 @@
+{
+  "name": "@bota-apps/gql-client",
+  "version": "0.2.1",
+  "description": "A tiny cookie-credentialed GraphQL client factory built on graphql-request. createGraphQLClient(endpoint) → a client whose every request carries the HttpOnly session cookie.",
+  "keywords": [
+    "bota-apps",
+    "typescript",
+    "graphql",
+    "graphql-request",
+    "graphql-client",
+    "cookies",
+    "session-auth",
+    "spa"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Bota Apps",
+    "url": "https://github.com/bota-apps"
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc && node ../../scripts/fixExtensions.mjs",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bota-apps/packages.git",
+    "directory": "packages/gql-client"
+  },
+  "homepage": "https://github.com/bota-apps/packages/tree/main/packages/gql-client#readme",
+  "bugs": {
+    "url": "https://github.com/bota-apps/packages/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "graphql": "catalog:",
+    "graphql-request": "catalog:"
+  },
+  "devDependencies": {
+    "typescript": "catalog:"
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "name": "@bota-apps/hooks",
+  "version": "0.5.3",
+  "description": "The generic data layer for @bota-apps apps: a configured React Query client wired to the feature error tracker, the GraphQL client context/provider, and typed query/mutation pipeline wrappers. Domain hooks stay in each app.",
+  "keywords": [
+    "bota-apps",
+    "typescript",
+    "react",
+    "react-query",
+    "tanstack-query",
+    "hooks",
+    "data-fetching",
+    "graphql"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Bota Apps",
+    "url": "https://github.com/bota-apps"
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc && node ../../scripts/fixExtensions.mjs",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bota-apps/packages.git",
+    "directory": "packages/hooks"
+  },
+  "homepage": "https://github.com/bota-apps/packages/tree/main/packages/hooks#readme",
+  "bugs": {
+    "url": "https://github.com/bota-apps/packages/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@bota-apps/fm": "workspace:^",
+    "@bota-apps/gql-client": "workspace:^",
+    "@graphql-typed-document-node/core": "catalog:"
+  },
+  "peerDependencies": {
+    "@tanstack/react-query": "catalog:",
+    "graphql": "catalog:",
+    "react": "catalog:"
+  },
+  "devDependencies": {
+    "@tanstack/react-query": "catalog:",
+    "@types/react": "catalog:",
+    "graphql": "catalog:",
+    "graphql-request": "catalog:",
+    "react": "catalog:",
+    "typescript": "catalog:"
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  }
+}

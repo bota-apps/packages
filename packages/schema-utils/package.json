@@ -1,0 +1,70 @@
+{
+  "name": "@bota-apps/schema-utils",
+  "version": "0.9.0",
+  "description": "The Zod runtime behind @bota-apps/types: currency/money, dynamic form/field/detail validators, domain-definition form builders, plus optional i18n (./i18n) helpers. Every schema is proven to align with its @bota-apps/types contract. (Env/runtime config validators live in @bota-apps/app-config.)",
+  "keywords": [
+    "bota-apps",
+    "typescript",
+    "zod",
+    "validation",
+    "schema",
+    "forms",
+    "currency",
+    "i18n"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Bota Apps",
+    "url": "https://github.com/bota-apps"
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./localize": {
+      "types": "./dist/localize.d.ts",
+      "default": "./dist/localize.js"
+    },
+    "./i18n": {
+      "types": "./dist/i18n.d.ts",
+      "default": "./dist/i18n.js"
+    }
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc && node ../../scripts/fixExtensions.mjs",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bota-apps/packages.git",
+    "directory": "packages/schema-utils"
+  },
+  "homepage": "https://github.com/bota-apps/packages/tree/main/packages/schema-utils#readme",
+  "bugs": {
+    "url": "https://github.com/bota-apps/packages/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@bota-apps/types": "workspace:^",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@bota-apps/utils": "workspace:^",
+    "typescript": "catalog:"
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  }
+}
