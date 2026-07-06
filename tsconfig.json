@@ -1,0 +1,24 @@
+{
+  "// note": "Dev-only root config for live cross-package navigation. `paths` point editors at each package's SOURCE so a change in types/src reflects in react-ui with no rebuild. Published packages always resolve via their `exports` → dist/. Not used for building (turbo runs each package's own tsconfig).",
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@bota-apps/types": ["packages/types/src/index.ts"],
+      "@bota-apps/types/*": ["packages/types/src/*"],
+      "@bota-apps/schema-utils": ["packages/schema-utils/src/index.ts"],
+      "@bota-apps/schema-utils/*": ["packages/schema-utils/src/*"],
+      "@bota-apps/fm": ["packages/fm/src/index.ts"],
+      "@bota-apps/fm/*": ["packages/fm/src/*"],
+      "@bota-apps/auth-client": ["packages/auth-client/src/index.ts"],
+      "@bota-apps/gql-client": ["packages/gql-client/src/index.ts"],
+      "@bota-apps/react-ui": ["packages/react-ui/src/index.ts"],
+      "@bota-apps/react-ui/*": ["packages/react-ui/src/*"],
+      "@bota-apps/hooks": ["packages/hooks/src/index.ts"],
+      "@bota-apps/react-components": ["packages/react-components/src/index.ts"],
+      "@bota-apps/extension-sdk": ["packages/extension-sdk/src/index.ts"]
+    }
+  },
+  "files": []
+}

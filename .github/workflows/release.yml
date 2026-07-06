@@ -1,0 +1,82 @@
+name: Release
+
+# On every push to main, the Changesets action either opens/updates a
+# "Version Packages" PR (when changesets are pending) or, once that PR is
+# merged, publishes the bumped packages to npm via `changeset publish`.
+# `workflow_dispatch` allows a manual run from the Actions tab.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+  # Needed to dispatch the Storybook Pages deploy after a publish.
+  actions: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # No `version:` — action-setup reads pnpm from package.json `packageManager`.
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      # Trusted Publishing (OIDC) needs npm >= 11.5.1; Node 22 bundles an older
+      # npm, and `changeset publish` shells out to the npm CLI.
+      - run: npm install -g npm@latest
+
+      - run: pnpm install --frozen-lockfile
+
+      # `version: pnpm version-packages` runs `changeset version` (consumes
+      # pending changesets, bumps versions, updates changelogs) when changesets
+      # exist → opens/updates the "Version Packages" PR. Once that PR is merged
+      # (no pending changesets), `publish: pnpm release` runs `turbo run build &&
+      # changeset publish`, which builds every package in dependency order and
+      # publishes the newly-versioned ones to npm (workspace:* deps are rewritten
+      # to real versions). publishConfig.access=public on each package makes the
+      # scoped packages public.
+      #
+      # Auth is npm Trusted Publishing (OIDC via id-token: write above) — no
+      # NPM_TOKEN secret. Each package on the npm registry must list this repo +
+      # release.yml as its trusted publisher. Provenance is attached
+      # automatically under OIDC.
+      - name: Create Release PR or publish
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          version: pnpm version-packages
+          publish: pnpm release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Every successful npm publish cuts a releases/<version> branch from the
+      # published commit (version = @bota-apps/react-ui, the showcase package;
+      # suffixed with the short SHA when a publish didn't bump it) and deploys
+      # the public Storybook from it. The explicit `gh workflow run` is
+      # required: pushes made with GITHUB_TOKEN intentionally do not trigger
+      # other workflows' `push` events (GitHub's recursion guard) —
+      # workflow_dispatch is the documented exception.
+      - name: Cut release branch + deploy Storybook
+        if: steps.changesets.outputs.published == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          version=$(node -p "require('./packages/react-ui/package.json').version")
+          branch="releases/${version}"
+          if git ls-remote --exit-code --heads origin "$branch" >/dev/null; then
+            branch="releases/${version}-$(git rev-parse --short HEAD)"
+          fi
+          git push origin "HEAD:refs/heads/${branch}"
+          gh workflow run deployStorybook.yml --ref "$branch"

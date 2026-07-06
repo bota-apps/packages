@@ -1,0 +1,80 @@
+packages:
+  - "packages/*"
+  # Test/story doubles for the packages (published as @bota-apps/mocks) — kept
+  # out of packages/ so the production layer stays visibly mock-free.
+  - "mocks"
+  # Workspace dev apps (not published). apps/storybook is the live component
+  # playground — it consumes package SOURCE via the workspace so stories update
+  # without a rebuild, and doubles as a build-time integration test in CI.
+  - "apps/*"
+# NOTE: examples/* is intentionally NOT a workspace member. examples/storybook
+# installs the PUBLISHED @bota-apps/react-ui from npm (a real-consumer smoke test),
+# so it must not resolve to the local workspace copy. Run it standalone:
+#   cd examples/storybook && pnpm install --ignore-workspace && pnpm storybook
+
+# Single source of truth for third-party versions. Packages reference these with
+# "catalog:" instead of a literal range, so bumping a version happens here only.
+# (react-ui's large Radix set stays literal in its own package.json — it is the
+# sole consumer, so there is nothing to keep in sync.)
+catalog:
+  # React
+  react: "^19.0.0"
+  react-dom: "^19.0.0"
+  "@types/react": "^19.0.0"
+  "@types/react-dom": "^19.0.0"
+
+  # Language + types
+  typescript: "^5.8.3"
+  "@types/node": "^22.10.1"
+
+  # Validation + forms
+  zod: "^3.24.4"
+  react-hook-form: "^7.54.0"
+  "@hookform/resolvers": "^3.9.1"
+
+  # TanStack
+  "@tanstack/react-query": "^5.62.0"
+  "@tanstack/react-router": "1.144.0"
+  "@tanstack/react-table": "^8.21.3"
+
+  # Styling
+  tailwindcss: "^3.4.17"
+  autoprefixer: "^10.4.20"
+  postcss: "^8.4.49"
+  postcss-import: "^16.1.0"
+  class-variance-authority: "^0.7.1"
+  clsx: "^2.1.1"
+  tailwind-merge: "^2.5.5"
+  tailwindcss-animate: "^1.0.7"
+  "@tailwindcss/typography": "^0.5.15"
+
+  # Icons
+  lucide-react: "^0.468.0"
+
+  # Charts + dates + misc UI deps
+  recharts: "^2.15.3"
+  date-fns: "^4.1.0"
+  react-day-picker: "^9.14.0"
+  dompurify: "^3.3.3"
+
+  # i18n
+  i18next: "^23.16.0"
+  react-i18next: "^15.1.0"
+  i18next-browser-languagedetector: "^8.0.0"
+
+  # GraphQL
+  graphql: "^16.9.0"
+  graphql-request: "^7.1.2"
+  "@graphql-typed-document-node/core": "^3.2.0"
+
+  # Build / dev
+  vite: "^6.0.3"
+  "@vitejs/plugin-react": "^4.3.4"
+
+  # Testing
+  vitest: "^2.1.8"
+  "@vitest/coverage-v8": "^2.1.8"
+  jsdom: "^25.0.1"
+  "@testing-library/react": "^16.1.0"
+  "@testing-library/dom": "^10.4.0"
+  "@testing-library/user-event": "^14.5.2"

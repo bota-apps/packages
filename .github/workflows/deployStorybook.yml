@@ -1,0 +1,61 @@
+name: Deploy Storybook
+
+# Publishes the workspace Storybook (apps/storybook — every colocated story,
+# built from package source) to GitHub Pages as the public component showcase.
+#
+# Deploys are tied to external releases, not to main: cutting a
+# `releases/<version>` branch from the published commit triggers a
+# build + deploy, and any follow-up push to a releases/* branch redeploys.
+# `workflow_dispatch` allows a manual deploy of any ref from the Actions tab.
+#
+# One-time repo setup: Settings → Pages → Source = "GitHub Actions".
+on:
+  push:
+    branches: ["releases/**"]
+  workflow_dispatch:
+
+# Pages allows only one active deployment — queue deploys in order and never
+# cancel one in flight (GitHub's recommended setting for Pages).
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # No `version:` — action-setup reads pnpm from package.json `packageManager`.
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # Same sequence as CI: turbo builds the packages in dependency order,
+      # then Storybook compiles every colocated story into a static site.
+      - run: pnpm build
+      - run: pnpm --filter @bota-apps/storybook build-storybook
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/storybook/storybook-static
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment

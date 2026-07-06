@@ -1,0 +1,133 @@
+[
+  {
+    "name": "react-ui (barrel)",
+    "path": "packages/react-ui/dist/index.js",
+    "limit": "275 kB"
+  },
+  {
+    "name": "export/csv",
+    "path": "packages/export/dist/csv.js",
+    "limit": "2 kB"
+  },
+  {
+    "name": "export/excel",
+    "path": "packages/export/dist/excel.js",
+    "limit": "500 kB",
+    "ignore": ["xlsx"]
+  },
+  {
+    "name": "export/pdf",
+    "path": "packages/export/dist/pdf.js",
+    "limit": "500 kB",
+    "ignore": ["jspdf", "jspdf-autotable"]
+  },
+  {
+    "name": "react-ui/charts",
+    "path": "packages/react-ui/dist/charts/index.js",
+    "limit": "120 kB"
+  },
+  {
+    "name": "react-ui/form",
+    "path": "packages/react-ui/dist/form/index.js",
+    "limit": "15 kB"
+  },
+  {
+    "name": "react-components",
+    "path": "packages/react-components/dist/index.js",
+    "limit": "92 kB"
+  },
+  {
+    "name": "schema-utils",
+    "path": "packages/schema-utils/dist/index.js",
+    "limit": "16 kB"
+  },
+  {
+    "name": "schema-utils/i18n",
+    "path": "packages/schema-utils/dist/i18n.js",
+    "limit": "1 kB"
+  },
+  {
+    "name": "utils (barrel)",
+    "path": "packages/utils/dist/index.js",
+    "limit": "9 kB"
+  },
+  {
+    "name": "utils/type",
+    "path": "packages/utils/dist/type/index.js",
+    "limit": "1 kB"
+  },
+  {
+    "name": "utils/time",
+    "path": "packages/utils/dist/time/index.js",
+    "limit": "8 kB"
+  },
+  {
+    "name": "utils/number",
+    "path": "packages/utils/dist/number/index.js",
+    "limit": "1 kB"
+  },
+  {
+    "name": "utils/url",
+    "path": "packages/utils/dist/url/index.js",
+    "limit": "1 kB"
+  },
+  {
+    "name": "hooks",
+    "path": "packages/hooks/dist/index.js",
+    "limit": "15 kB",
+    "ignore": ["graphql"]
+  },
+  {
+    "name": "auth-client",
+    "path": "packages/auth-client/dist/index.js",
+    "limit": "4.5 kB"
+  },
+  {
+    "name": "mocks",
+    "path": "mocks/dist/index.js",
+    "limit": "1.5 kB"
+  },
+  {
+    "name": "fm",
+    "path": "packages/fm/dist/index.js",
+    "limit": "7 kB",
+    "ignore": ["lucide-react"]
+  },
+  {
+    "name": "translations",
+    "path": "packages/translations/dist/index.js",
+    "limit": "20.5 kB"
+  },
+  {
+    "name": "gql-client",
+    "path": "packages/gql-client/dist/index.js",
+    "limit": "13.5 kB"
+  },
+  {
+    "name": "gql-codegen",
+    "path": "packages/gql-codegen/dist/index.js",
+    "limit": "35 kB",
+    "ignore": ["node:fs", "node:path"]
+  },
+  {
+    "name": "types",
+    "path": "packages/types/dist/index.js",
+    "limit": "1 kB"
+  },
+  {
+    "name": "types/fm",
+    "path": "packages/types/dist/fm/index.js",
+    "limit": "1 kB"
+  },
+  {
+    "name": "types/auth",
+    "path": "packages/types/dist/auth/index.js",
+    "limit": "1 kB"
+  },
+  {
+    "name": "extension-sdk",
+    "path": "packages/extension-sdk/dist/index.js",
+    "limit": "42 kB",
+    "ignore": ["react", "react-dom"]
+  }
+]

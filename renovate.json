@@ -1,0 +1,30 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", ":semanticCommits"],
+  "schedule": ["before 6am on monday"],
+  "rangeStrategy": "bump",
+  "packageRules": [
+    {
+      "description": "Radix updates move together — one PR for the whole set",
+      "groupName": "radix-ui",
+      "matchPackageNames": ["@radix-ui/**"]
+    },
+    {
+      "description": "Storybook packages move together",
+      "groupName": "storybook",
+      "matchPackageNames": ["storybook", "@storybook/**"]
+    },
+    {
+      "description": "Group all non-major dev tooling",
+      "groupName": "dev tooling (non-major)",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "description": "Majors of core peers need coordinated changesets — flag, don't auto-open",
+      "matchPackageNames": ["react", "react-dom", "tailwindcss", "zod", "typescript"],
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true
+    }
+  ]
+}

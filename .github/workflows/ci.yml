@@ -1,0 +1,109 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # No `version:` — action-setup reads the pinned pnpm from the root
+      # package.json `packageManager` field (pnpm@10.9.0), so CI matches local.
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # turbo builds in dependency order (^build); typecheck/test depend on ^build.
+      - run: pnpm build
+      - run: pnpm typecheck
+      - run: pnpm lint
+      - run: pnpm test
+
+      # Storybook is the integration test for the component packages: it
+      # compiles every colocated story against package source.
+      - run: pnpm --filter @bota-apps/storybook build-storybook
+
+      # Interaction/render regression: the test-runner visits every story in
+      # headless Chromium and fails on render errors. The ~100MB browser
+      # download is cached by Playwright version; apt deps are not cacheable
+      # and install on every run.
+      - name: Resolve Playwright version
+        id: playwright
+        run: echo "version=$(pnpm --filter @bota-apps/storybook exec playwright --version | awk '{print $2}')" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}
+      - if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: pnpm --filter @bota-apps/storybook exec playwright install --with-deps chromium
+      - if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: pnpm --filter @bota-apps/storybook exec playwright install-deps chromium
+      # The runner's Jest process accumulates past Node's default ~2GB
+      # old-space as the story count grows — give it explicit headroom.
+      - run: pnpm --filter @bota-apps/storybook run test-storybook:ci
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
+
+      # Import-cost budgets (brotli, deps bundled, peers external). Bump
+      # .size-limit.json deliberately when a dependency genuinely must grow.
+      # The coverage check fails if a published dist entrypoint has no budget.
+      - run: node scripts/checkSizeLimitCoverage.mjs
+      - run: pnpm size
+
+      # Validate the publish surface: package.json/exports hygiene (publint)
+      # and that the ESM-only dist + d.ts actually resolve for consumers (attw).
+      # theme.css entrypoints are excluded — attw cannot type CSS.
+      - name: publint + arethetypeswrong
+        run: |
+          for dir in packages/*/ mocks/; do
+            echo "::group::publint $(basename "$dir")"
+            (cd "$dir" && pnpm exec publint)
+            echo "::endgroup::"
+          done
+          # Every package with a d.ts surface is validated — no hand-maintained
+          # list to rot as packages are added. CSS entrypoints (attw cannot
+          # type CSS) are derived from each package.json exports map; untyped
+          # packages (eslint-config ships plain JS + JSON) are skipped.
+          for dir in packages/*/ mocks/; do
+            if [ -z "$(find "$dir" -maxdepth 2 -name '*.d.ts' -not -path '*/node_modules/*' -print -quit)" ]; then
+              echo "attw $(basename "$dir"): skipped (no d.ts surface)"
+              continue
+            fi
+            excludes=$(node -p 'Object.keys(require("./" + process.argv[1] + "package.json").exports ?? {}).filter((key) => key.endsWith(".css")).map((key) => "--exclude-entrypoints " + key).join(" ")' "$dir")
+            echo "::group::attw $(basename "$dir")"
+            (cd "$dir" && pnpm exec attw --pack --profile esm-only $excludes)
+            echo "::endgroup::"
+          done
+
+  # PRs that touch published packages must carry a changeset (docs/CI-only
+  # changes can add an empty one: `pnpm changeset --empty`).
+  changeset:
+    if: github.event_name == 'pull_request' && github.head_ref != 'changeset-release/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      # Only the root devDependencies (@changesets/cli) are needed for the
+      # status check — skip installing every package's dependency tree.
+      - run: pnpm install --frozen-lockfile --ignore-scripts --filter .
+
+      - run: pnpm changeset status --since=origin/${{ github.base_ref }}
