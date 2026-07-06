@@ -1,6 +1,6 @@
 {
   "name": "@bota-apps/gql-codegen",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "SDL-first code generator: derives domain definitions, form/detail schemas, enum display metadata, Zod input validators, and typed GraphQL documents from an annotated GraphQL SDL. Node-side build tool — pairs with @graphql-codegen/typescript for the base types.",
   "keywords": [
     "bota-apps",

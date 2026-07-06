@@ -1,5 +1,11 @@
 # @bota-apps/types
 
+## 0.10.1
+
+### Patch Changes
+
+- 0671cc2: Docs & metadata: add package keywords, a structured author field, and an expanded README. No runtime or API changes.
+
 ## 0.10.0
 
 ### Minor Changes

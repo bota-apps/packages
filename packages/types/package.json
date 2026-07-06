@@ -1,6 +1,6 @@
 {
   "name": "@bota-apps/types",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "description": "Framework-free TypeScript contracts shared across @bota-apps packages: schema-driven form/detail/domain types, Money, feature-management (fm) boundary types, config shapes, and the minimal constraints expected on API-owned types. Zero runtime, zero dependencies.",
   "keywords": [
     "bota-apps",

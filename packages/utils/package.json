@@ -1,6 +1,6 @@
 {
   "name": "@bota-apps/utils",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Framework-free utility modules for @bota-apps packages, one subpath per concern: type-level helpers (./type), date/time formatting (./time), number formatting (./number), and subdomain URL utilities (./url).",
   "keywords": [
     "bota-apps",

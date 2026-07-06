@@ -1,6 +1,6 @@
 {
   "name": "@bota-apps/eslint-config",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Shared flat ESLint config, Prettier config, and base tsconfig for @bota-apps repos and generated apps. Owns its lint plugins so consumers install one dev dependency.",
   "keywords": [
     "bota-apps",

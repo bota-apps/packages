@@ -1,5 +1,15 @@
 # @bota-apps/hooks
 
+## 0.5.4
+
+### Patch Changes
+
+- 0671cc2: Docs & metadata: add package keywords, a structured author field, and an expanded README. No runtime or API changes.
+- Updated dependencies [0671cc2]
+- Updated dependencies [0671cc2]
+  - @bota-apps/fm@0.8.2
+  - @bota-apps/gql-client@0.2.2
+
 ## 0.5.3
 
 ### Patch Changes

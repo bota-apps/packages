@@ -1,6 +1,6 @@
 {
   "name": "@bota-apps/hooks",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "The generic data layer for @bota-apps apps: a configured React Query client wired to the feature error tracker, the GraphQL client context/provider, and typed query/mutation pipeline wrappers. Domain hooks stay in each app.",
   "keywords": [
     "bota-apps",

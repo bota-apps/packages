@@ -1,6 +1,6 @@
 {
   "name": "@bota-apps/fm",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "Feature-management and error-boundary runtime: a feature tree drives per-action error classification, telemetry, and notifications, with React providers and hooks.",
   "keywords": [
     "bota-apps",
