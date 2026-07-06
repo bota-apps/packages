@@ -1,5 +1,11 @@
 # @bota-apps/tailwind-preset
 
+## 0.5.1
+
+### Patch Changes
+
+- 0671cc2: Docs & metadata: add package keywords and a structured author field. No runtime or API changes.
+
 ## 0.5.0
 
 ### Minor Changes

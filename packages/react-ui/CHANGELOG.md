@@ -1,5 +1,29 @@
 # @bota-apps/react-ui
 
+## 0.5.0
+
+### Minor Changes
+
+- 0671cc2: `PhoneDisplay` is now country-agnostic — no built-in locale. The number is shown as given unless you supply formatting props.
+
+  Migration:
+
+  - Removed the `variant` prop and the `PhoneDisplayVariant` type (`"ethiopian" | "international"`), along with the hard-coded `+251` normalization/grouping.
+  - Added `countryCode?: string` (calling code applied to national-form input, dropping a leading trunk `0`) and `groups?: number[]` (segment lengths for the national part).
+  - To reproduce the previous Ethiopian default, pass `countryCode="251"` with `groups={[3, 2, 2, 2]}`; for the old `"international"` layout use `groups={[3, 3, 3]}`.
+
+### Patch Changes
+
+- 0671cc2: Docs & metadata: add package keywords, a structured author field, and an expanded README. No runtime or API changes.
+- Updated dependencies [0671cc2]
+- Updated dependencies [0671cc2]
+- Updated dependencies [0671cc2]
+- Updated dependencies [0671cc2]
+  - @bota-apps/schema-utils@0.9.1
+  - @bota-apps/tailwind-preset@0.5.1
+  - @bota-apps/types@0.10.1
+  - @bota-apps/utils@0.3.1
+
 ## 0.4.3
 
 ### Patch Changes

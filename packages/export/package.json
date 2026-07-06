@@ -1,6 +1,6 @@
 {
   "name": "@bota-apps/export",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Framework-free client-side data export: turn header + row arrays into a downloaded CSV, XLSX, or PDF. One subpath per format (./csv is dependency-free; ./excel pulls xlsx, ./pdf pulls jspdf) plus an exportTable() format dispatcher on the barrel.",
   "keywords": [
     "bota-apps",

@@ -1,6 +1,6 @@
 {
   "name": "@bota-apps/app-config",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Standardized runtime env config for @bota-apps apps: createViteAppConfig (maps Vite VITE_* env vars onto a Zod schema, failing fast on missing/invalid values), graphqlAppEnv — the base env schema every GraphQL-backed host shares (mode, apiUrl, authUrl, baseDomains, session gateway paths) — and sessionPaths, which maps the session env keys onto the auth-client paths shape. Apps extend the base with app-only keys.",
   "keywords": [
     "bota-apps",

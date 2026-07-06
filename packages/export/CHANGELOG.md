@@ -1,5 +1,11 @@
 # @bota-apps/export
 
+## 0.1.1
+
+### Patch Changes
+
+- 0671cc2: Docs & metadata: add package keywords, a structured author field, and an expanded README, and correct the `package.json` description (the barrel dispatcher is `exportTable()`, not `exportReport()`). No runtime or API changes.
+
 ## 0.1.0
 
 ### Minor Changes
