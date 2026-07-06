@@ -19,4 +19,21 @@ describe("Avatar", () => {
     expect(root.className).toContain("rounded-full");
     expect(root.className).toContain("avatar-x");
   });
+
+  it("applies the size variant to the root and fallback", () => {
+    const { container } = render(
+      <Avatar size="xl">
+        <AvatarFallback size="xl">MH</AvatarFallback>
+      </Avatar>,
+    );
+    const root = container.firstChild as HTMLElement;
+    expect(root.className).toContain("h-16");
+    expect(root.className).toContain("w-16");
+    expect(screen.getByText("MH").className).toContain("text-lg");
+  });
+
+  it("defaults to the md size", () => {
+    const { container } = render(<Avatar />);
+    expect((container.firstChild as HTMLElement).className).toContain("h-10");
+  });
 });

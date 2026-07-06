@@ -26,3 +26,15 @@ export const Fallback: Story = {
     </Avatar>
   ),
 };
+
+export const Sizes: Story = {
+  render: () => (
+    <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+      {(["sm", "md", "lg", "xl"] as const).map((size) => (
+        <Avatar key={size} size={size}>
+          <AvatarFallback size={size}>MH</AvatarFallback>
+        </Avatar>
+      ))}
+    </div>
+  ),
+};

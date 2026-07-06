@@ -21,4 +21,11 @@ describe("Card", () => {
     const { container } = render(<Card variant="compact" title="Dense" />);
     expect((container.firstChild as HTMLElement).className).toContain("p-4");
   });
+
+  it("stretches to the parent cell with the fill prop", () => {
+    const { container } = render(<Card fill title="Node" />);
+    const el = container.firstChild as HTMLElement;
+    expect(el.className).toContain("h-full");
+    expect(el.className).toContain("w-full");
+  });
 });

@@ -13,6 +13,7 @@ type CardProps = Omit<CardElProps, "title"> & {
 
 function Card({
   variant,
+  fill,
   title,
   description,
   icon,
@@ -24,7 +25,7 @@ function Card({
   const hasHeader = Boolean(title || headerRight);
 
   return (
-    <CardEl variant={variant} className={className}>
+    <CardEl variant={variant} fill={fill} className={className}>
       {variant === "feature" && (
         <Div padding="lg">
           {icon && <CardIconEl>{icon}</CardIconEl>}

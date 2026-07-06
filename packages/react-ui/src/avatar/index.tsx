@@ -1,13 +1,14 @@
 import * as React from "react";
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
+import type { VariantProps } from "class-variance-authority";
 import { cn } from "../lib/utils";
 import { avatarFallbackVariants, avatarImageVariants, avatarVariants } from "./variants";
 
 const Avatar = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>
->(({ className, ...props }, ref) => (
-  <AvatarPrimitive.Root ref={ref} className={cn(avatarVariants(), className)} {...props} />
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root> & VariantProps<typeof avatarVariants>
+>(({ className, size, ...props }, ref) => (
+  <AvatarPrimitive.Root ref={ref} className={cn(avatarVariants({ size }), className)} {...props} />
 ));
 Avatar.displayName = AvatarPrimitive.Root.displayName;
 
@@ -21,11 +22,12 @@ AvatarImage.displayName = AvatarPrimitive.Image.displayName;
 
 const AvatarFallback = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Fallback>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback>
->(({ className, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback> &
+    VariantProps<typeof avatarFallbackVariants>
+>(({ className, size, ...props }, ref) => (
   <AvatarPrimitive.Fallback
     ref={ref}
-    className={cn(avatarFallbackVariants(), className)}
+    className={cn(avatarFallbackVariants({ size }), className)}
     {...props}
   />
 ));

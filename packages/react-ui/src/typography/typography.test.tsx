@@ -51,4 +51,16 @@ describe("Typography", () => {
     expect(span.tagName).toBe("SPAN");
     expect(span.className).toContain("font-semibold");
   });
+
+  it("renders Text with monospace tabular figures for numeric ranges", () => {
+    render(
+      <Text as="span" mono tabular>
+        1000 — 2000
+      </Text>,
+    );
+    const span = screen.getByText("1000 — 2000");
+    expect(span.className).toContain("font-mono");
+    expect(span.className).toContain("tabular-nums");
+    expect(textVariants({ tabular: true })).toContain("tabular-nums");
+  });
 });

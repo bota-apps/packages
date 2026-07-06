@@ -66,3 +66,32 @@ export const BoxExample: Story = {
     </Box>
   ),
 };
+
+export const LabeledRow: Story = {
+  render: () => (
+    <Inline gap="lg" className="w-96">
+      <Stack width="md" shrink="0">
+        <Swatch>Date</Swatch>
+      </Stack>
+      <Stack grow gap="sm">
+        <Swatch>Flexible content column (grows, min-w-0)</Swatch>
+      </Stack>
+    </Inline>
+  ),
+};
+
+export const SelectableRows: Story = {
+  render: () => (
+    <Stack className="w-96 rounded-md border">
+      <Inline justify="between" paddingX="md" paddingY="lg" borderBottom>
+        <Badge variant="secondary">Header row</Badge>
+      </Inline>
+      <Inline gap="sm" paddingX="md" paddingY="md" background="muted">
+        <Badge variant="muted">Group header</Badge>
+      </Inline>
+      <Inline gap="sm" paddingX="md" paddingY="md" indent="md" borderBottom>
+        <Badge variant="outline">Nested row (indented)</Badge>
+      </Inline>
+    </Stack>
+  ),
+};

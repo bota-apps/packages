@@ -51,6 +51,15 @@ export const Variants: Story = {
   ),
 };
 
+export const Fill: Story = {
+  render: () => (
+    <div className="grid h-40 grid-cols-2 gap-4">
+      <Card fill variant="compact" title="Node A" description="Stretches to the grid cell." />
+      <Card fill variant="compact" title="Node B" description="Equal height via fill." />
+    </div>
+  ),
+};
+
 export const Anatomy: Story = {
   render: () => (
     <Card

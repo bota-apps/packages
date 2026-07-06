@@ -33,19 +33,25 @@ export const cardVariants = cva("rounded-lg border bg-card text-card-foreground 
       /** Content surface — slightly larger radius, subtle bg. */
       surface: "rounded-xl bg-background shadow-sm border-border/50 p-6",
     },
+    /** Stretch to fill the parent's width and height (e.g. a grid/flex cell). */
+    fill: {
+      true: "h-full w-full",
+      false: "",
+    },
   },
   defaultVariants: {
     variant: "default",
+    fill: false,
   },
 });
 
 export type CardElProps = HTMLAttributes<HTMLDivElement> & VariantProps<typeof cardVariants>;
 
 export const CardEl = forwardRef<HTMLDivElement, CardElProps>(function CardEl(
-  { variant, className, ...props },
+  { variant, fill, className, ...props },
   ref,
 ) {
-  return <div ref={ref} className={cn(cardVariants({ variant }), className)} {...props} />;
+  return <div ref={ref} className={cn(cardVariants({ variant, fill }), className)} {...props} />;
 });
 
 /* ------------------------------------------------------------------ */
