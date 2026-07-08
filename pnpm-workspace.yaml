@@ -3,6 +3,9 @@ packages:
   # Test/story doubles for the packages (published as @bota-apps/mocks) — kept
   # out of packages/ so the production layer stays visibly mock-free.
   - "mocks"
+  # Page-level integration-test harness (published as @bota-apps/testing) —
+  # same rationale as mocks: dev-only surface, kept out of packages/.
+  - "testing"
   # Workspace dev apps (not published). apps/storybook is the live component
   # playground — it consumes package SOURCE via the workspace so stories update
   # without a rebuild, and doubles as a build-time integration test in CI.
@@ -78,3 +81,4 @@ catalog:
   "@testing-library/react": "^16.1.0"
   "@testing-library/dom": "^10.4.0"
   "@testing-library/user-event": "^14.5.2"
+  "@testing-library/jest-dom": "^6.6.3"

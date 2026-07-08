@@ -1,0 +1,81 @@
+{
+  "name": "@bota-apps/testing",
+  "version": "0.0.0",
+  "description": "Page-level integration-test harness for @bota-apps hosts: mount the real app with only the @bota-apps/mocks auth + graphql doubles injected, a data-driven route smoke engine (shell / error / 404 terminal surfaces, flag-gate assertions), a route-catalog coverage guard, and jsdom environment setup with a missing-translation gate.",
+  "license": "MIT",
+  "author": "bota-apps",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./setup": {
+      "types": "./dist/setup/index.d.ts",
+      "default": "./dist/setup/index.js"
+    },
+    "./coverage": {
+      "types": "./dist/coverage/index.d.ts",
+      "default": "./dist/coverage/index.js"
+    }
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc && node ../scripts/fixExtensions.mjs",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bota-apps/packages.git",
+    "directory": "testing"
+  },
+  "homepage": "https://github.com/bota-apps/packages/tree/main/testing#readme",
+  "bugs": {
+    "url": "https://github.com/bota-apps/packages/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@bota-apps/fm": "workspace:^",
+    "@bota-apps/mocks": "workspace:^",
+    "@bota-apps/react-components": "workspace:^",
+    "@bota-apps/types": "workspace:^",
+    "@tanstack/react-router": "catalog:",
+    "@testing-library/jest-dom": "catalog:",
+    "graphql": "catalog:"
+  },
+  "peerDependencies": {
+    "@tanstack/react-query": "catalog:",
+    "@testing-library/react": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "vitest": ">=2.0.0"
+  },
+  "devDependencies": {
+    "@bota-apps/auth-client": "workspace:^",
+    "@bota-apps/hooks": "workspace:^",
+    "@tanstack/react-query": "catalog:",
+    "@testing-library/react": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "sideEffects": [
+    "dist/setup/index.js",
+    "dist/routeSmoke/createRouteSmoke.js"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
+}

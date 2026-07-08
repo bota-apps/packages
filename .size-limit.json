@@ -34,7 +34,7 @@
   {
     "name": "react-components",
     "path": "packages/react-components/dist/index.js",
-    "limit": "92 kB"
+    "limit": "110 kB"
   },
   {
     "name": "schema-utils",
@@ -164,5 +164,34 @@
     "path": "packages/translations/dist/review/index.js",
     "limit": "3 kB",
     "ignore": ["node:fs", "node:path", "node:os", "node:util", "node:child_process"]
+  },
+  {
+    "name": "testing",
+    "path": "testing/dist/index.js",
+    "limit": "1.5 kB",
+    "ignore": [
+      "@bota-apps/react-components",
+      "@bota-apps/mocks",
+      "@bota-apps/fm",
+      "@tanstack/react-router",
+      "@testing-library/react",
+      "@testing-library/jest-dom",
+      "vitest",
+      "graphql",
+      "react",
+      "react-dom"
+    ]
+  },
+  {
+    "name": "testing/setup",
+    "path": "testing/dist/setup/index.js",
+    "limit": "1.5 kB",
+    "ignore": ["@testing-library/react", "@testing-library/jest-dom", "vitest"]
+  },
+  {
+    "name": "testing/coverage",
+    "path": "testing/dist/coverage/index.js",
+    "limit": "1.5 kB",
+    "ignore": ["node:fs", "node:path", "vitest"]
   }
 ]

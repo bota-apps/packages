@@ -26,10 +26,11 @@ function distJsTarget(value) {
 
 const missing = [];
 // Published package directories: everything under packages/, plus the
-// root-level mocks workspace.
+// root-level mocks and testing workspaces.
 const packageDirs = [
   ...readdirSync(join(repoRoot, "packages")).map((name) => `packages/${name}`),
   "mocks",
+  "testing",
 ];
 for (const dir of packageDirs) {
   const packageJsonPath = join(repoRoot, dir, "package.json");

@@ -30,9 +30,14 @@ export type PageMenuAction = {
 
 type PageMenuActionsProps = {
   actions: PageMenuAction[];
+  /**
+   * Accessible name for the icon-only trigger — what screen readers announce
+   * and tests query by role. Override to translate.
+   */
+  triggerLabel?: string;
 };
 
-export function PageMenuActions({ actions }: PageMenuActionsProps) {
+export function PageMenuActions({ actions, triggerLabel = "Page actions" }: PageMenuActionsProps) {
   const visible = actions.filter((a) => !a.hidden);
   if (visible.length === 0) {
     return null;
@@ -41,7 +46,7 @@ export function PageMenuActions({ actions }: PageMenuActionsProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant="outline" size="icon" aria-label={triggerLabel}>
           <MoreVertical />
         </Button>
       </DropdownMenuTrigger>

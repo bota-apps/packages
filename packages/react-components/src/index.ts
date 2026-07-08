@@ -46,3 +46,4 @@ export * from "./entityAuditLog";
 
 // Composed provider stack
 export * from "./createAppRoot";
+export * from "./createHostRouter";
