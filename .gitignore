@@ -11,3 +11,4 @@ storybook-static
 /coverage
 coverage/
 !packages/*/src/coverage/
+!testing/src/coverage/

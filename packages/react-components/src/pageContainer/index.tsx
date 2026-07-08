@@ -59,6 +59,8 @@ export type PageContainerProps = {
   headerMetadata?: ReactNode;
   /** Structured actions rendered as a dropdown in the header (right side). */
   menuActions?: PageMenuAction[];
+  /** Accessible name for the menu-actions trigger (override to translate). */
+  menuActionsLabel?: string;
   /** Escape hatch for non-standard header content (badges, confirm dialogs, toggles). */
   headerRight?: ReactNode;
   /** Content area width. */
@@ -157,6 +159,7 @@ export function PageContainer({
   description,
   headerMetadata,
   menuActions,
+  menuActionsLabel,
   headerRight,
   variant,
   layout = "flow",
@@ -177,7 +180,9 @@ export function PageContainer({
     }
 
     const menuActionsNode =
-      menuActions && menuActions.length > 0 ? <PageMenuActions actions={menuActions} /> : null;
+      menuActions && menuActions.length > 0 ? (
+        <PageMenuActions actions={menuActions} triggerLabel={menuActionsLabel} />
+      ) : null;
 
     const resolvedAction =
       menuActionsNode && headerRight ? (
@@ -200,7 +205,15 @@ export function PageContainer({
         />
       </Stack>
     );
-  }, [description, heading, headerMetadata, headerRight, menuActions, shouldShowHeader]);
+  }, [
+    description,
+    heading,
+    headerMetadata,
+    headerRight,
+    menuActions,
+    menuActionsLabel,
+    shouldShowHeader,
+  ]);
 
   const body = (
     <>

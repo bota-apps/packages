@@ -12,6 +12,16 @@ describe("PageMenuActions", () => {
     expect(container.firstChild).toBe(null);
   });
 
+  it("names the icon-only trigger for screen readers, overridable for translation", () => {
+    const actions: PageMenuAction[] = [{ label: "Edit" }];
+    const { unmount } = render(<PageMenuActions actions={actions} />);
+    expect(screen.getByRole("button", { name: "Page actions" })).toBeTruthy();
+    unmount();
+
+    render(<PageMenuActions actions={actions} triggerLabel="የገፅ ተግባራት" />);
+    expect(screen.getByRole("button", { name: "የገፅ ተግባራት" })).toBeTruthy();
+  });
+
   it("opens the menu from the trigger and invokes the selected action", async () => {
     const user = userEvent.setup();
     const onEdit = vi.fn();

@@ -11,10 +11,14 @@ export default defineConfig({
     // Shared jsdom polyfills (ResizeObserver, matchMedia, scrollIntoView,
     // pointer capture) + Testing Library auto-cleanup for all package tests.
     setupFiles: ["./vitest.setup.ts"],
-    include: ["packages/**/*.test.{ts,tsx}", "mocks/**/*.test.{ts,tsx}"],
+    include: [
+      "packages/**/*.test.{ts,tsx}",
+      "mocks/**/*.test.{ts,tsx}",
+      "testing/**/*.test.{ts,tsx}",
+    ],
     coverage: {
       provider: "v8",
-      include: ["packages/*/src/**", "mocks/src/**"],
+      include: ["packages/*/src/**", "mocks/src/**", "testing/src/**"],
       exclude: ["packages/*/src/**/*.test.*", "packages/*/src/**/index.ts"],
       reporter: ["text", "html"],
       // Floor, not target: fails the run if coverage regresses below what the

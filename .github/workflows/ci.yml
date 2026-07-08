@@ -65,7 +65,7 @@ jobs:
       # theme.css entrypoints are excluded — attw cannot type CSS.
       - name: publint + arethetypeswrong
         run: |
-          for dir in packages/*/ mocks/; do
+          for dir in packages/*/ mocks/ testing/; do
             echo "::group::publint $(basename "$dir")"
             (cd "$dir" && pnpm exec publint)
             echo "::endgroup::"
@@ -74,7 +74,7 @@ jobs:
           # list to rot as packages are added. CSS entrypoints (attw cannot
           # type CSS) are derived from each package.json exports map; untyped
           # packages (eslint-config ships plain JS + JSON) are skipped.
-          for dir in packages/*/ mocks/; do
+          for dir in packages/*/ mocks/ testing/; do
             if [ -z "$(find "$dir" -maxdepth 2 -name '*.d.ts' -not -path '*/node_modules/*' -print -quit)" ]; then
               echo "attw $(basename "$dir"): skipped (no d.ts surface)"
               continue
