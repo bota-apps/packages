@@ -78,6 +78,37 @@ describe("DynamicForm", () => {
     );
   });
 
+  it("submits currency fields as plain numbers (the widget's data contract)", async () => {
+    const user = userEvent.setup();
+    const onSubmit = vi.fn();
+    const currencySchema: RegistrationSchema = {
+      id: "position-registration",
+      key: "position",
+      name: "Position registration",
+      fields: [
+        { name: "title", label: "Title", type: "text", required: true, section: "main" },
+        {
+          name: "salaryAmount",
+          label: "Salary",
+          type: "currency",
+          required: true,
+          section: "main",
+        },
+      ],
+      sections: [{ key: "main", title: "Main" }],
+    };
+    render(<DynamicForm schema={currencySchema} onSubmit={onSubmit} />);
+
+    await user.type(screen.getByLabelText("Title *"), "Engineer");
+    await user.type(screen.getByLabelText("Salary *"), "45000.5");
+    await user.click(screen.getByRole("button", { name: "Submit" }));
+
+    await waitFor(() => expect(onSubmit).toHaveBeenCalledTimes(1));
+    expect(onSubmit).toHaveBeenCalledWith(
+      expect.objectContaining({ title: "Engineer", salaryAmount: 45000.5 }),
+    );
+  });
+
   it("does not enter the featureScope boundary when validation fails", async () => {
     const user = userEvent.setup();
     const onSubmit = vi.fn();

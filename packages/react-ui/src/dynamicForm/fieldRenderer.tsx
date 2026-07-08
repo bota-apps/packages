@@ -171,7 +171,11 @@ function renderInput(
         </Div>
       );
 
+    // Currency shares the number contract: the form value is a plain number
+    // (zodBuilder/normalizer coerce it, gql-codegen's widget policy documents
+    // it). Money-shaped objects are display-only — never form state.
     case "number":
+    case "currency":
       return (
         <Input
           id={rhfField.name}
@@ -185,37 +189,9 @@ function renderInput(
           ref={rhfField.ref}
           min={fieldDef.validation?.min}
           max={fieldDef.validation?.max}
+          step={type === "currency" ? "0.01" : undefined}
         />
       );
-
-    case "currency": {
-      const moneyValue = value as { amount?: number; currency?: string } | undefined;
-      return (
-        <Input
-          id={rhfField.name}
-          type="number"
-          value={
-            moneyValue?.amount !== undefined && moneyValue?.amount !== null
-              ? String(moneyValue.amount)
-              : ""
-          }
-          onChange={(e) => {
-            const numVal = e.target.value === "" ? undefined : Number(e.target.value);
-            rhfField.onChange(
-              numVal !== undefined
-                ? { amount: numVal, currency: moneyValue?.currency ?? "USD" }
-                : undefined,
-            );
-          }}
-          onBlur={rhfField.onBlur}
-          placeholder={placeholder}
-          ref={rhfField.ref}
-          min={fieldDef.validation?.min}
-          max={fieldDef.validation?.max}
-          step="0.01"
-        />
-      );
-    }
 
     case "date":
       return (
