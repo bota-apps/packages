@@ -37,7 +37,7 @@ export type AppInstallationContext = {
 /** Fallback context used when running standalone (no host-provided params). */
 export const standaloneContext: AppInstallationContext = {
   tenantId: "tenant_demo",
-  tenantName: "Demoz Demo Org",
+  tenantName: "Demo Organization",
   appToken: "demo_app_token",
 };
 

@@ -121,7 +121,7 @@ describe("sumMoney", () => {
 });
 
 describe("registry", () => {
-  it("keeps the default Ethiopian-market set intact", () => {
+  it("keeps the built-in default currency set intact", () => {
     expect(Object.keys(currencies)).toEqual([
       "ETB",
       "USD",

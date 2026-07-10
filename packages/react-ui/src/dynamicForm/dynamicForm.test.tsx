@@ -88,8 +88,8 @@ describe("DynamicForm", () => {
       fields: [
         { name: "title", label: "Title", type: "text", required: true, section: "main" },
         {
-          name: "salaryAmount",
-          label: "Salary",
+          name: "budgetAmount",
+          label: "Budget",
           type: "currency",
           required: true,
           section: "main",
@@ -100,12 +100,12 @@ describe("DynamicForm", () => {
     render(<DynamicForm schema={currencySchema} onSubmit={onSubmit} />);
 
     await user.type(screen.getByLabelText("Title *"), "Engineer");
-    await user.type(screen.getByLabelText("Salary *"), "45000.5");
+    await user.type(screen.getByLabelText("Budget *"), "45000.5");
     await user.click(screen.getByRole("button", { name: "Submit" }));
 
     await waitFor(() => expect(onSubmit).toHaveBeenCalledTimes(1));
     expect(onSubmit).toHaveBeenCalledWith(
-      expect.objectContaining({ title: "Engineer", salaryAmount: 45000.5 }),
+      expect.objectContaining({ title: "Engineer", budgetAmount: 45000.5 }),
     );
   });
 

@@ -16,7 +16,7 @@ export const Default: Story = {
         <SelectValue placeholder="Pick a currency" />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="ETB">Ethiopian Birr</SelectItem>
+        <SelectItem value="CHF">Swiss Franc</SelectItem>
         <SelectItem value="USD">US Dollar</SelectItem>
         <SelectItem value="EUR">Euro</SelectItem>
       </SelectContent>

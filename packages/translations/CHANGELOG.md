@@ -31,7 +31,7 @@
 
 ### Minor Changes
 
-- 4e70aa9: New package: shared translation runtime extracted from the legacy `@demoz/translations`
+- 4e70aa9: New package: shared translation runtime extracted from the legacy shared translation runtime
   core. The name is engine-neutral (it currently wraps i18next + react-i18next, but
   consumers never depend on those directly). Ships the preconfigured process-wide
   singleton (browser language detection, `en` fallback, locale persisted under
@@ -46,4 +46,4 @@
   `SupportedLanguage`, `ToStringLeaves`, `TFunction`, `Namespace`, `LocaleResources`,
   `AppTranslationsConfig` types (the last four re-exported so consumers never import
   `i18next`). The i18next `CustomTypeOptions` augmentation ships with the package.
-  Note for migrators: the localStorage key changed from `demoz:locale` to `bota:locale`.
+  Note for migrators: the locale localStorage key is now `bota:locale` (renamed from the legacy key).

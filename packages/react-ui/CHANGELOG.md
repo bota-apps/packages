@@ -77,9 +77,9 @@
 
   Migration:
 
-  - Removed the `variant` prop and the `PhoneDisplayVariant` type (`"ethiopian" | "international"`), along with the hard-coded `+251` normalization/grouping.
+  - Removed the `variant` prop and the `PhoneDisplayVariant` type, along with the hard-coded default normalization/grouping.
   - Added `countryCode?: string` (calling code applied to national-form input, dropping a leading trunk `0`) and `groups?: number[]` (segment lengths for the national part).
-  - To reproduce the previous Ethiopian default, pass `countryCode="251"` with `groups={[3, 2, 2, 2]}`; for the old `"international"` layout use `groups={[3, 3, 3]}`.
+  - To reproduce the previous default, pass `countryCode="251"` with `groups={[3, 2, 2, 2]}`; for the old `"international"` layout use `groups={[3, 3, 3]}`.
 
 ### Patch Changes
 

@@ -40,8 +40,8 @@ describe("DetailField", () => {
 
 describe("InfoRow", () => {
   it("renders the icon and content with muted styling", () => {
-    render(<InfoRow icon={<Mail data-testid="row-icon" />}>Addis Ababa</InfoRow>);
-    expect(screen.getByText("Addis Ababa")).toBeTruthy();
+    render(<InfoRow icon={<Mail data-testid="row-icon" />}>Lisbon</InfoRow>);
+    expect(screen.getByText("Lisbon")).toBeTruthy();
     const row = screen.getByTestId("row-icon").parentElement?.parentElement;
     expect(row?.className).toContain(infoRowVariants());
   });

@@ -24,7 +24,7 @@ export const graphqlAppEnv = z.object({
   // var fails the parse.
   authUrl: z.string(),
   // Allowlisted base domains this deployment serves, comma-separated
-  // (`demozapps.com,localhost`). The active tenant is the subdomain under one.
+  // (`example.com,localhost`). The active tenant is the subdomain under one.
   baseDomains: z.string().transform((value) =>
     value
       .split(",")

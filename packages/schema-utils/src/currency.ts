@@ -11,7 +11,7 @@ export type { CurrencyCode, CurrencyInfo, FormatCurrencyOptions, Money } from "@
 /* Currency codes — default set                                        */
 /* ------------------------------------------------------------------ */
 
-/** The default ISO 4217 currency codes (Ethiopian-market defaults). */
+/** The default ISO 4217 currency codes (built-in default set). */
 export const currencyCodes = ["ETB", "USD", "EUR", "GBP", "AED", "SAR", "KES", "CNY"] as const;
 
 export const currencyCodeSchema = z.enum(currencyCodes);
@@ -49,13 +49,13 @@ export function sumMoney(values: readonly Money[], fallbackCurrency: CurrencyCod
 
 /**
  * A currency entry for a custom registry. Same shape as CurrencyInfo but open
- * to any code, so apps outside the default market can bring their own set via
+ * to any code, so apps can bring their own set via
  * {@link createCurrencyFormatter}. Derived from CurrencyInfo so the shapes
  * cannot drift.
  */
 export type CurrencyDefinition = Omit<CurrencyInfo, "code"> & { code: string };
 
-/** Default registry (Ethiopian-market currencies) with metadata. */
+/** Default registry (built-in default currencies) with metadata. */
 export const currencies: Record<CurrencyCode, CurrencyInfo> = {
   ETB: { code: "ETB", symbol: "Br", label: "Ethiopian Birr", decimals: 2, locale: "am-ET" },
   USD: { code: "USD", symbol: "$", label: "US Dollar", decimals: 2, locale: "en-US" },
@@ -73,7 +73,7 @@ export const currencies: Record<CurrencyCode, CurrencyInfo> = {
 
 export type CurrencyFormatterConfig<C extends string = CurrencyCode> = {
   /**
-   * Currency registry. Defaults to the Ethiopian-market set — a custom code
+   * Currency registry. Defaults to the built-in set — a custom code
    * set must bring its own registry (enforced by the factory's overloads).
    */
   currencies?: Record<C, CurrencyDefinition>;
