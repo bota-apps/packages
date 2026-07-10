@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Page, PageContent, ContentSurface } from "./index";
 import { PageHeader } from "../pageHeader";
 import { Button } from "../button";

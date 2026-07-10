@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Copy, Download, FileText, Pencil, Trash2 } from "lucide-react";
 import { PageMenuActions } from "./index";
 

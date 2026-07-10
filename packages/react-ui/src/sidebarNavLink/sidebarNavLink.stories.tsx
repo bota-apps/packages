@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { FileText, Home, Settings } from "lucide-react";
 import { Badge } from "../badge";
 import { SidebarNavLink, sidebarNavLinkClass } from "./index";

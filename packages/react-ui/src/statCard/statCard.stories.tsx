@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Users, Wallet, TrendingUp, AlertTriangle } from "lucide-react";
 import { StatCard } from "./index";
 

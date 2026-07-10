@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Inbox } from "lucide-react";
 import { Button, Text } from "@bota-apps/react-ui";
 import { PageContainer } from "./index";

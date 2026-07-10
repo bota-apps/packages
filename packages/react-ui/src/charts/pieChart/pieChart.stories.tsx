@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { PieChart, DonutChart } from "./index";
 import { chartColors, type ChartDataEntry } from "../chartConfig";
 

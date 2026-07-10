@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { Money, TypedDetailSchema } from "@bota-apps/types";
 import { DynamicDetail } from "./index";
 import { TooltipProvider } from "../tooltip";

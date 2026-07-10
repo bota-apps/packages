@@ -12,12 +12,15 @@ function getAbsolutePath(value: string): string {
 }
 
 const config: StorybookConfig = {
-  // Stories live next to the components they document.
-  stories: ["../../../packages/*/src/**/*.stories.@(ts|tsx)"],
+  // Stories live next to the components they document; standalone docs pages
+  // (the Welcome page) live in this app's src.
+  stories: ["../src/**/*.mdx", "../../../packages/*/src/**/*.stories.@(ts|tsx)"],
   addons: [
-    getAbsolutePath("@storybook/addon-essentials"),
+    // Controls/actions/viewport/backgrounds/interactions ship in Storybook
+    // core since v9 — only docs, theming, and a11y remain addons.
+    getAbsolutePath("@storybook/addon-docs"),
     getAbsolutePath("@storybook/addon-themes"),
-    getAbsolutePath("@storybook/addon-interactions"),
+    getAbsolutePath("@storybook/addon-a11y"),
   ],
   framework: {
     name: getAbsolutePath("@storybook/react-vite") as "@storybook/react-vite",

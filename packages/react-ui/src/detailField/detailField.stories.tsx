@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Mail, MapPin, Calendar, Building2 } from "lucide-react";
 import { DetailField, InfoRow } from "./index";
 import { TooltipProvider } from "../tooltip";

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Pencil, Trash2, Download } from "lucide-react";
 import type { Money } from "@bota-apps/types";
 import { Badge } from "../badge";
