@@ -4,7 +4,7 @@ import { createMissingTranslationInterceptor } from "./missingTranslations";
 describe("createMissingTranslationInterceptor", () => {
   it("swallows missing-key reports and passes every other warn through", () => {
     const interceptor = createMissingTranslationInterceptor();
-    expect(interceptor.handleWarn(["[i18n] MISSING en payroll/runs:actions.create"])).toBe(true);
+    expect(interceptor.handleWarn(["[i18n] MISSING en reports/runs:actions.create"])).toBe(true);
     expect(interceptor.handleWarn(["some unrelated warning"])).toBe(false);
     expect(interceptor.handleWarn([new Error("non-string first arg")])).toBe(false);
   });

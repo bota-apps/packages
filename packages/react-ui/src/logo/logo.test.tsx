@@ -5,10 +5,17 @@ import { Logo } from "./index";
 afterEach(cleanup);
 
 describe("Logo", () => {
-  it("renders the logo image and wordmark", () => {
+  it("renders the default logo image and wordmark", () => {
     render(<Logo />);
-    expect(screen.getByAltText("Demoz Logo")).toBeTruthy();
-    const wordmark = screen.getByText("Demoz");
+    expect(screen.getByAltText("Bota Apps logo")).toBeTruthy();
+    const wordmark = screen.getByText("Bota Apps");
     expect(wordmark.className).toContain("font-bold");
+  });
+
+  it("renders an app-provided name, source, and alt", () => {
+    render(<Logo name="Acme" src="/brand/acme.svg" alt="Acme brand mark" />);
+    const img = screen.getByAltText("Acme brand mark");
+    expect(img.getAttribute("src")).toBe("/brand/acme.svg");
+    expect(screen.getByText("Acme")).toBeTruthy();
   });
 });

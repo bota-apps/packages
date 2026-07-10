@@ -10,7 +10,7 @@
 
 ### Minor Changes
 
-- 1966215: New `./url` subpath — subdomain-per-tenant URL utilities migrated from the ui repo's `@demoz/utils-web`:
+- 1966215: New `./url` subpath — subdomain-per-tenant URL utilities migrated from the legacy app monorepo's web-utils package:
 
   - `getSubdomain(prodDomain, localDomain, hostname?)` — extracts the tenant subdomain from a hostname (defaults to `window.location.hostname`); throws when none is present.
   - `buildSubdomainUrl(subdomain, prodDomain, localDomain, pathname?, location?)` — builds the URL for a subdomain, preserving the current protocol and non-default port. The location source is injectable (`UrlLocation`), defaulting to `window.location`.

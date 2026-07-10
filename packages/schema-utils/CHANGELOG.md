@@ -116,7 +116,7 @@
 
 ### Minor Changes
 
-- c4f1875: Currency formatting is now injectable while keeping the Ethiopian-market defaults.
+- c4f1875: Currency formatting is now injectable while keeping the built-in defaults.
 
   - New `createCurrencyFormatter(config?)` factory: bring your own currency registry (any ISO 4217 codes, not just the default union) and locale policy. Factory-built formatters honour each currency's own `locale` metadata (previously dead — everything formatted as "en"); pass `locale` to force one output locale. Unknown codes format via Intl instead of crashing.
   - The module-level `formatCurrency`/`formatMoney`/… exports are unchanged in behavior: the default instance stays pinned to the "en" output locale so existing rendering is stable.
