@@ -40,11 +40,15 @@ function buildRouter() {
 }
 
 // The horizontal orientation presents groups as overlay menus, so the story
-// hosts it in a chrome-toned bar like the topnav arrangement does.
-function buildTopnavRouter() {
+// hosts it in a chrome-toned bar like the topnav arrangement does. The width
+// prop constrains the bar to demonstrate the overflow behavior: entries that
+// don't fit fold into the trailing "More" menu instead of being clipped.
+function buildTopnavRouter(width?: string) {
   const rootRoute = createRootRoute({
     component: () => (
-      <nav className="flex items-center gap-1 rounded-lg border border-sidebar-border bg-sidebar p-2 text-sidebar-foreground">
+      <nav
+        className={`flex items-center gap-1 rounded-lg border border-sidebar-border bg-sidebar p-2 text-sidebar-foreground ${width ?? ""}`}
+      >
         <NavList items={items} orientation="horizontal" />
       </nav>
     ),
@@ -69,4 +73,8 @@ export const Default: Story = {
 
 export const Horizontal: Story = {
   render: () => <RouterProvider router={buildTopnavRouter()} />,
+};
+
+export const HorizontalOverflow: Story = {
+  render: () => <RouterProvider router={buildTopnavRouter("max-w-xs")} />,
 };

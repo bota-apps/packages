@@ -1,4 +1,4 @@
-import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import { act, cleanup, render, screen, waitFor } from "@testing-library/react";
 import {
   createMemoryHistory,
   createRootRoute,
@@ -8,7 +8,7 @@ import {
 import { fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { FileText, Home, Users, UserCheck } from "lucide-react";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { NavList, navItemVariants, type NavItemDef, type NavListOrientation } from "./index";
 
 const items: NavItemDef[] = [
@@ -177,5 +177,143 @@ describe("NavList (horizontal)", () => {
     expect((await screen.findByRole("link", { name: "Home" })).className).not.toContain(
       "bg-sidebar-primary/10",
     );
+  });
+});
+
+// The horizontal list measures its entries with an IntersectionObserver rooted
+// at its clipping container. jsdom has no layout, so these tests install a
+// driveable observer stub and push intersection entries by hand.
+const mockObservers: MockIntersectionObserver[] = [];
+
+class MockIntersectionObserver implements IntersectionObserver {
+  readonly root = null;
+  readonly rootMargin = "";
+  readonly thresholds: readonly number[] = [];
+  readonly observed: Element[] = [];
+  private readonly callback: IntersectionObserverCallback;
+
+  constructor(callback: IntersectionObserverCallback) {
+    this.callback = callback;
+    mockObservers.push(this);
+  }
+
+  observe(target: Element): void {
+    this.observed.push(target);
+  }
+
+  unobserve(): void {}
+  disconnect(): void {}
+  takeRecords(): IntersectionObserverEntry[] {
+    return [];
+  }
+
+  /** Report the given elements' visibility ratios to the component. */
+  report(ratios: ReadonlyMap<Element, number>): void {
+    const rect = {
+      x: 0,
+      y: 0,
+      width: 0,
+      height: 0,
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0,
+      toJSON: (): Record<string, never> => ({}),
+    };
+    const entries = [...ratios].map(([target, intersectionRatio]) => ({
+      target,
+      intersectionRatio,
+      isIntersecting: intersectionRatio > 0,
+      boundingClientRect: rect,
+      intersectionRect: rect,
+      rootBounds: null,
+      time: 0,
+    }));
+    this.callback(entries, this);
+  }
+}
+
+describe("NavList (horizontal overflow)", () => {
+  const barItems: NavItemDef[] = [
+    { to: "/", label: "Home", icon: Home },
+    {
+      to: "/documents",
+      label: "Documents",
+      icon: FileText,
+      children: [{ to: "/documents/statements", label: "Statements", icon: FileText }],
+    },
+    { to: "/settings", label: "Settings", icon: Users },
+  ];
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    mockObservers.length = 0;
+  });
+
+  function renderBar(initialPath = "/") {
+    vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
+    return renderNavList(barItems, initialPath, "horizontal");
+  }
+
+  it("shows no overflow menu while every entry fits", async () => {
+    renderBar();
+
+    await screen.findByRole("link", { name: "Home" });
+    // One observer per horizontal list, watching one element per entry.
+    expect(mockObservers).toHaveLength(1);
+    expect(mockObservers[0].observed).toHaveLength(barItems.length);
+    expect(screen.queryByRole("button", { name: "More" })).toBeNull();
+  });
+
+  it("folds entries that stop fitting into the overflow menu and restores them", async () => {
+    const user = userEvent.setup();
+    renderBar();
+
+    await screen.findByRole("link", { name: "Home" });
+    const observer = mockObservers[0];
+    const settingsBox = observer.observed[2];
+
+    act(() => observer.report(new Map([[settingsBox, 0.4]])));
+
+    // The clipped entry keeps its box (stable measurements) but turns
+    // invisible, and the overflow menu appears in its stead.
+    expect(settingsBox.className).toContain("invisible");
+    await user.click(screen.getByRole("button", { name: "More" }));
+    await waitFor(() => expect(screen.getByRole("menu")).toBeTruthy());
+    expect(screen.getByRole("menuitem", { name: "Settings" }).getAttribute("href")).toBe(
+      "/settings",
+    );
+
+    // Once it fits again the menu disappears with it.
+    act(() => observer.report(new Map([[settingsBox, 1]])));
+    await waitFor(() => expect(screen.queryByRole("button", { name: "More" })).toBeNull());
+    expect(settingsBox.className).not.toContain("invisible");
+  });
+
+  it("keeps hidden groups reachable as submenus of the overflow menu", async () => {
+    const user = userEvent.setup();
+    renderBar();
+
+    await screen.findByRole("link", { name: "Home" });
+    const observer = mockObservers[0];
+    act(() => observer.report(new Map([[observer.observed[1], 0]])));
+
+    await user.click(screen.getByRole("button", { name: "More" }));
+    await waitFor(() => expect(screen.getByRole("menu")).toBeTruthy());
+    // The hidden group is a submenu trigger, keeping its children reachable.
+    expect(screen.getByRole("menuitem", { name: "Documents" }).getAttribute("aria-haspopup")).toBe(
+      "menu",
+    );
+  });
+
+  it("moves the active tone onto the overflow trigger when the active entry hides", async () => {
+    renderBar("/settings");
+
+    await screen.findByRole("link", { name: "Home" });
+    const observer = mockObservers[0];
+    act(() => observer.report(new Map([[observer.observed[2], 0]])));
+
+    const more = await screen.findByRole("button", { name: "More" });
+    expect(more.className).toContain("bg-sidebar-primary/10");
   });
 });

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type ComponentProps } from "react";
+import { useEffect, useMemo, useRef, useState, type ComponentProps } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
   DropdownMenu,
@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@bota-apps/react-ui";
 import type { LucideIcon } from "lucide-react";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import { ChevronDown, ChevronRight, Ellipsis } from "lucide-react";
 import { navItemVariants, navMenuItemVariants } from "./variants";
 
 export * from "./variants";
@@ -40,24 +40,26 @@ export type NavListOrientation = "vertical" | "horizontal";
 export function NavList({
   items,
   orientation = "vertical",
+  moreLabel = "More",
 }: {
   items: NavItemDef[];
   orientation?: NavListOrientation;
+  /** Label of the horizontal overflow menu holding the entries that don't fit. */
+  moreLabel?: string;
 }) {
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   // Exactly one entry is highlighted — the one the current route belongs to.
   // We drive the active style from this (not per-<Link> activeProps), so an
   // ancestor route like /projects doesn't also light up on /projects/inactive.
   const activeItem = useMemo(() => findActiveItem(items, pathname), [items, pathname]);
+  if (orientation === "horizontal") {
+    return <TopnavList items={items} activeItem={activeItem} moreLabel={moreLabel} />;
+  }
   return (
     <>
-      {items.map((item, index) =>
-        orientation === "horizontal" ? (
-          <TopnavEntry key={`${String(item.to)}::${index}`} item={item} activeItem={activeItem} />
-        ) : (
-          <NavEntry key={`${String(item.to)}::${index}`} item={item} activeItem={activeItem} />
-        ),
-      )}
+      {items.map((item, index) => (
+        <NavEntry key={`${String(item.to)}::${index}`} item={item} activeItem={activeItem} />
+      ))}
     </>
   );
 }
@@ -164,6 +166,132 @@ function NavGroup({ item, activeItem }: { item: NavItemDef; activeItem: NavItemD
         </div>
       )}
     </div>
+  );
+}
+
+// The horizontal list is a priority+ nav: every entry renders in flow inside a
+// clipping container, an IntersectionObserver (rooted at that container)
+// reports which entries no longer fit fully, and those turn invisible —
+// keeping their box, so measurements stay stable — while a trailing overflow
+// menu mirrors them. Bar entries must never be silently clipped: everything
+// the bar can't show stays reachable through the overflow menu.
+function TopnavList({
+  items,
+  activeItem,
+  moreLabel,
+}: {
+  items: NavItemDef[];
+  activeItem: NavItemDef | undefined;
+  moreLabel: string;
+}) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [hidden, setHidden] = useState<ReadonlySet<number>>(new Set());
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) {
+      return;
+    }
+    itemRefs.current.length = items.length;
+    const indexByElement = new Map<Element, number>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        setHidden((previous) => {
+          const next = new Set(previous);
+          for (const entry of entries) {
+            const index = indexByElement.get(entry.target);
+            if (index === undefined) {
+              continue;
+            }
+            if (entry.intersectionRatio < 1) {
+              next.add(index);
+            } else {
+              next.delete(index);
+            }
+          }
+          if (next.size === previous.size && [...next].every((index) => previous.has(index))) {
+            return previous;
+          }
+          return next;
+        });
+      },
+      { root: container, threshold: 1 },
+    );
+    itemRefs.current.forEach((element, index) => {
+      if (element) {
+        indexByElement.set(element, index);
+        observer.observe(element);
+      }
+    });
+    return () => observer.disconnect();
+  }, [items]);
+
+  const overflowItems = items.filter((_, index) => hidden.has(index));
+
+  return (
+    <div className="flex min-w-0 flex-1 items-center gap-1">
+      <div ref={containerRef} className="flex min-w-0 flex-1 items-center gap-1 overflow-hidden">
+        {items.map((item, index) => (
+          <div
+            key={`${String(item.to)}::${index}`}
+            ref={(element) => {
+              itemRefs.current[index] = element;
+            }}
+            className={hidden.has(index) ? "invisible shrink-0" : "shrink-0"}
+          >
+            <TopnavEntry item={item} activeItem={activeItem} />
+          </div>
+        ))}
+      </div>
+      {overflowItems.length > 0 && (
+        <TopnavOverflowMenu items={overflowItems} activeItem={activeItem} label={moreLabel} />
+      )}
+    </div>
+  );
+}
+
+// The trailing menu holding every bar entry that didn't fit. Groups keep their
+// panel shape as submenus; the trigger carries the active tone when the active
+// route is currently hidden, so the indicator never disappears with its entry.
+function TopnavOverflowMenu({
+  items,
+  activeItem,
+  label,
+}: {
+  items: NavItemDef[];
+  activeItem: NavItemDef | undefined;
+  label: string;
+}) {
+  const active = items.some((item) => item === activeItem || containsItem(item, activeItem));
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger className={navItemVariants({ active, className: "shrink-0" })}>
+        <Ellipsis />
+        {label}
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        {items.map((item, index) =>
+          item.children && item.children.length > 0 ? (
+            <DropdownMenuSub key={`${String(item.to)}::${index}`}>
+              <DropdownMenuSubTrigger>
+                <item.icon />
+                {item.label}
+              </DropdownMenuSubTrigger>
+              <DropdownMenuSubContent>
+                <MenuEntries item={item} activeItem={activeItem} />
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+          ) : (
+            <MenuLink
+              key={`${String(item.to)}::${index}`}
+              item={item}
+              active={item === activeItem}
+            />
+          ),
+        )}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
