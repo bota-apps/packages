@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import {
   createMemoryHistory,
   createRootRoute,
@@ -6,9 +6,10 @@ import {
   RouterProvider,
 } from "@tanstack/react-router";
 import { fireEvent } from "@testing-library/react";
-import { Home, Users, UserCheck } from "lucide-react";
+import userEvent from "@testing-library/user-event";
+import { FileText, Home, Users, UserCheck } from "lucide-react";
 import { afterEach, describe, expect, it } from "vitest";
-import { NavList, navItemVariants, type NavItemDef } from "./index";
+import { NavList, navItemVariants, type NavItemDef, type NavListOrientation } from "./index";
 
 const items: NavItemDef[] = [
   { to: "/", label: "Home", icon: Home },
@@ -17,8 +18,14 @@ const items: NavItemDef[] = [
 
 // NavList renders TanStack Router <Link>s, which require a router context —
 // host it in a minimal in-memory router.
-function renderNavList(navItems: NavItemDef[] = items, initialPath = "/") {
-  const rootRoute = createRootRoute({ component: () => <NavList items={navItems} /> });
+function renderNavList(
+  navItems: NavItemDef[] = items,
+  initialPath = "/",
+  orientation: NavListOrientation = "vertical",
+) {
+  const rootRoute = createRootRoute({
+    component: () => <NavList items={navItems} orientation={orientation} />,
+  });
   const router = createRouter({
     routeTree: rootRoute,
     history: createMemoryHistory({ initialEntries: [initialPath] }),
@@ -96,5 +103,79 @@ describe("NavList", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Collapse People" }));
     expect(screen.queryByRole("link", { name: "Active" })).toBeNull();
+  });
+});
+
+// Horizontal orientation: groups must present as overlay menus — an open
+// group renders in a portal and never as in-flow children of the bar.
+describe("NavList (horizontal)", () => {
+  const deepItems: NavItemDef[] = [
+    { to: "/", label: "Home", icon: Home },
+    {
+      to: "/documents",
+      label: "Documents",
+      icon: FileText,
+      children: [
+        { to: "/documents/statements", label: "Statements", icon: FileText },
+        {
+          to: "/documents/invoices",
+          label: "Invoices",
+          icon: FileText,
+          children: [{ to: "/documents/invoices/archive", label: "Archive", icon: FileText }],
+        },
+      ],
+    },
+  ];
+
+  it("renders leaves as links and groups as closed menu triggers", async () => {
+    renderNavList(deepItems, "/", "horizontal");
+
+    expect((await screen.findByRole("link", { name: "Home" })).getAttribute("href")).toBe("/");
+    // The group is a menu button, not a link, and its children start hidden.
+    expect(screen.getByRole("button", { name: "Documents" })).toBeTruthy();
+    expect(screen.queryByRole("link", { name: "Documents" })).toBeNull();
+    expect(screen.queryByRole("link", { name: "Statements" })).toBeNull();
+  });
+
+  it("opens the group as a menu holding the group's own route plus its children", async () => {
+    const user = userEvent.setup();
+    renderNavList(deepItems, "/", "horizontal");
+
+    await user.click(await screen.findByRole("button", { name: "Documents" }));
+    await waitFor(() => expect(screen.getByRole("menu")).toBeTruthy());
+
+    // The group's own route is the panel's first row.
+    const own = screen.getByRole("menuitem", { name: "Documents" });
+    expect(own.getAttribute("href")).toBe("/documents");
+    expect(screen.getByRole("menuitem", { name: "Statements" }).getAttribute("href")).toBe(
+      "/documents/statements",
+    );
+    // A nested group renders as a submenu trigger row, not an in-flow list.
+    expect(screen.getByRole("menuitem", { name: "Invoices" }).getAttribute("aria-haspopup")).toBe(
+      "menu",
+    );
+  });
+
+  it("keeps the open menu out of the bar's flow (portaled)", async () => {
+    const user = userEvent.setup();
+    const { container } = renderNavList(deepItems, "/", "horizontal");
+
+    await user.click(await screen.findByRole("button", { name: "Documents" }));
+    await waitFor(() => expect(screen.getByRole("menu")).toBeTruthy());
+
+    // The panel mounts in a portal outside the rendered tree — the bar's own
+    // DOM must not contain the child entries (that in-flow rendering is what
+    // stretched the topnav bar).
+    expect(container.textContent).not.toContain("Statements");
+  });
+
+  it("marks the trigger active when the active route lives inside the group", async () => {
+    renderNavList(deepItems, "/documents/statements", "horizontal");
+
+    const trigger = await screen.findByRole("button", { name: "Documents" });
+    expect(trigger.className).toContain("bg-sidebar-primary/10");
+    expect((await screen.findByRole("link", { name: "Home" })).className).not.toContain(
+      "bg-sidebar-primary/10",
+    );
   });
 });

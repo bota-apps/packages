@@ -19,3 +19,20 @@ export const navItemVariants = cva(
     defaultVariants: { active: false },
   },
 );
+
+/**
+ * Menu-panel counterpart of navItemVariants: horizontal nav groups open as
+ * portaled menus on a popover surface (page-scoped tokens), so the active row
+ * carries the selected tint rather than the chrome-scoped sidebar one. The
+ * row's base look comes from the menu item recipe; this only layers the
+ * active state.
+ */
+export const navMenuItemVariants = cva("", {
+  variants: {
+    active: {
+      true: "bg-selected text-selected-foreground",
+      false: "",
+    },
+  },
+  defaultVariants: { active: false },
+});
