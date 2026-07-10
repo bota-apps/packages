@@ -123,13 +123,13 @@ function NavGroup({ item, activeItem }: { item: NavItemDef; activeItem: NavItemD
           aria-label={open ? `Collapse ${item.label}` : `Expand ${item.label}`}
           aria-expanded={open}
           onClick={() => setOpen((value) => !value)}
-          className="rounded-md p-1 text-muted-foreground hover:bg-muted"
+          className="rounded-md p-1 text-sidebar-foreground/75 hover:bg-sidebar-accent hover:text-sidebar-foreground"
         >
           <ChevronRight className={`size-4 transition-transform ${open ? "rotate-90" : ""}`} />
         </button>
       </div>
       {open && (
-        <div className="ml-3 flex flex-col gap-1 border-l border-border pl-2">
+        <div className="ml-3 flex flex-col gap-1 border-l border-sidebar-border pl-2">
           {children.map((child, index) => (
             <NavEntry key={`${String(child.to)}::${index}`} item={child} activeItem={activeItem} />
           ))}

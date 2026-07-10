@@ -99,17 +99,17 @@ describe("AppShell", () => {
   it("re-styles the whole shell — including the layout — from one preset pick", async () => {
     renderAppShell([
       { value: "bota", label: "Bota" },
-      { value: "violetTopnav", label: "Violet topnav", brand: "violet", layout: "topnav" },
+      { value: "manuscript", label: "Manuscript", brand: "manuscript", layout: "topnav" },
     ]);
 
     // The sidebar layout renders its nav inside an <aside> (complementary landmark).
     expect(await screen.findByRole("complementary")).toBeTruthy();
 
     await userEvent.click(screen.getByRole("button", { name: "Change theme" }));
-    await userEvent.click(await screen.findByRole("menuitemradio", { name: "Violet topnav" }));
+    await userEvent.click(await screen.findByRole("menuitemradio", { name: "Manuscript" }));
 
     expect(screen.queryByRole("complementary")).toBeNull();
     expect(screen.getByRole("banner").textContent).toContain("Home");
-    expect(document.documentElement.dataset.brand).toBe("violet");
+    expect(document.documentElement.dataset.brand).toBe("manuscript");
   });
 });

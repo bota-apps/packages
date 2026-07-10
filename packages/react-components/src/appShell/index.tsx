@@ -52,9 +52,10 @@ export function AppShell({ title, navItems, headerActions, children }: AppShellP
       nav={<NavList items={navItems} />}
       headerLeft={
         user ? (
-          <Text tone="muted" size="sm">
-            {`Signed in as ${user.name}`}
-          </Text>
+          // Inherit the chrome's sidebar-foreground (already a muted tone
+          // relative to the chrome surface) — the page-scoped muted token can
+          // be unreadable on dark-chrome brands.
+          <Text size="sm">{`Signed in as ${user.name}`}</Text>
         ) : undefined
       }
       headerRight={

@@ -64,25 +64,41 @@ forking the preset:
 A **brand** is a block of token values scoped under `:root[data-brand="<name>"]`,
 so switching brands at runtime is one attribute flip on `<html>` — the same
 mechanism dark mode uses with the `.dark` class (`@bota-apps/react-components`'
-`AppearanceProvider` + `BrandSelect` do exactly that). Brands redefine only the
-chromatic tokens (primary/accent ramps, ring, sidebar highlights, matching chart
-slots); neutrals inherit from `theme.css`.
+`AppearanceProvider` + `PresetSelect` do exactly that). Every brand redefines
+the chromatic tokens (primary/accent ramps, ring, sidebar highlights, matching
+chart slots); beyond that it may override any other theme token — surfaces,
+borders, chrome, typefaces, corner radius — so a brand can range from a simple
+accent swap to a complete look that reads as a different product.
 
-Import the shipped brands your app offers, after `theme.css`:
+The shipped brands are complete looks. Import the ones your app offers, after
+`theme.css`:
 
 ```css
 @import "@bota-apps/tailwind-preset/theme.css";
-@import "@bota-apps/tailwind-preset/brands/emerald.css";
-@import "@bota-apps/tailwind-preset/brands/violet.css";
+@import "@bota-apps/tailwind-preset/brands/manuscript.css"; /* warm paper, serif voice, hairline borders */
+@import "@bota-apps/tailwind-preset/brands/terminal.css"; /* monospace, square corners, console chrome */
+@import "@bota-apps/tailwind-preset/brands/sorbet.css"; /* soft rounded corners, berry brights */
+@import "@bota-apps/tailwind-preset/brands/graphite.css"; /* charcoal chrome over a light page */
 ```
 
-Or generate your own from one or two colors (authoring-time, check the output in):
+Or generate your own (authoring-time, check the output in). One or two colors
+make an accent-swap brand; add shape, typeface, and token overrides to build a
+full look (`tokens`/`darkTokens` keys are camelCase token names, values verbatim
+CSS values):
 
 ```js
 import { brandCss } from "@bota-apps/tailwind-preset/brand";
 writeFileSync(
   "src/brands/acme.css",
-  brandCss({ name: "acme", primary: "#0E7490", accent: "#F59E0B" }),
+  brandCss({
+    name: "acme",
+    primary: "#0E7490",
+    accent: "#F59E0B",
+    radius: "0.25rem",
+    fontDisplay: '"Iowan Old Style", Palatino, Georgia, serif',
+    tokens: { background: "42 44% 96%", sidebarBackground: "43 40% 93%" },
+    darkTokens: { background: "24 22% 8%" },
+  }),
 );
 ```
 
@@ -92,7 +108,7 @@ writeFileSync(
 | ----------------------------------------- | -------------------------------------------------------------------------------------- |
 | `@bota-apps/tailwind-preset/preset`       | Tailwind preset (`darkMode: class`, color tokens, radii, typography + animate plugins) |
 | `@bota-apps/tailwind-preset/theme.css`    | CSS variables for light + `.dark`, plus the `@tailwind` layers                         |
-| `@bota-apps/tailwind-preset/brands/*.css` | Shipped brand token blocks (`emerald`, `violet`) scoped under `data-brand`             |
+| `@bota-apps/tailwind-preset/brands/*.css` | Shipped complete-look brands (`manuscript`, `terminal`, `sorbet`, `graphite`)          |
 | `@bota-apps/tailwind-preset/brand`        | `brandCss` / `colorRamp` / `hexToHslChannels` brand generators                         |
 | `@bota-apps/tailwind-preset/postcss`      | `{ tailwindcss, autoprefixer }` PostCSS config                                         |
 

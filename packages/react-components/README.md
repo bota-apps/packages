@@ -88,7 +88,7 @@ personal light/dark mode. `PresetSelect` applies a whole look with one pick;
 ```tsx
 import { useAppearance } from "@bota-apps/react-components";
 
-const { mode, setMode, preset, setPreset } = useAppearance();
+const { mode, toggleMode, preset, applyPreset } = useAppearance();
 ```
 
 ### Routing surfaces

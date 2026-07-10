@@ -17,6 +17,15 @@ export type BrandCssOptions = {
   fontSans?: string;
   /** --font-display as a complete font-family list. */
   fontDisplay?: string;
+  /**
+   * Light-block overrides for any remaining theme.css token — keys are
+   * camelCase token names (`sidebarBackground` → `--sidebar-background`),
+   * values verbatim CSS values (HSL channel triples for colors). Emitted last,
+   * so they win over the generated chromatic tokens too.
+   */
+  tokens?: Record<string, string>;
+  /** Dark-block token overrides — same shape as `tokens`. */
+  darkTokens?: Record<string, string>;
 };
 
 /** HSL channel triple for a hex color, e.g. hexToHslChannels("#2563EB") → "217.2 91.2% 53.3%". */
