@@ -1,5 +1,12 @@
 # @bota-apps/react-ui
 
+## 0.7.1
+
+### Patch Changes
+
+- Updated dependencies [3722dd4]
+  - @bota-apps/tailwind-preset@0.7.0
+
 ## 0.7.0
 
 ### Minor Changes

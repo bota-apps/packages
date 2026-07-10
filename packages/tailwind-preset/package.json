@@ -1,6 +1,6 @@
 {
   "name": "@bota-apps/tailwind-preset",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "The @bota-apps Tailwind preset (design tokens), a ready-made PostCSS config, and the theme CSS variables (light + dark) that the components render against.",
   "keywords": [
     "bota-apps",
