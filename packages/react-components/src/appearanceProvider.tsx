@@ -7,6 +7,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import type { LucideIcon } from "lucide-react";
 import { appShellLayoutKinds, type AppShellLayoutKind } from "./appShellLayout";
 
 // App-agnostic appearance provider. Apps configure PRESETS — pre-assembled
@@ -41,6 +42,10 @@ export type AppearancePreset = {
   value: string;
   /** Display name shown by PresetSelect. */
   label: string;
+  /** Menu glyph hinting at the look's character. */
+  icon?: LucideIcon;
+  /** One-line hint of what the look changes, shown under the label. */
+  description?: string;
   /** `data-brand` token set (a brands/*.css block or the app's own). */
   brand?: string;
   layout?: AppShellLayoutKind;

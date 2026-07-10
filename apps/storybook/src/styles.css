@@ -1,6 +1,9 @@
 /* Theme CSS variables (light + dark) plus the @tailwind layers, straight from
    the workspace tailwind-preset package. The brand files add the alternate
-   token blocks the BrandSelect stories switch between via <html data-brand>. */
+   token blocks the PresetSelect stories switch between via <html data-brand> —
+   each one a complete look (surfaces, chrome, typeface, radius). */
 @import "@bota-apps/tailwind-preset/theme.css";
-@import "@bota-apps/tailwind-preset/brands/emerald.css";
-@import "@bota-apps/tailwind-preset/brands/violet.css";
+@import "@bota-apps/tailwind-preset/brands/manuscript.css";
+@import "@bota-apps/tailwind-preset/brands/terminal.css";
+@import "@bota-apps/tailwind-preset/brands/sorbet.css";
+@import "@bota-apps/tailwind-preset/brands/graphite.css";

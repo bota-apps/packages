@@ -51,7 +51,15 @@ export function PresetSelect({ label = "Change theme" }: PresetSelectProps = {})
         >
           {presets.map((option) => (
             <DropdownMenuRadioItem key={option.value} value={option.value}>
-              {option.label}
+              <span className="flex items-center gap-3 py-0.5">
+                {option.icon && <option.icon className="size-4 shrink-0 text-muted-foreground" />}
+                <span className="flex min-w-0 flex-col">
+                  <span className="font-medium">{option.label}</span>
+                  {option.description && (
+                    <span className="text-xs text-muted-foreground">{option.description}</span>
+                  )}
+                </span>
+              </span>
             </DropdownMenuRadioItem>
           ))}
         </DropdownMenuRadioGroup>

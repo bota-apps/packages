@@ -74,11 +74,11 @@ describe("NavList", () => {
   it("highlights only the active leaf, not its ancestors", async () => {
     renderNavList(nestedItems, "/people/active");
 
-    // The active tone (bg-primary/10) is what visibly highlights an entry. Only
-    // the leaf whose route matches carries it — its parent group and sibling do
-    // not — so exactly one item is highlighted. (TanStack's own bare "active"
-    // class may be appended by prefix match, but has no styling here.)
-    const activeTone = "bg-primary/10";
+    // The active tone (bg-sidebar-primary/10) is what visibly highlights an
+    // entry. Only the leaf whose route matches carries it — its parent group and
+    // sibling do not — so exactly one item is highlighted. (TanStack's own bare
+    // "active" class may be appended by prefix match, but has no styling here.)
+    const activeTone = "bg-sidebar-primary/10";
     expect((await screen.findByRole("link", { name: "Active" })).className).toContain(activeTone);
     expect(screen.getByRole("link", { name: "People" }).className).not.toContain(activeTone);
     expect(screen.getByRole("link", { name: "Inactive" }).className).not.toContain(activeTone);

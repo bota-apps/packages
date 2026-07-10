@@ -6,8 +6,17 @@ import {
   createRouter,
   RouterProvider,
 } from "@tanstack/react-router";
-import { Home, Settings, Users } from "lucide-react";
-import { AppearanceProvider } from "../appearanceProvider";
+import {
+  BookOpenText,
+  Droplet,
+  Home,
+  IceCreamCone,
+  Layers,
+  Settings,
+  SquareTerminal,
+  Users,
+} from "lucide-react";
+import { AppearanceProvider, type AppearancePreset } from "../appearanceProvider";
 import { AppShell } from "./index";
 import type { NavItemDef } from "../navList";
 
@@ -64,22 +73,54 @@ type Story = StoryObj<typeof AppShell>;
 
 // Multi-preset appearance setup: one pick in the header's PresetSelect applies
 // a pre-assembled look — brand tokens, shell layout, and density together. The
-// storybook host imports the shipped brands/*.css token blocks.
+// storybook host imports the shipped brands/*.css token blocks. Each shipped
+// look combines its own surfaces, chrome, typeface, corner radius, layout, and
+// density, so switching presets reads as switching products.
+const shippedPresets: readonly AppearancePreset[] = [
+  {
+    value: "bota",
+    label: "Bota",
+    icon: Droplet,
+    description: "The signature look — cool blue, roomy",
+  },
+  {
+    value: "manuscript",
+    label: "Manuscript",
+    icon: BookOpenText,
+    description: "Warm paper, serif voice, masthead nav",
+    brand: "manuscript",
+    layout: "topnav",
+  },
+  {
+    value: "terminal",
+    label: "Terminal",
+    icon: SquareTerminal,
+    description: "Monospace, square corners, dense",
+    brand: "terminal",
+    layout: "topnav",
+    density: "compact",
+  },
+  {
+    value: "sorbet",
+    label: "Sorbet",
+    icon: IceCreamCone,
+    description: "Soft rounded corners, berry brights",
+    brand: "sorbet",
+  },
+  {
+    value: "graphite",
+    label: "Graphite",
+    icon: Layers,
+    description: "Charcoal chrome, crisp and dense",
+    brand: "graphite",
+    density: "compact",
+  },
+];
+
 export const Default: Story = {
   render: () => (
     <AuthProvider client={stubAuthClient}>
-      <AppearanceProvider
-        presets={[
-          { value: "bota", label: "Bota" },
-          {
-            value: "emeraldCompact",
-            label: "Emerald compact",
-            brand: "emerald",
-            density: "compact",
-          },
-          { value: "violetTopnav", label: "Violet topnav", brand: "violet", layout: "topnav" },
-        ]}
-      >
+      <AppearanceProvider presets={shippedPresets}>
         <RouterProvider router={buildRouter()} />
       </AppearanceProvider>
     </AuthProvider>
