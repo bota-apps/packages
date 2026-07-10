@@ -1,5 +1,20 @@
 # @bota-apps/react-ui
 
+## 0.7.0
+
+### Minor Changes
+
+- 38fd879: `Logo` is now app-configurable instead of hard-coding a wordmark and asset path. New props: `name` (wordmark text, default `"Bota Apps"`), `src` (image source, default `"/images/logo.png"`), and `alt` (defaults to `"<name> logo"`).
+
+  Migration: apps that relied on the previously baked-in wordmark must now pass their own `name` (and optionally `src`/`alt`). No exports were removed; `logoVariants` is unchanged.
+
+### Patch Changes
+
+- Updated dependencies [38fd879]
+  - @bota-apps/types@0.10.3
+  - @bota-apps/utils@0.3.2
+  - @bota-apps/schema-utils@0.9.2
+
 ## 0.6.0
 
 ### Minor Changes

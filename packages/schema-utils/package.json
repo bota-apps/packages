@@ -1,6 +1,6 @@
 {
   "name": "@bota-apps/schema-utils",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "The Zod runtime behind @bota-apps/types: currency/money, dynamic form/field/detail validators, domain-definition form builders, plus optional i18n (./i18n) helpers. Every schema is proven to align with its @bota-apps/types contract. (Env/runtime config validators live in @bota-apps/app-config.)",
   "keywords": [
     "bota-apps",

@@ -1,5 +1,13 @@
 # @bota-apps/extension-sdk
 
+## 0.2.3
+
+### Patch Changes
+
+- 38fd879: The standalone fallback install context now uses a neutral `tenantName` (`"Demo Organization"`).
+- Updated dependencies [38fd879]
+  - @bota-apps/react-ui@0.7.0
+
 ## 0.2.2
 
 ### Patch Changes

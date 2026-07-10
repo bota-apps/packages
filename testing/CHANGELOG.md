@@ -1,5 +1,14 @@
 # @bota-apps/testing
 
+## 0.1.2
+
+### Patch Changes
+
+- 38fd879: Documentation and sample-data wording cleanup (JSDoc, changelog entries, test fixtures). No runtime or API changes.
+- Updated dependencies [38fd879]
+  - @bota-apps/types@0.10.3
+  - @bota-apps/react-components@0.8.5
+
 ## 0.1.0
 
 ### Minor Changes

@@ -1,6 +1,6 @@
 {
   "name": "@bota-apps/translations",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Shared translation runtime: preconfigured singleton + TranslationProvider, createAppTranslations for registering app-local locale bundles with a typed hook, useTranslations, translateEnum, a scoped translator context, imperative language helpers, and a server-side translator.",
   "keywords": [
     "bota-apps",
