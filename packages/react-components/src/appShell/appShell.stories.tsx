@@ -9,9 +9,12 @@ import {
 import {
   BookOpenText,
   Droplet,
+  FileText,
   Home,
   IceCreamCone,
   Layers,
+  Receipt,
+  ScrollText,
   Settings,
   SquareTerminal,
   Users,
@@ -41,9 +44,26 @@ const stubAuthClient: AuthClient = {
     `https://auth.example.com/bff/login?returnUrl=${encodeURIComponent(returnUrl ?? "/")}`,
 };
 
+// Includes a nested group so both shell arrangements exercise their group
+// presentation: the sidebar expands it in place, the topnav opens it as an
+// overlay menu (with the deeper level as a submenu).
 const navItems: NavItemDef[] = [
   { to: "/", label: "Home", icon: Home },
   { to: "/people", label: "People", icon: Users },
+  {
+    to: "/documents",
+    label: "Documents",
+    icon: FileText,
+    children: [
+      { to: "/documents/statements", label: "Statements", icon: ScrollText },
+      {
+        to: "/documents/invoices",
+        label: "Invoices",
+        icon: Receipt,
+        children: [{ to: "/documents/invoices/archive", label: "Archive", icon: FileText }],
+      },
+    ],
+  },
   { to: "/settings", label: "Settings", icon: Settings },
 ];
 

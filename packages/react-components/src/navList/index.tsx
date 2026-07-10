@@ -1,25 +1,49 @@
 import { useEffect, useMemo, useState, type ComponentProps } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@bota-apps/react-ui";
 import type { LucideIcon } from "lucide-react";
-import { ChevronRight } from "lucide-react";
-import { navItemVariants } from "./variants";
+import { ChevronDown, ChevronRight } from "lucide-react";
+import { navItemVariants, navMenuItemVariants } from "./variants";
 
 export * from "./variants";
 
-// The one place sidebar nav links are styled: active/inactive tone is a cva
+// The one place nav links are styled: active/inactive tone is a cva
 // variant and the iteration lives here, so feature code composes
 // `<NavList items={…} />` with no className. `to` borrows the router's own link
 // type, so only real routes are accepted (no casts). Items may nest via
-// `children`, which render as a collapsible, indented sub-group (see NavGroup).
+// `children`; how a group presents depends on the orientation (see NavGroup /
+// TopnavGroup).
 export type NavItemDef = {
   to: ComponentProps<typeof Link>["to"];
   label: string;
   icon: LucideIcon;
-  /** Nested sub-nav entries. Rendered as a collapsible, indented group. */
+  /** Nested sub-nav entries. Collapsible group (vertical) or menu (horizontal). */
   children?: NavItemDef[];
 };
 
-export function NavList({ items }: { items: NavItemDef[] }) {
+/**
+ * "vertical" (default) suits a rail: groups expand in place as indented,
+ * collapsible sub-lists. "horizontal" suits a bar: groups open as portaled
+ * overlay menus, so an open group never grows the bar itself.
+ */
+export type NavListOrientation = "vertical" | "horizontal";
+
+export function NavList({
+  items,
+  orientation = "vertical",
+}: {
+  items: NavItemDef[];
+  orientation?: NavListOrientation;
+}) {
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   // Exactly one entry is highlighted — the one the current route belongs to.
   // We drive the active style from this (not per-<Link> activeProps), so an
@@ -27,9 +51,13 @@ export function NavList({ items }: { items: NavItemDef[] }) {
   const activeItem = useMemo(() => findActiveItem(items, pathname), [items, pathname]);
   return (
     <>
-      {items.map((item, index) => (
-        <NavEntry key={`${String(item.to)}::${index}`} item={item} activeItem={activeItem} />
-      ))}
+      {items.map((item, index) =>
+        orientation === "horizontal" ? (
+          <TopnavEntry key={`${String(item.to)}::${index}`} item={item} activeItem={activeItem} />
+        ) : (
+          <NavEntry key={`${String(item.to)}::${index}`} item={item} activeItem={activeItem} />
+        ),
+      )}
     </>
   );
 }
@@ -136,5 +164,93 @@ function NavGroup({ item, activeItem }: { item: NavItemDef; activeItem: NavItemD
         </div>
       )}
     </div>
+  );
+}
+
+function TopnavEntry({
+  item,
+  activeItem,
+}: {
+  item: NavItemDef;
+  activeItem: NavItemDef | undefined;
+}) {
+  if (!item.children || item.children.length === 0) {
+    return <NavLink item={item} active={item === activeItem} />;
+  }
+  return <TopnavGroup item={item} activeItem={activeItem} />;
+}
+
+// A bar entry with children: the whole entry is a menu button whose panel is
+// portaled over the page — an open group must never grow the bar it sits in.
+// The group's own route stays reachable as the panel's first row, and the
+// trigger lights up whenever the active route lives anywhere inside the group
+// (the bar entry is the only always-visible indicator for its subtree).
+function TopnavGroup({
+  item,
+  activeItem,
+}: {
+  item: NavItemDef;
+  activeItem: NavItemDef | undefined;
+}) {
+  const active = item === activeItem || containsItem(item, activeItem);
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger className={navItemVariants({ active })}>
+        <item.icon />
+        {item.label}
+        <ChevronDown className="opacity-60" aria-hidden="true" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start">
+        <MenuEntries item={item} activeItem={activeItem} />
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+// Panel rows for one group: the group's own link first, then its children.
+// Children that are themselves groups recurse as nested submenus with the
+// same shape.
+function MenuEntries({
+  item,
+  activeItem,
+}: {
+  item: NavItemDef;
+  activeItem: NavItemDef | undefined;
+}) {
+  return (
+    <>
+      <MenuLink item={item} active={item === activeItem} />
+      <DropdownMenuSeparator />
+      {(item.children ?? []).map((child, index) =>
+        child.children && child.children.length > 0 ? (
+          <DropdownMenuSub key={`${String(child.to)}::${index}`}>
+            <DropdownMenuSubTrigger>
+              <child.icon />
+              {child.label}
+            </DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              <MenuEntries item={child} activeItem={activeItem} />
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
+        ) : (
+          <MenuLink
+            key={`${String(child.to)}::${index}`}
+            item={child}
+            active={child === activeItem}
+          />
+        ),
+      )}
+    </>
+  );
+}
+
+function MenuLink({ item, active }: { item: NavItemDef; active: boolean }) {
+  return (
+    <DropdownMenuItem asChild className={navMenuItemVariants({ active })}>
+      <Link to={item.to}>
+        <item.icon />
+        {item.label}
+      </Link>
+    </DropdownMenuItem>
   );
 }

@@ -49,7 +49,10 @@ export function AppShell({ title, navItems, headerActions, children }: AppShellP
           {title}
         </Text>
       }
-      nav={<NavList items={navItems} />}
+      // The rail expands groups in place; the bar opens them as overlay menus.
+      nav={
+        <NavList items={navItems} orientation={layout === "topnav" ? "horizontal" : "vertical"} />
+      }
       headerLeft={
         user ? (
           // Inherit the chrome's sidebar-foreground (already a muted tone
