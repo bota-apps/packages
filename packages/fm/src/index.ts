@@ -117,7 +117,11 @@ export type {
   AppManifest,
   AppFeatureContribution,
   AppPermissionDescriptor,
+  // NOT FmRegister: declaration merging must target the module that declares
+  // the interface — augment "@bota-apps/types/fm" to extend the taxonomy.
   AppMarketplaceCategory,
+  DefaultAppMarketplaceCategory,
+  RegisteredMarketplaceCategory,
   AppMarketplacePrice,
   AppPage,
   AppNavEntry,

@@ -19,9 +19,11 @@ import { createFeatureRegistry, type FeatureRegistry } from "../tree/registry";
 // or on @bota-apps/hooks. Enum-ish fields (`category`, `price`) are typed as
 // `string` and nullable optionals as `T | null`, so an app's graphql-codegen
 // output (string-literal unions + `Maybe<T>` optionals) assigns with no cast.
-// `category`/`price` reuse the platform unions (identical members to the app's
-// generated `MarketplaceAppCategory`/`MarketplaceAppPrice`, so they assign both
-// ways) — keeping `toAppManifest` a clean pass-through into `AppManifest`.
+// `category`/`price` reuse the platform unions — `AppMarketplaceCategory`
+// resolves to the platform defaults plus whatever taxonomy the app registered
+// via `FmRegister` (declaration merging on "@bota-apps/types/fm"), so an app's
+// generated `MarketplaceAppCategory`/`MarketplaceAppPrice` unions assign both
+// ways — keeping `toAppManifest` a clean pass-through into `AppManifest`.
 // ---------------------------------------------------------------------------
 
 /** One permission a marketplace app requests, with its consent copy. */

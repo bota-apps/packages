@@ -254,8 +254,49 @@ export type FeatureScope = {
 
 /* ── app manifests (marketplace/extension apps) ─────────────────────────── */
 
-export type AppMarketplaceCategory =
+/** The marketplace taxonomy every host understands out of the box. */
+export type DefaultAppMarketplaceCategory =
   "tasks" | "projects" | "compliance" | "reporting" | "integrations";
+
+/**
+ * Marketplace taxonomy is owned by the app's domain — this package only ships
+ * the {@link DefaultAppMarketplaceCategory} platform set. An app extends the
+ * taxonomy once, via declaration merging (same mechanism as `AuthRegister` in
+ * `@bota-apps/types/auth`):
+ *
+ * ```ts
+ * declare module "@bota-apps/types/fm" {
+ *   interface FmRegister {
+ *     marketplaceCategory: "crm" | "billing";
+ *   }
+ * }
+ * ```
+ *
+ * {@link AppMarketplaceCategory} then resolves to the defaults PLUS the
+ * registered members app-wide, with no generics at call sites. Unregistered,
+ * it stays exactly the default five. The augmentation must target
+ * `"@bota-apps/types/fm"` — the module that DECLARES the interface.
+ */
+// An interface (not a type) on purpose: declaration merging is the mechanism,
+// and it is empty until an app merges its taxonomy in.
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface FmRegister {}
+
+/**
+ * The app-registered marketplace categories ({@link FmRegister}'s
+ * `marketplaceCategory` slot), or `never` when nothing is registered.
+ */
+export type RegisteredMarketplaceCategory<TRegister = FmRegister> = TRegister extends {
+  marketplaceCategory: infer TCategory extends string;
+}
+  ? TCategory
+  : never;
+
+/**
+ * The platform defaults widened by whatever the app registered via
+ * {@link FmRegister} — apps own their marketplace taxonomy.
+ */
+export type AppMarketplaceCategory = DefaultAppMarketplaceCategory | RegisteredMarketplaceCategory;
 
 export type AppMarketplacePrice = "free" | "paid" | "enterprise";
 
