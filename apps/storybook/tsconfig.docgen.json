@@ -1,0 +1,10 @@
+{
+  // Program used only by react-docgen-typescript (see .storybook/main.ts).
+  // The app tsconfig includes just stories + app source; docgen needs the
+  // component sources themselves in its program or it silently emits nothing.
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": ["../../packages/*/src/**/*.ts", "../../packages/*/src/**/*.tsx"]
+}
