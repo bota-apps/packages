@@ -1,4 +1,4 @@
-import type { Preview } from "@storybook/react";
+import type { Preview } from "@storybook/react-vite";
 import { withThemeByClassName } from "@storybook/addon-themes";
 
 // Theme variables + Tailwind layers, generated from package source.
@@ -18,13 +18,16 @@ const preview: Preview = {
       sort: "requiredFirst",
     },
     // Log every `onX` callback in the Actions panel without per-story wiring.
-    // (Storybook 9 drops this in favor of explicit `fn()` args — revisit when
-    // upgrading; stories that need to *assert* on calls already use `fn()`.)
+    // (Implicit actions stay unavailable inside `play` functions — stories
+    // that need to *assert* on calls already use explicit `fn()` args.)
     actions: { argTypesRegex: "^on[A-Z].*" },
-    // Alphabetize the sidebar so placement never depends on story-file
-    // discovery order.
+    // Accessibility panel: surface axe violations per story without failing
+    // the test-runner — the panel is the showcase, CI gating is a later step.
+    a11y: { test: "off" },
+    // Welcome page first, then alphabetized so sidebar placement never
+    // depends on story-file discovery order.
     options: {
-      storySort: { method: "alphabetical" },
+      storySort: { method: "alphabetical", order: ["Welcome"] },
     },
     docs: {
       // Docs pages are long (every story of a component); give them a

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { CheckCircle2, FileText, Rocket } from "lucide-react";
 import { IconBadge } from "./index";
 

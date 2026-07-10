@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Badge } from "@bota-apps/react-ui";
 import { AuthProvider, type AuthClient, type AuthState } from "@bota-apps/auth-client";
 import { OrgSwitcherMenu } from "../orgSwitcherMenu";

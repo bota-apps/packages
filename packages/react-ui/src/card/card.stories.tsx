@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Rocket } from "lucide-react";
 import { Button } from "../button";
 import { Card } from "./index";

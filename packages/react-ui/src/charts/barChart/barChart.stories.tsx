@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { BarChart } from "./index";
 import { chartColors, type ChartSeriesConfig } from "../chartConfig";
 

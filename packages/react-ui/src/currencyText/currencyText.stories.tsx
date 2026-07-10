@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { Money } from "@bota-apps/types";
 import { CurrencyText } from "./index";
 

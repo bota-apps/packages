@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { CreditCard, FileText, Users } from "lucide-react";
 import { Badge } from "../badge";
 import { QuickLink, QuickLinkGrid } from "./index";

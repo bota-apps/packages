@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { PrintDocument } from "./printDocument";
 import { PrintRoot } from "./printRoot";
 import { PageBreak } from "./pageBreak";

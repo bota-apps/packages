@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { BookOpenText, Droplet, IceCreamCone, Layers, SquareTerminal } from "lucide-react";
 import { AppearanceProvider, type AppearancePreset } from "../appearanceProvider";
 import { PresetSelect } from "./index";

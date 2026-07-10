@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { AppShell } from "./index";
 import { HeaderBar } from "../headerBar";
 import { Logo } from "../logo";

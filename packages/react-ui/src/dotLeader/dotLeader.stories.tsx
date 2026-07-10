@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { DotLeader } from "./index";
 import { Div } from "../html";
 import { Inline, Stack } from "../layout";
