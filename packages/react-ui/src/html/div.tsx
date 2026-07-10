@@ -29,6 +29,24 @@ const divVariants = cva("", {
       md: "p-4",
       lg: "p-6",
     },
+    /** Horizontal-only spacing inside (combine with `paddingY` for asymmetric bands) */
+    paddingX: {
+      none: "",
+      xs: "px-1",
+      sm: "px-2",
+      md: "px-4",
+      lg: "px-6",
+      xl: "px-8",
+    },
+    /** Vertical-only spacing inside */
+    paddingY: {
+      none: "",
+      xs: "py-1",
+      sm: "py-2",
+      md: "py-4",
+      lg: "py-6",
+      xl: "py-8",
+    },
     /** Spacing between children */
     gap: {
       none: "",
@@ -45,6 +63,10 @@ const divVariants = cva("", {
     /** Background */
     background: {
       surface: "bg-background",
+      /** Primary tint — document banners / emphasized bands (statement/invoice-style artifacts). */
+      primary: "bg-primary/10",
+      /** Softer primary tint — secondary document bands. */
+      primarySubtle: "bg-primary/5",
     },
     /** Flex child behaviour */
     grow: {
@@ -58,6 +80,10 @@ const divVariants = cva("", {
     /** Border utilities */
     border: {
       b: "border-b",
+      /** Primary-tinted bottom border — pairs with `background="primary"` banners. */
+      bPrimary: "border-b border-primary/20",
+      /** Softer primary-tinted bottom border — pairs with `background="primarySubtle"` bands. */
+      bPrimarySubtle: "border-b border-primary/10",
     },
     /** Top padding overrides */
     pt: {
@@ -78,6 +104,8 @@ export const Div = forwardRef<HTMLDivElement, DivProps>(function Div(
   {
     layout,
     padding,
+    paddingX,
+    paddingY,
     gap,
     height,
     background,
@@ -95,7 +123,20 @@ export const Div = forwardRef<HTMLDivElement, DivProps>(function Div(
     <div
       ref={ref}
       className={cn(
-        divVariants({ layout, padding, gap, height, background, grow, shrink, border, pt, spaceY }),
+        divVariants({
+          layout,
+          padding,
+          paddingX,
+          paddingY,
+          gap,
+          height,
+          background,
+          grow,
+          shrink,
+          border,
+          pt,
+          spaceY,
+        }),
         className,
       )}
       {...props}

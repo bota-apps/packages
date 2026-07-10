@@ -80,6 +80,59 @@ describe("Layout primitives", () => {
     expect(row.className).toContain("pl-10");
   });
 
+  it("renders Inline as a document band with primary tint, top border, and xl padding", () => {
+    render(
+      <Inline
+        justify="between"
+        paddingX="xl"
+        paddingY="xl"
+        borderTop
+        background="primary"
+        data-testid="band"
+      >
+        <span>Amount due</span>
+      </Inline>,
+    );
+    const band = screen.getByTestId("band");
+    expect(band.className).toContain("px-8");
+    expect(band.className).toContain("py-5");
+    expect(band.className).toContain("border-t");
+    expect(band.className).toContain("bg-primary/10");
+  });
+
+  it("renders Inline as an accented section header with the subtle primary tint", () => {
+    render(
+      <Inline
+        paddingX="xl"
+        paddingY="md"
+        accent
+        borderBottom
+        background="primarySubtle"
+        data-testid="header"
+      >
+        <span>Charges</span>
+      </Inline>,
+    );
+    const header = screen.getByTestId("header");
+    expect(header.className).toContain("border-l-[3px]");
+    expect(header.className).toContain("border-l-primary");
+    expect(header.className).toContain("border-b");
+    expect(header.className).toContain("bg-primary/5");
+  });
+
+  it("renders Inline line items indented one step past the xl document padding", () => {
+    render(
+      <Inline align="baseline" paddingX="xl" paddingY="md" indent="xl" data-testid="line">
+        <span>Service fee</span>
+      </Inline>,
+    );
+    const line = screen.getByTestId("line");
+    // paddingX emits px-8 and indent emits pl-12; both survive twMerge and the
+    // CSS cascade lets pl-12 win the left side (same trick as the md pairing).
+    expect(line.className).toContain("px-8");
+    expect(line.className).toContain("pl-12");
+  });
+
   it("renders Center, Container, and Box with their variants and polymorphic tags", () => {
     render(
       <Container as="main" padding="md" data-testid="container">
