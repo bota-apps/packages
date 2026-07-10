@@ -12,8 +12,24 @@ const preview: Preview = {
   parameters: {
     controls: {
       matchers: { color: /(background|color)$/i, date: /Date$/i },
+      // Show each control's description and default (straight from JSDoc +
+      // types) in the panel, and surface required props first.
+      expanded: true,
+      sort: "requiredFirst",
+    },
+    // Log every `onX` callback in the Actions panel without per-story wiring.
+    // (Storybook 9 drops this in favor of explicit `fn()` args — revisit when
+    // upgrading; stories that need to *assert* on calls already use `fn()`.)
+    actions: { argTypesRegex: "^on[A-Z].*" },
+    // Alphabetize the sidebar so placement never depends on story-file
+    // discovery order.
+    options: {
+      storySort: { method: "alphabetical" },
     },
     docs: {
+      // Docs pages are long (every story of a component); give them a
+      // table of contents.
+      toc: true,
       // "auto": show a story's written source when it has a custom `render`
       // (dynamic serialization would collapse component names to their minified
       // identifiers in the production build — e.g. a RouterProvider-wrapped
