@@ -60,6 +60,14 @@
     --ring: 217 91% 53%;
     --radius: 0.5rem;
 
+    /* Interaction-state tokens — `selected` is the soft emphasis surface for
+       persistent on/active states (toggle groups, selected menu items,
+       calendar ranges, active nav). Transient hover surfaces use `muted`.
+       Both resolve through the primary ramp so brand overrides flow through
+       without regenerating brand CSS. */
+    --selected: var(--primary-100);
+    --selected-foreground: var(--primary-800);
+
     /* Typeface tokens — brands override these to change the app's voice, not
        just its palette. Values must be complete font-family lists; loading any
        webfont files stays the app's job. */
@@ -113,6 +121,9 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 217 91% 53%;
+
+    --selected: var(--primary-800);
+    --selected-foreground: var(--primary-100);
 
     /* Chart palette — branded */
     --chart-1: 217 91% 60%; /* Primary Blue */

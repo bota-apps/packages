@@ -12,8 +12,8 @@ export default meta;
 type Story = StoryObj<typeof SidebarNavLink>;
 
 const linkClass = (active = false) =>
-  `${sidebarNavLinkClass("sidebar", active)} flex items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-accent [&>svg]:size-4 ${
-    active ? "bg-accent font-medium" : ""
+  `${sidebarNavLinkClass("sidebar", active)} flex items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-muted [&>svg]:size-4 ${
+    active ? "bg-selected text-selected-foreground font-medium" : ""
   }`;
 
 export const Default: Story = {

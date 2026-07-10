@@ -67,3 +67,17 @@ export const Clickable: Story = {
     />
   ),
 };
+
+export const CompactInNarrowContainer: Story = {
+  render: () => (
+    <div className="w-72 rounded-lg border p-4">
+      <Stepper
+        steps={[
+          { key: "one", state: "done", content: <Check />, label: "Details" },
+          { key: "two", state: "active", content: "2", label: "Payment" },
+          { key: "three", state: "upcoming", content: "3", label: "Confirm" },
+        ]}
+      />
+    </div>
+  ),
+};

@@ -199,7 +199,7 @@ export const PaginationButtonEl = forwardRef<
     <button
       ref={ref}
       type="button"
-      className="inline-flex items-center justify-center rounded-md border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-accent disabled:pointer-events-none disabled:opacity-50"
+      className="inline-flex items-center justify-center rounded-md border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-50"
       {...props}
     />
   );

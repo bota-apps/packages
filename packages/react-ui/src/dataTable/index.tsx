@@ -326,33 +326,35 @@ export function DataTable<T>({
     }
 
     return (
-      <div className={dataTableCardListVariants({ layout: cardLayout })}>
-        {rows.map((row) => {
-          const card = renderer(row.original);
-          if (onRowClick) {
+      <div className="@container">
+        <div className={dataTableCardListVariants({ layout: cardLayout })}>
+          {rows.map((row) => {
+            const card = renderer(row.original);
+            if (onRowClick) {
+              return (
+                <div
+                  key={row.id}
+                  role="button"
+                  tabIndex={0}
+                  className={dataTableCardVariants({ layout: cardLayout, clickable: true })}
+                  onClick={() => onRowClick(row.original)}
+                  onKeyDown={(e: KeyboardEvent) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      onRowClick(row.original);
+                    }
+                  }}
+                >
+                  {card}
+                </div>
+              );
+            }
             return (
-              <div
-                key={row.id}
-                role="button"
-                tabIndex={0}
-                className={dataTableCardVariants({ layout: cardLayout, clickable: true })}
-                onClick={() => onRowClick(row.original)}
-                onKeyDown={(e: KeyboardEvent) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    onRowClick(row.original);
-                  }
-                }}
-              >
+              <div key={row.id} className={dataTableCardVariants({ layout: cardLayout })}>
                 {card}
               </div>
             );
-          }
-          return (
-            <div key={row.id} className={dataTableCardVariants({ layout: cardLayout })}>
-              {card}
-            </div>
-          );
-        })}
+          })}
+        </div>
       </div>
     );
   };

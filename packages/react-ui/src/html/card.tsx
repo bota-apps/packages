@@ -59,7 +59,7 @@ export const CardEl = forwardRef<HTMLDivElement, CardElProps>(function CardEl(
 /* ------------------------------------------------------------------ */
 
 export const tileVariants = cva(
-  "group relative flex items-center gap-4 rounded-xl border border-border/60 bg-card text-left transition-all duration-200 hover:border-primary/40 hover:bg-accent/40 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+  "group relative flex items-center gap-4 rounded-xl border border-border/60 bg-card text-left transition-all duration-200 hover:border-primary/40 hover:bg-muted/60 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/35",
   {
     variants: {
       /** Row: single-column list. Grid: multi-column grid. */

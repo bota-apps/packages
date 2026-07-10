@@ -8,5 +8,9 @@
       "@storybook/react": ["./node_modules/@storybook/react"]
     }
   },
-  "include": [".storybook", "src", "../../packages/*/src/**/*.stories.tsx"]
+  // `.storybook` needs the explicit `/**/*` glob — a bare dot-prefixed folder
+  // name in `include` is silently skipped by TypeScript's file matcher, which
+  // left preview.tsx/main.ts out of the program entirely (so their imports,
+  // e.g. the styles.css side-effect, went unchecked and errored in-editor).
+  "include": [".storybook/**/*", "src", "../../packages/*/src/**/*.stories.tsx"]
 }

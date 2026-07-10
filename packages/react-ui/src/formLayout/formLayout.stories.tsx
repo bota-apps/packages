@@ -68,3 +68,34 @@ export const WithButtonGroup: Story = {
     </div>
   ),
 };
+
+export const ContainerScopedColumns: Story = {
+  render: () => (
+    <div className="flex gap-6">
+      <div className="w-72 rounded-lg border p-4">
+        <FormGrid columns={2}>
+          <FormField>
+            <Label htmlFor="narrow-city">City</Label>
+            <Input id="narrow-city" placeholder="City" />
+          </FormField>
+          <FormField>
+            <Label htmlFor="narrow-country">Country</Label>
+            <Input id="narrow-country" placeholder="Country" />
+          </FormField>
+        </FormGrid>
+      </div>
+      <div className="flex-1 rounded-lg border p-4">
+        <FormGrid columns={2}>
+          <FormField>
+            <Label htmlFor="wide-city">City</Label>
+            <Input id="wide-city" placeholder="City" />
+          </FormField>
+          <FormField>
+            <Label htmlFor="wide-country">Country</Label>
+            <Input id="wide-country" placeholder="Country" />
+          </FormField>
+        </FormGrid>
+      </div>
+    </div>
+  ),
+};

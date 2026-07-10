@@ -24,8 +24,10 @@ type FormGridProps = {
 
 export function FormGrid({ children, columns = 2, gap = "md" }: FormGridProps) {
   return (
-    <Div layout="grid" gap={gap} className={formGridVariants({ columns })}>
-      {children}
+    <Div className="@container">
+      <Div layout="grid" gap={gap} className={formGridVariants({ columns })}>
+        {children}
+      </Div>
     </Div>
   );
 }

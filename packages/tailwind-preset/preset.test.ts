@@ -48,6 +48,23 @@ describe("botaPreset color ramps", () => {
     }
   });
 
+  it("emits selected-state utilities resolving through the interaction tokens", async () => {
+    const css = await compile("bg-selected text-selected-foreground bg-selected/60");
+    expect(css).toContain("hsl(var(--selected))");
+    expect(css).toContain("hsl(var(--selected-foreground))");
+    expect(css).toContain("hsl(var(--selected) / 0.6)");
+    const themeCss = readFileSync("packages/tailwind-preset/theme.css", "utf8");
+    expect(themeCss).toContain("--selected:");
+    expect(themeCss).toContain("--selected-foreground:");
+  });
+
+  it("emits container-query variants so components can adapt to their container", async () => {
+    const css = await compile("@container @lg:grid-cols-2");
+    expect(css).toContain("container-type: inline-size");
+    expect(css).toContain("@container (min-width: 32rem)");
+    expect(css).toContain("grid-template-columns: repeat(2, minmax(0, 1fr))");
+  });
+
   it("resolves the sans/display typefaces through theme.css font tokens", async () => {
     const css = await compile("font-sans font-display");
     expect(css).toContain("font-family: var(--font-sans)");

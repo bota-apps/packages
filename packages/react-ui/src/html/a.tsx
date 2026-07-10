@@ -13,7 +13,7 @@ const anchorVariants = cva("", {
       muted: "text-muted-foreground hover:text-foreground",
       /** Full-width bordered button-like link for social providers */
       buttonOutline:
-        "flex w-full items-center justify-center gap-2 rounded-md border border-input bg-background px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground transition-colors",
+        "flex w-full items-center justify-center gap-2 rounded-md border border-input bg-background px-4 py-2 text-sm font-medium hover:bg-muted hover:text-foreground transition-colors",
     },
   },
   defaultVariants: {
@@ -47,8 +47,8 @@ export const navLinkVariants = cva("", {
         "group inline-flex h-9 w-max items-center justify-center",
         "rounded-md px-4 py-2 text-sm font-medium",
         "transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50",
-        "hover:bg-accent hover:text-accent-foreground",
-        "focus:bg-accent focus:text-accent-foreground",
+        "hover:bg-muted hover:text-foreground",
+        "focus:bg-muted focus:text-foreground",
         "relative",
         "after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full",
         "after:origin-left after:scale-x-0 after:bg-primary",

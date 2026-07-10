@@ -10,14 +10,14 @@ export const comboboxContentVariants = cva(
 
 /** A single option row inside the listbox. */
 export const comboboxOptionVariants = cva(
-  "relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground",
+  "relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-muted hover:text-foreground",
   {
     variants: {
       disabled: {
         true: "pointer-events-none opacity-50",
       },
       selected: {
-        true: "bg-accent text-accent-foreground",
+        true: "bg-selected text-selected-foreground",
       },
     },
   },

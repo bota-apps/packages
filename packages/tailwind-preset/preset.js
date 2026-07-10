@@ -1,3 +1,4 @@
+import containerQueries from "@tailwindcss/container-queries";
 import typography from "@tailwindcss/typography";
 import animate from "tailwindcss-animate";
 
@@ -98,6 +99,14 @@ export const botaPreset = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+        // Soft emphasis surface for persistent on/active states (toggle
+        // groups, selected menu items, calendar ranges). Hover surfaces use
+        // `muted`; `accent` stays a deliberate brand-emphasis color and is
+        // never an interaction-state surface.
+        selected: {
+          DEFAULT: "hsl(var(--selected))",
+          foreground: "hsl(var(--selected-foreground))",
+        },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         destructive: {
@@ -168,7 +177,9 @@ export const botaPreset = {
       },
     },
   },
-  plugins: [typography, animate],
+  // containerQueries powers the `@container` / `@lg:` variants — components
+  // adapt to the width of their own container, never the viewport.
+  plugins: [typography, animate, containerQueries],
 };
 
 export default botaPreset;

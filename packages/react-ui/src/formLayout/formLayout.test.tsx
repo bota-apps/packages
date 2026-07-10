@@ -17,16 +17,17 @@ describe("FormLayout", () => {
     expect((input.parentElement as HTMLElement).className).toContain("space-y-2");
   });
 
-  it("applies the FormGrid columns variant", () => {
+  it("applies the container-responsive FormGrid columns variant inside a @container scope", () => {
     render(
       <FormGrid columns={3}>
         <span>Field</span>
       </FormGrid>,
     );
     const grid = screen.getByText("Field").parentElement as HTMLElement;
-    expect(grid.className).toContain("lg:grid-cols-3");
-    expect(formGridVariants({ columns: 2 })).toContain("md:grid-cols-2");
-    expect(formGridVariants({ columns: 2 })).not.toContain("lg:grid-cols-3");
+    expect(grid.className).toContain("@4xl:grid-cols-3");
+    expect((grid.parentElement as HTMLElement).className).toContain("@container");
+    expect(formGridVariants({ columns: 2 })).toContain("@xl:grid-cols-2");
+    expect(formGridVariants({ columns: 2 })).not.toContain("@4xl:grid-cols-3");
   });
 
   it("renders ButtonGroup children in a row", () => {

@@ -18,17 +18,17 @@ export const calendarClassNames = {
   weekdays: "flex",
   weekday: "text-muted-foreground rounded-md w-8 font-normal text-[0.8rem] text-center",
   week: "flex w-full mt-2",
-  day: "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected].range_end)]:rounded-r-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md",
+  day: "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-selected [&:has([aria-selected].range_end)]:rounded-r-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md",
   day_button:
-    "inline-flex items-center justify-center rounded-md h-8 w-8 p-0 text-sm font-normal transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring aria-selected:opacity-100 cursor-pointer",
+    "inline-flex items-center justify-center rounded-md h-8 w-8 p-0 text-sm font-normal transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/35 aria-selected:opacity-100 cursor-pointer",
   range_start: "rounded-l-md",
   range_end: "rounded-r-md",
   selected:
     "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground rounded-md",
-  today: "bg-accent text-accent-foreground rounded-md",
+  today: "bg-muted font-medium text-foreground rounded-md",
   outside:
-    "text-muted-foreground opacity-50 aria-selected:bg-accent/50 aria-selected:text-muted-foreground",
+    "text-muted-foreground opacity-50 aria-selected:bg-selected/50 aria-selected:text-muted-foreground",
   disabled: "text-muted-foreground opacity-50",
-  range_middle: "aria-selected:bg-accent aria-selected:text-accent-foreground",
+  range_middle: "aria-selected:bg-selected aria-selected:text-selected-foreground",
   hidden: "invisible",
 };

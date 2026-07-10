@@ -36,7 +36,7 @@ export const Default: Story = {
                   <li key={product.title}>
                     <NavigationMenuLink
                       href="#"
-                      className="block rounded-md p-3 hover:bg-accent hover:text-accent-foreground"
+                      className="block rounded-md p-3 hover:bg-muted hover:text-foreground"
                     >
                       <div className="text-sm font-medium">{product.title}</div>
                       <p className="text-sm text-muted-foreground">{product.description}</p>

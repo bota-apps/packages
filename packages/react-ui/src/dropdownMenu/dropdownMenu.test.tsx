@@ -45,7 +45,7 @@ describe("DropdownMenu", () => {
     expect(menu.className).toContain("min-w-[8rem]");
 
     const item = screen.getByRole("menuitem", { name: "Edit" });
-    expect(item.className).toContain("focus:bg-accent");
+    expect(item.className).toContain("focus:bg-muted");
     expect(item.className).not.toContain("pl-8");
 
     const insetItem = screen.getByRole("menuitem", { name: "Duplicate" });

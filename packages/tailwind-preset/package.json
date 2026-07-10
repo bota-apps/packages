@@ -51,6 +51,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/typography": "catalog:",
     "tailwindcss-animate": "catalog:"
   },

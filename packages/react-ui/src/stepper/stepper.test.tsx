@@ -21,13 +21,27 @@ describe("Stepper", () => {
     expect(screen.getByText("Review")).toBeTruthy();
   });
 
-  it("applies the maxWidth variant to the root", () => {
+  it("applies the maxWidth variant to the container-query root", () => {
     const { container } = render(<Stepper steps={steps} maxWidth="md" />);
 
     const root = container.firstElementChild;
-    expect(root?.className).toContain("flex w-full");
+    expect(root?.className).toContain("@container");
     expect(root?.className).toContain("max-w-md");
     expect(stepperVariants({ maxWidth: "xl" })).toContain("max-w-xl");
+  });
+
+  it("renders the compact active-step summary for narrow containers", () => {
+    render(<Stepper steps={steps} />);
+
+    const summary = screen.getByText("Step 2 of 3 — Profile");
+    expect(summary.className).toContain("@2xl:hidden");
+  });
+
+  it("hides per-step labels below the compact container threshold", () => {
+    render(<Stepper steps={steps} />);
+
+    const label = screen.getByText("Account");
+    expect((label.parentElement as HTMLElement).className).toContain("hidden @2xl:flex");
   });
 
   it("colors connector lines to match each step's state", () => {

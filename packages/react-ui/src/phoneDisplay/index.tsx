@@ -108,7 +108,7 @@ export function PhoneDisplay({
         <a
           href={telHref}
           aria-label={`Call ${formatted}`}
-          className="print:hidden inline-flex h-6 w-6 items-center justify-center rounded hover:bg-accent transition-colors text-muted-foreground hover:text-foreground"
+          className="print:hidden inline-flex h-6 w-6 items-center justify-center rounded hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
         >
           <Phone className="h-3 w-3" />
         </a>

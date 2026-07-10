@@ -1,6 +1,11 @@
 import { cva, type VariantProps } from "class-variance-authority";
 
-export const stepperVariants = cva("flex w-full", {
+/**
+ * Stepper root — a container-query scope. Per-step labels hide below the
+ * @2xl container width, where the compact "Step x of n" summary takes over,
+ * so the stepper degrades gracefully in narrow panels regardless of viewport.
+ */
+export const stepperVariants = cva("@container w-full", {
   variants: {
     maxWidth: {
       sm: "max-w-sm",
