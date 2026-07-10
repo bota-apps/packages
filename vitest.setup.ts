@@ -31,6 +31,23 @@ globalThis.matchMedia = (query: string): MediaQueryList => ({
   dispatchEvent: () => false,
 });
 
+// jsdom lacks IntersectionObserver (NavList's horizontal overflow measuring).
+// An inert observer is enough: jsdom elements always measure 0×0, so nothing
+// ever leaves or enters a root. Tests that drive overflow states install a
+// controllable stub per file via vi.stubGlobal.
+class IntersectionObserverStub implements IntersectionObserver {
+  readonly root = null;
+  readonly rootMargin = "";
+  readonly thresholds: readonly number[] = [];
+  observe(): void {}
+  unobserve(): void {}
+  disconnect(): void {}
+  takeRecords(): IntersectionObserverEntry[] {
+    return [];
+  }
+}
+globalThis.IntersectionObserver = IntersectionObserverStub;
+
 // jsdom lacks the layout and pointer-capture APIs Radix primitives call
 // (menus, select, toast swipe handling).
 Element.prototype.scrollIntoView = () => {};
