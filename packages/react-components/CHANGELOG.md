@@ -1,5 +1,15 @@
 # @bota-apps/react-components
 
+## 0.8.5
+
+### Patch Changes
+
+- Updated dependencies [38fd879]
+- Updated dependencies [38fd879]
+  - @bota-apps/types@0.10.3
+  - @bota-apps/schema-utils@0.9.2
+  - @bota-apps/react-ui@0.7.0
+
 ## 0.8.4
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @bota-apps/app-config
 
+## 0.2.2
+
+### Patch Changes
+
+- 38fd879: Documentation and sample-data wording cleanup (JSDoc, changelog entries, test fixtures). No runtime or API changes.
+
 ## 0.2.1
 
 ### Patch Changes

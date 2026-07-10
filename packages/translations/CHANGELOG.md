@@ -1,5 +1,14 @@
 # @bota-apps/translations
 
+## 0.3.4
+
+### Patch Changes
+
+- 38fd879: Documentation and sample-data wording cleanup (JSDoc, changelog entries, test fixtures). No runtime or API changes.
+- Updated dependencies [38fd879]
+  - @bota-apps/types@0.10.3
+  - @bota-apps/schema-utils@0.9.2
+
 ## 0.3.3
 
 ### Patch Changes

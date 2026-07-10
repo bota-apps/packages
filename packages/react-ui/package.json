@@ -1,6 +1,6 @@
 {
   "name": "@bota-apps/react-ui",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Context-free React UI building blocks: 70+ Tailwind + Radix primitives, schema-driven DynamicForm/DynamicDetail, charts, and design tokens.",
   "keywords": [
     "bota-apps",
