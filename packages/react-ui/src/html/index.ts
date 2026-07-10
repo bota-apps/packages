@@ -41,8 +41,9 @@ export * from "./menu";
 export * from "./overlay";
 export * from "./trigger";
 
-// Note: html/layout.tsx and html/typography.tsx contain the CVA for the layout
-// and typography primitives, but they are NOT re-exported here to avoid double
-// exposure through the top-level barrel (index.ts already has
-// `export * from "./layout"` and `export * from "./typography"`).
-// Those files delegate to html/layout.tsx and html/typography.tsx.
+// Note: html/layout.tsx, html/typography.tsx, and html/dotLeader.tsx contain
+// the CVA for the layout, typography, and dot-leader primitives, but they are
+// NOT re-exported here to avoid double exposure through the top-level barrel
+// (index.ts already has `export * from "./layout"`, `export * from
+// "./typography"`, and `export * from "./dotLeader"`).
+// Those component modules delegate to the html/ files.

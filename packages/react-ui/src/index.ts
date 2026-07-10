@@ -33,6 +33,7 @@ export * from "./dateRangeInput";
 export * from "./detailField";
 export * from "./dialog";
 export * from "./documentPreview";
+export * from "./dotLeader";
 export * from "./dropdownMenu";
 export * from "./dynamicDetail";
 export * from "./dynamicForm";

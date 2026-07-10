@@ -159,31 +159,48 @@ export const inlineVariants = cva("flex", {
     // Tailwind. For nested/hierarchical rows, combine `paddingX` with `indent`:
     // both classes render (px-* + pl-*) and the CSS cascade lets the deeper
     // pl-* win the left side, matching the original raw-className behavior.
+    // `indent` values are tuned to pair with the same-named `paddingX` (an
+    // indented row inside an xl-padded document uses `paddingX="xl" indent="xl"`)
+    // — they are not an absolute size scale of their own.
     paddingX: {
       none: "",
       sm: "px-2",
       md: "px-4",
       lg: "px-6",
+      xl: "px-8",
     },
     paddingY: {
       none: "",
       sm: "py-1",
       md: "py-2",
       lg: "py-3",
+      xl: "py-5",
     },
     borderBottom: {
       true: "border-b",
       false: "",
     },
+    borderTop: {
+      true: "border-t",
+      false: "",
+    },
     background: {
       none: "",
       muted: "bg-muted/20",
+      primary: "bg-primary/10",
+      primarySubtle: "bg-primary/5",
     },
     indent: {
       none: "",
       sm: "pl-6",
       md: "pl-10",
       lg: "pl-14",
+      xl: "pl-12",
+    },
+    // Left accent bar for document/section headers (statement/invoice-style artifacts).
+    accent: {
+      true: "border-l-[3px] border-l-primary",
+      false: "",
     },
   },
   defaultVariants: {
@@ -206,8 +223,10 @@ export function Inline<T extends ElementType = "div">({
   paddingX,
   paddingY,
   borderBottom,
+  borderTop,
   background,
   indent,
+  accent,
   className,
   ...props
 }: InlineProps<T>) {
@@ -225,8 +244,10 @@ export function Inline<T extends ElementType = "div">({
           paddingX,
           paddingY,
           borderBottom,
+          borderTop,
           background,
           indent,
+          accent,
         }),
         className,
       )}

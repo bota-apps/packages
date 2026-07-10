@@ -95,3 +95,23 @@ export const SelectableRows: Story = {
     </Stack>
   ),
 };
+
+/** Document-artifact rows (statement/invoice-style): primary tints, accented
+ *  section header, xl padding/indent, and a top-bordered emphasized total band.
+ *  See Layout/DotLeader for the full statement composition. */
+export const DocumentRows: Story = {
+  render: () => (
+    <Stack className="w-96 rounded-md border overflow-hidden">
+      <Inline paddingX="xl" paddingY="md" accent borderBottom background="primarySubtle">
+        <Badge variant="secondary">Section header (accent bar)</Badge>
+      </Inline>
+      <Inline paddingX="xl" paddingY="md" indent="xl" borderBottom>
+        <Badge variant="outline">Line item (xl indent)</Badge>
+      </Inline>
+      <Inline justify="between" paddingX="xl" paddingY="xl" borderTop background="primary">
+        <Badge variant="secondary">Total band</Badge>
+        <Badge>9,565.00</Badge>
+      </Inline>
+    </Stack>
+  ),
+};
