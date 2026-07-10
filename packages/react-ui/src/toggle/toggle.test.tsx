@@ -33,4 +33,12 @@ describe("Toggle", () => {
     expect(toggleVariants({ variant: "outline" })).toContain("border-input");
     expect(toggleVariants({ size: "lg" })).toContain("h-10");
   });
+
+  it("styles the on state with the selected tokens, never accent", () => {
+    const base = toggleVariants();
+    expect(base).toContain("data-[state=on]:bg-selected");
+    expect(base).toContain("data-[state=on]:text-selected-foreground");
+    expect(base).not.toContain("bg-accent");
+    expect(toggleVariants({ variant: "outline" })).toContain("data-[state=on]:border-primary/40");
+  });
 });

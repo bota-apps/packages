@@ -1,11 +1,11 @@
 import { cva } from "class-variance-authority";
 
-/** Wrapper around the card list — grid layout gets columns and gutters. */
+/** Wrapper around the card list — grid columns react to the list's own container width. */
 export const dataTableCardListVariants = cva("", {
   variants: {
     layout: {
       list: "",
-      grid: "grid grid-cols-2 md:grid-cols-3 gap-3 p-3",
+      grid: "grid grid-cols-1 @lg:grid-cols-2 @4xl:grid-cols-3 gap-3 p-3",
     },
   },
   defaultVariants: {

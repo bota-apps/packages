@@ -45,7 +45,7 @@ describe("ContextMenu", () => {
     expect(menu.className).toContain("min-w-[8rem]");
 
     const item = screen.getByRole("menuitem", { name: "Open" });
-    expect(item.className).toContain("focus:bg-accent");
+    expect(item.className).toContain("focus:bg-muted");
 
     const label = screen.getByText("File");
     expect(label.className).toContain("pl-8");

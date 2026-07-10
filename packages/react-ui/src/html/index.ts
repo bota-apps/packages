@@ -37,6 +37,7 @@ export * from "./themeToggle";
 export * from "./tree";
 
 // Foundational cva definitions shared across components (no rendered primitives)
+export * from "./interaction";
 export * from "./menu";
 export * from "./overlay";
 export * from "./trigger";

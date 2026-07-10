@@ -39,8 +39,9 @@ describe("QuickLink", () => {
       </QuickLinkGrid>,
     );
     const grid = screen.getByText("Tile").parentElement as HTMLElement;
-    expect(grid.className).toContain("sm:grid-cols-2");
+    expect(grid.className).toContain("@2xl:grid-cols-2");
     expect(grid.className).toContain("extra");
-    expect(quickLinkGridVariants({ columns: 4 })).toContain("lg:grid-cols-4");
+    expect((grid.parentElement as HTMLElement).className).toContain("@container");
+    expect(quickLinkGridVariants({ columns: 4 })).toContain("@5xl:grid-cols-4");
   });
 });

@@ -59,5 +59,9 @@ type QuickLinkGridProps = {
 };
 
 export function QuickLinkGrid({ children, columns = 3, className }: QuickLinkGridProps) {
-  return <Div className={cn(quickLinkGridVariants({ columns }), className)}>{children}</Div>;
+  return (
+    <Div className="@container">
+      <Div className={cn(quickLinkGridVariants({ columns }), className)}>{children}</Div>
+    </Div>
+  );
 }
