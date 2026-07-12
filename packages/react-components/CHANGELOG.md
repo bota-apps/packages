@@ -1,5 +1,13 @@
 # @bota-apps/react-components
 
+## 0.9.4
+
+### Patch Changes
+
+- Updated dependencies [888d537]
+- Updated dependencies [fd74d2e]
+  - @bota-apps/react-ui@0.9.0
+
 ## 0.9.3
 
 ### Patch Changes
