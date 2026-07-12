@@ -1,16 +1,23 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Check, Minus } from "lucide-react";
-import { ComparisonTable, type ComparisonColumn, type ComparisonRow } from "./index";
+import {
+  ComparisonTable,
+  type ComparisonColumn,
+  type ComparisonRow,
+  type ComparisonTableProps,
+} from "./index";
 
-const meta: Meta<typeof ComparisonTable> = {
+// The stories fix the generic to `Plan` so args keep their concrete type
+// (Meta<typeof ComparisonTable> would erase the generic to `unknown`).
+const meta: Meta<ComparisonTableProps<Plan>> = {
   title: "Display/ComparisonTable",
   component: ComparisonTable,
   parameters: { layout: "padded" },
 };
 export default meta;
 
-type Story = StoryObj<typeof ComparisonTable>;
+type Story = StoryObj<ComparisonTableProps<Plan>>;
 
 // Domain-neutral sample: three subscription plans compared across attributes.
 type Plan = {
