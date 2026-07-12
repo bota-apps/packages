@@ -26,14 +26,16 @@
     "brand.js",
     "brand.d.ts",
     "theme.css",
-    "brands"
+    "brands",
+    "fonts"
   ],
   "exports": {
     "./preset": "./preset.js",
     "./postcss": "./postcss.js",
     "./brand": "./brand.js",
     "./theme.css": "./theme.css",
-    "./brands/*.css": "./brands/*.css"
+    "./brands/*.css": "./brands/*.css",
+    "./fonts/*.css": "./fonts/*.css"
   },
   "sideEffects": [
     "**/*.css"

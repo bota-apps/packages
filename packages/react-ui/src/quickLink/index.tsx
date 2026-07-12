@@ -47,7 +47,7 @@ export function QuickLink({
 
       {suffix}
 
-      <ChevronRight className="shrink-0 size-4 text-muted-foreground/40 transition-all duration-200 group-hover:text-primary group-hover:translate-x-0.5" />
+      <ChevronRight className="shrink-0 size-4 text-muted-foreground/40 transition-all duration-base ease-standard group-hover:text-primary group-hover:translate-x-0.5" />
     </TileEl>
   );
 }

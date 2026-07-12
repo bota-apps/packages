@@ -23,3 +23,13 @@ export const focusRingClasses =
  */
 export const formControlInteractionClasses =
   "transition-colors hover:border-ring/40 focus-visible:outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/25 disabled:cursor-not-allowed disabled:opacity-50";
+
+/**
+ * Press feedback for pointer-activated controls (buttons, toggles, tiles):
+ * subtle scale-down on :active, on the token duration/easing. Owns the full
+ * transition property list (colors + shadow + transform) because
+ * tailwind-merge collapses `transition-colors` and `transition-transform`
+ * into one group — composing both would silently drop one.
+ */
+export const pressableClasses =
+  "transition-[color,background-color,border-color,box-shadow,transform,opacity] duration-fast ease-standard active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100";

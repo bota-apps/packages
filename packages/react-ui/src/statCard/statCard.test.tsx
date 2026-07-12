@@ -35,4 +35,9 @@ describe("StatCard", () => {
     await user.keyboard("{Enter}");
     expect(onClick).toHaveBeenCalledTimes(2);
   });
+
+  it("renders the trailing chart slot when provided", () => {
+    render(<StatCard label="Trend" value={42} chart={<span data-testid="trend-chart" />} />);
+    expect(screen.getByTestId("trend-chart")).toBeTruthy();
+  });
 });

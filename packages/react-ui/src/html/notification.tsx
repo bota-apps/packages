@@ -8,7 +8,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/utils";
 
 export const notificationVariants = cva(
-  "flex items-center gap-3 text-white p-4 rounded-lg shadow-lg pointer-events-auto",
+  "flex items-center gap-3 text-white p-4 rounded-lg shadow-floating pointer-events-auto",
   {
     variants: {
       variant: {

@@ -18,20 +18,20 @@ import { cn } from "../lib/utils";
 /* CardEl — rounded bordered panel surface                             */
 /* ------------------------------------------------------------------ */
 
-export const cardVariants = cva("rounded-lg border bg-card text-card-foreground shadow-sm", {
+export const cardVariants = cva("rounded-lg border bg-card text-card-foreground shadow-raised", {
   variants: {
     variant: {
       /** Standard card with padding. */
       default: "p-6",
       /** Hover-lift card for grid listings. */
       interactive:
-        "h-full transition-shadow duration-200 hover:shadow-lg hover:border-primary/50 group",
+        "h-full transition-shadow duration-base ease-standard hover:shadow-floating hover:border-primary/50 group",
       /** Icon-above-title feature card — caller provides internal layout. */
       feature: "",
       /** Tighter padding for dense contexts. */
       compact: "p-4",
       /** Content surface — slightly larger radius, subtle bg. */
-      surface: "rounded-xl bg-background shadow-sm border-border/50 p-6",
+      surface: "rounded-xl bg-background shadow-raised border-border/50 p-6",
     },
     /** Stretch to fill the parent's width and height (e.g. a grid/flex cell). */
     fill: {
@@ -59,7 +59,7 @@ export const CardEl = forwardRef<HTMLDivElement, CardElProps>(function CardEl(
 /* ------------------------------------------------------------------ */
 
 export const tileVariants = cva(
-  "group relative flex items-center gap-4 rounded-xl border border-border/60 bg-card text-left transition-all duration-200 hover:border-primary/40 hover:bg-muted/60 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/35",
+  "group relative flex items-center gap-4 rounded-xl border border-border/60 bg-card text-left transition-all duration-base ease-standard hover:border-primary/40 hover:bg-muted/60 hover:shadow-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/35",
   {
     variants: {
       /** Row: single-column list. Grid: multi-column grid. */
@@ -158,7 +158,7 @@ export const CardButtonEl = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<H
       <button
         ref={ref}
         type="button"
-        className="w-full text-left rounded-lg border bg-card p-4 shadow-sm transition-shadow hover:shadow-lg hover:border-primary/50 cursor-pointer"
+        className="w-full text-left rounded-lg border bg-card p-4 shadow-raised transition-shadow duration-base ease-standard hover:shadow-floating hover:border-primary/50 cursor-pointer"
         {...props}
       />
     );

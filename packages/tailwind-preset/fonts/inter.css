@@ -1,0 +1,24 @@
+/*
+ * Curated typeface pairing — Inter for body and display.
+ *
+ * This file only points the typeface tokens at Inter; loading the font files
+ * stays the app's job (same contract as the brand files). Recommended setup:
+ *
+ *   pnpm add @fontsource-variable/inter
+ *
+ *   // src/index.css (or your global stylesheet)
+ *   @import "@fontsource-variable/inter";
+ *   @import "@bota-apps/tailwind-preset/theme.css";
+ *   @import "@bota-apps/tailwind-preset/fonts/inter.css";
+ *
+ * Without the @fontsource import the stack degrades gracefully to the system
+ * UI font. A `data-brand` sheet that sets its own --font-sans/--font-display
+ * (e.g. terminal, manuscript) still wins over this file — pairings restyle the
+ * default voice, brands own theirs.
+ */
+:root {
+  --font-sans:
+    "Inter Variable", Inter, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-display: var(--font-sans);
+}

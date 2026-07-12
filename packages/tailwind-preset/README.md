@@ -48,15 +48,38 @@ forking the preset:
   defined in `theme.css` for light and `.dark`. Override any of them after the
   `@import` — values are space-separated HSL triples (`221.2 83.2% 53.3%`).
 - **Numeric ramps** (`primary-50…900`, `secondary-50…900`, `accent-50…900`,
-  e.g. `bg-primary-100`, `text-accent-700`) resolve through optional variables
-  `--primary-50` … `--accent-900` with the stock palette as fallback. Define
-  them only if you want to rebrand the full scale:
+  `destructive-50…900`, e.g. `bg-primary-100`, `text-accent-700`) resolve
+  through variables `--primary-50` … `--destructive-900` whose defaults live in
+  `theme.css`. Redefine them only to rebrand the full scale:
 
 ```css
 :root {
   --primary: 262 83% 58%; /* semantic token */
   --primary-500: 262 83% 58%; /* optional: numeric ramp step */
 }
+```
+
+In `.dark` the ramps are **reversed**: the shade number means "contrast steps
+from the (dark) background", so `bg-primary-100` is a soft tint and
+`text-primary-800` readable text in both modes with no `dark:` variants. If
+you hand-write dark ramp overrides, derive them with `darkColorRamp` from the
+`brand` subpath so your pairings keep those semantics.
+
+- **Elevation** (`shadow-raised`, `shadow-overlay`, `shadow-floating`) and
+  **motion** (`duration-fast/base/slow`, `ease-standard/emphasized`,
+  `animate-shimmer`) utilities resolve through `--shadow-*`, `--duration-*`,
+  and `--ease-*` tokens. Dark mode carries depth mainly through surface
+  lightness (`--background` < `--card` < `--popover`); a
+  `prefers-reduced-motion` block collapses the duration tokens to 1ms.
+
+- **Typeface pairings** — optional files that only point `--font-sans` /
+  `--font-display` at a curated stack (font files stay the app's job; each
+  pairing file's header documents the matching `@fontsource` install):
+
+```css
+@import "@fontsource-variable/inter";
+@import "@bota-apps/tailwind-preset/theme.css";
+@import "@bota-apps/tailwind-preset/fonts/inter.css";
 ```
 
 ## Brands (runtime theme switching)
@@ -109,7 +132,8 @@ writeFileSync(
 | `@bota-apps/tailwind-preset/preset`       | Tailwind preset (`darkMode: class`, color tokens, radii, typography + animate plugins) |
 | `@bota-apps/tailwind-preset/theme.css`    | CSS variables for light + `.dark`, plus the `@tailwind` layers                         |
 | `@bota-apps/tailwind-preset/brands/*.css` | Shipped complete-look brands (`manuscript`, `terminal`, `sorbet`, `graphite`)          |
-| `@bota-apps/tailwind-preset/brand`        | `brandCss` / `colorRamp` / `hexToHslChannels` brand generators                         |
+| `@bota-apps/tailwind-preset/brand`        | `brandCss` / `colorRamp` / `darkColorRamp` / `hexToHslChannels` brand generators       |
+| `@bota-apps/tailwind-preset/fonts/*.css`  | Typeface pairings (`inter`) — token-only, fonts load via `@fontsource`                 |
 | `@bota-apps/tailwind-preset/postcss`      | `{ tailwindcss, autoprefixer }` PostCSS config                                         |
 
 Part of the [`@bota-apps` packages monorepo](https://github.com/bota-apps/packages).

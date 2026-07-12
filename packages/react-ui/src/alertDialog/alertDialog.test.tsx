@@ -53,7 +53,7 @@ describe("AlertDialog", () => {
 
     const dialog = screen.getByRole("alertdialog");
     expect(dialog.className).toContain("max-w-lg");
-    expect(dialog.className).toContain("bg-background");
+    expect(dialog.className).toContain("bg-popover");
   });
 
   it("closes via the cancel button", async () => {
