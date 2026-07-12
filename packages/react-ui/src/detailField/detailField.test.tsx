@@ -36,6 +36,14 @@ describe("DetailField", () => {
     render(<DetailField label="Email" value="user@example.com" copyable />);
     expect(screen.queryByRole("button")).not.toBeTruthy();
   });
+
+  it("hosts block-level node values without nesting them inside a paragraph", () => {
+    render(<DetailField label="Location" value={<p data-testid="node-value">Warehouse 4</p>} />);
+    const value = screen.getByTestId("node-value");
+    expect(value.closest("div")?.className).toContain("text-muted-foreground");
+    // Invalid <p><p> nesting would make the browser reparent the value.
+    expect(document.querySelectorAll("p p")).toHaveLength(0);
+  });
 });
 
 describe("InfoRow", () => {

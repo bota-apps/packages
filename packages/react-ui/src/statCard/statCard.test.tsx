@@ -40,4 +40,15 @@ describe("StatCard", () => {
     render(<StatCard label="Trend" value={42} chart={<span data-testid="trend-chart" />} />);
     expect(screen.getByTestId("trend-chart")).toBeTruthy();
   });
+
+  it("hides the chart slot in containers too narrow to fit it", () => {
+    const { container } = render(
+      <StatCard label="Trend" value={42} chart={<span data-testid="trend-chart" />} />,
+    );
+    const root = container.firstChild as HTMLElement;
+    expect(root.className).toContain("@container");
+    const chartHost = screen.getByTestId("trend-chart").parentElement as HTMLElement;
+    expect(chartHost.className).toContain("hidden");
+    expect(chartHost.className).toContain("@[19rem]:block");
+  });
 });

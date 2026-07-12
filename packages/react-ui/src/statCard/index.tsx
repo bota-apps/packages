@@ -118,7 +118,8 @@ export function StatCard({
           </Text>
         )}
       </div>
-      {chart && <div className="shrink-0">{chart}</div>}
+      {/* Below ~19rem the fixed-width chart would starve the text column. */}
+      {chart && <div className="hidden shrink-0 @[19rem]:block">{chart}</div>}
       {interactive && chevron}
     </div>
   );
