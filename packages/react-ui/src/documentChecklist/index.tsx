@@ -49,9 +49,20 @@ export type DocumentChecklistProps = {
   ariaLabel?: string;
   /** Rendered when there are no documents. Defaults to a neutral English state. */
   emptyState?: ReactNode;
+  /** English by default; override to localize the worded status labels. */
+  statusLabels?: Partial<Record<DocumentStatus, string>>;
+  /** Worded tag for mandatory documents. Defaults to English "Required". */
+  requiredLabel?: ReactNode;
+  /** Worded tag for optional documents. Defaults to English "Optional". */
+  optionalLabel?: ReactNode;
+  /**
+   * Formats the completeness caption above the progress bar. Defaults to
+   * English "{provided} of {total} provided".
+   */
+  progressLabel?: (provided: number, total: number) => ReactNode;
 };
 
-const statusLabels: Record<DocumentStatus, string> = {
+const defaultStatusLabels: Record<DocumentStatus, string> = {
   provided: "Provided",
   missing: "Missing",
   pending: "Pending",
@@ -71,8 +82,14 @@ function statusIcon(status: DocumentStatus): ReactNode {
   return <CircleAlert aria-hidden />;
 }
 
-function ItemBody({ item }: { item: DocumentChecklistItem }) {
-  const requiredText = item.required === true ? "Required" : "Optional";
+type ResolvedLabels = {
+  status: Record<DocumentStatus, string>;
+  required: ReactNode;
+  optional: ReactNode;
+};
+
+function ItemBody({ item, labels }: { item: DocumentChecklistItem; labels: ResolvedLabels }) {
+  const requiredText = item.required === true ? labels.required : labels.optional;
   return (
     <>
       <Span className={cn(documentChecklistIconVariants({ status: item.status }))}>
@@ -84,7 +101,7 @@ function ItemBody({ item }: { item: DocumentChecklistItem }) {
             {item.label}
           </Text>
           <Text as="span" size="sm" tone="muted" className="@md:shrink-0">
-            {`${requiredText} · ${statusLabels[item.status]}`}
+            {requiredText} · {labels.status[item.status]}
           </Text>
         </Div>
         {item.description !== undefined && (
@@ -103,7 +120,7 @@ function ItemBody({ item }: { item: DocumentChecklistItem }) {
   );
 }
 
-function ItemRow({ item }: { item: DocumentChecklistItem }) {
+function ItemRow({ item, labels }: { item: DocumentChecklistItem; labels: ResolvedLabels }) {
   if (item.onSelect !== undefined) {
     const onSelect = item.onSelect;
     return (
@@ -112,13 +129,13 @@ function ItemRow({ item }: { item: DocumentChecklistItem }) {
         onClick={() => onSelect()}
         className={cn(documentChecklistItemVariants({ interactive: true }))}
       >
-        <ItemBody item={item} />
+        <ItemBody item={item} labels={labels} />
       </button>
     );
   }
   return (
     <Div className={cn(documentChecklistItemVariants())}>
-      <ItemBody item={item} />
+      <ItemBody item={item} labels={labels} />
     </Div>
   );
 }
@@ -128,7 +145,21 @@ export function DocumentChecklist({
   showProgress = true,
   ariaLabel,
   emptyState,
+  statusLabels,
+  requiredLabel,
+  optionalLabel,
+  progressLabel,
 }: DocumentChecklistProps) {
+  const labels: ResolvedLabels = {
+    status: {
+      provided: statusLabels?.provided ?? defaultStatusLabels.provided,
+      missing: statusLabels?.missing ?? defaultStatusLabels.missing,
+      pending: statusLabels?.pending ?? defaultStatusLabels.pending,
+      expired: statusLabels?.expired ?? defaultStatusLabels.expired,
+    },
+    required: requiredLabel ?? "Required",
+    optional: optionalLabel ?? "Optional",
+  };
   const requiredItems = items.filter((item) => item.required === true);
   const counted = requiredItems.length > 0 ? requiredItems : items;
   const total = counted.length;
@@ -150,7 +181,9 @@ export function DocumentChecklist({
       {showProgress && pct !== undefined && (
         <Div className="flex flex-col gap-2">
           <Text as="span" size="sm" tone="muted">
-            {`${providedCount} of ${total} provided`}
+            {progressLabel
+              ? progressLabel(providedCount, total)
+              : `${providedCount} of ${total} provided`}
           </Text>
           <Progress value={pct} />
         </Div>
@@ -159,7 +192,7 @@ export function DocumentChecklist({
       <Ul className="flex flex-col">
         {items.map((item) => (
           <Li key={item.id}>
-            <ItemRow item={item} />
+            <ItemRow item={item} labels={labels} />
           </Li>
         ))}
       </Ul>

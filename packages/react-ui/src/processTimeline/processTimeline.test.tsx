@@ -91,4 +91,17 @@ describe("ProcessTimeline", () => {
     // The @2xl:hidden summary node is present in the DOM (visibility is CSS).
     expect(screen.getByText(/Step 2 of 3 —/)).toBeTruthy();
   });
+
+  it("localizes the compact horizontal summary via summaryLabel", () => {
+    render(
+      <ProcessTimeline
+        items={items}
+        orientation="horizontal"
+        summaryLabel={(step, total, label) => `Étape ${step} / ${total} — ${label}`}
+      />,
+    );
+
+    expect(screen.getByText("Étape 2 / 3 — In review")).toBeTruthy();
+    expect(screen.queryByText(/Step 2 of 3 —/)).toBeNull();
+  });
 });

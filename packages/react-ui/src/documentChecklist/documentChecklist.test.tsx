@@ -70,4 +70,21 @@ describe("DocumentChecklist", () => {
     expect(screen.queryByRole("listitem")).toBeNull();
     expect(screen.queryByRole("progressbar")).toBeNull();
   });
+
+  it("localizes status, required/optional, and progress captions via overrides", () => {
+    render(
+      <DocumentChecklist
+        items={items}
+        statusLabels={{ provided: "Fourni", missing: "Manquant", pending: "En attente" }}
+        requiredLabel="Requis"
+        optionalLabel="Facultatif"
+        progressLabel={(provided, total) => `${provided} sur ${total} fournis`}
+      />,
+    );
+
+    expect(screen.getByText("Requis · Fourni")).toBeTruthy();
+    expect(screen.getByText("Facultatif · Manquant")).toBeTruthy();
+    expect(screen.getByText("1 sur 3 fournis")).toBeTruthy();
+    expect(screen.queryByText("Required · Provided")).toBeNull();
+  });
 });
