@@ -11,6 +11,12 @@ const spanVariants = cva("", {
       inline: "",
       inlineFlex: "inline-flex items-center",
       srOnly: "sr-only",
+      /** Visible from the sm viewport up; screen-reader-only below — for
+       * header-chrome labels that cost too much width on phones. */
+      srOnlyMobile: "sr-only sm:not-sr-only",
+      /** Hidden below the sm viewport, inline-flex from it — for decorative
+       * chrome (shortcut hints …) phones can drop entirely. */
+      hiddenMobile: "hidden sm:inline-flex sm:items-center",
     },
     gap: {
       none: "",

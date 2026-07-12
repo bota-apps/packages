@@ -71,7 +71,7 @@ export function AppShell({ title, navItems, headerActions, children }: AppShellP
             <LogOut />
             {/* Icon-only on phones (label stays for screen readers) — the
                 visible label costs too much header width. */}
-            <Span className="sr-only sm:not-sr-only">Sign out</Span>
+            <Span display="srOnlyMobile">Sign out</Span>
           </Button>
         </>
       }
