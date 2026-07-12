@@ -79,7 +79,7 @@ export const ContentSurfaceEl = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDi
     return (
       <div
         ref={ref}
-        className="w-full rounded-xl bg-background shadow-sm border border-border/50 p-4 md:p-6"
+        className="w-full rounded-xl bg-background shadow-raised border border-border/50 p-4 md:p-6"
         {...props}
       />
     );

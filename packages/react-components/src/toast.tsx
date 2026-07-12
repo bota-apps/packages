@@ -64,7 +64,7 @@ export function Toasts() {
           type="button"
           onClick={() => dismissToast(t.id)}
           className={cn(
-            "rounded-lg border px-4 py-3 text-left text-sm shadow-sm",
+            "rounded-lg border px-4 py-3 text-left text-sm shadow-floating",
             variantClass[t.variant],
           )}
         >

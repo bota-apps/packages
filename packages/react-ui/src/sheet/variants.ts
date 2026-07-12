@@ -3,7 +3,7 @@ import { cva } from "class-variance-authority";
 export { overlayVariants as sheetOverlayVariants } from "../html/overlay";
 
 export const sheetVariants = cva(
-  "fixed z-50 gap-4 bg-background shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
+  "fixed z-50 gap-4 bg-popover text-popover-foreground shadow-floating transition ease-standard data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-base data-[state=open]:duration-slow",
   {
     variants: {
       side: {

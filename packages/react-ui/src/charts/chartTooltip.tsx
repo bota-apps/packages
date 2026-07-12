@@ -16,7 +16,7 @@ export function ChartTooltipContent({ active, payload, label }: TooltipProps<Val
     <Stack
       gap="xs"
       as="div"
-      className="rounded-[var(--radius)] border border-border bg-popover px-3 py-2 text-popover-foreground shadow-md"
+      className="rounded-[var(--radius)] border border-border bg-popover px-3 py-2 text-popover-foreground shadow-overlay"
     >
       {label !== undefined && (
         <Text size="sm" weight="medium">

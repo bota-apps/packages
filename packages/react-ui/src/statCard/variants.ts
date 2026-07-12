@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from "class-variance-authority";
 
-export const statCardVariants = cva("rounded-lg border shadow-sm flex items-center", {
+export const statCardVariants = cva("rounded-lg border shadow-raised flex items-center", {
   variants: {
     /** Visual style. `outlined` = left border accent. `filled` = tinted background. */
     variant: {
@@ -22,7 +22,7 @@ export const statCardVariants = cva("rounded-lg border shadow-sm flex items-cent
       lg: "p-4 gap-4",
     },
     interactive: {
-      true: "cursor-pointer hover:shadow-md hover:border-primary/30 transition-all",
+      true: "cursor-pointer hover:shadow-overlay hover:border-primary/30 transition-all duration-base ease-standard",
       false: "",
     },
   },

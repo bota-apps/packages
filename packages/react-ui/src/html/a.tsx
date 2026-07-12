@@ -52,7 +52,7 @@ export const navLinkVariants = cva("", {
         "relative",
         "after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full",
         "after:origin-left after:scale-x-0 after:bg-primary",
-        "after:transition-transform after:duration-300 hover:after:scale-x-100",
+        "after:transition-transform after:duration-slow hover:after:scale-x-100",
       ].join(" "),
       /** Vertical sidebar nav — SidebarMenuButton provides all layout/sizing.
        *  We only add `group` so depth-label color inherits via group-[.text-primary]. */

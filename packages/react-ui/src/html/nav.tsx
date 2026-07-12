@@ -33,7 +33,7 @@ export const tabNavLinkVariants = cva(
   {
     variants: {
       active: {
-        true: "bg-background text-foreground shadow",
+        true: "bg-background text-foreground shadow-raised",
         false: "hover:bg-background/50 hover:text-foreground",
       },
     },

@@ -137,7 +137,9 @@ export const tdVariants = cva(
       align: {
         left: "text-left",
         center: "text-center",
-        right: "text-right",
+        // Right-aligned cells are the numeric convention — tabular figures keep
+        // digit columns stable while sorting or streaming updates.
+        right: "text-right tabular-nums",
       },
       empty: {
         true: "h-24 text-center",

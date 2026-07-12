@@ -41,7 +41,7 @@ export function StackedBar({ segments, height = "md" }: StackedBarProps) {
             <Tooltip key={segment.key}>
               <TooltipTrigger asChild>
                 <span
-                  className={`${segment.color} ${roundedClass} h-full transition-all duration-500 ease-out`}
+                  className={`${segment.color} ${roundedClass} h-full transition-all duration-slow ease-standard`}
                   style={{ width: `${pct}%` }}
                 />
               </TooltipTrigger>

@@ -7,32 +7,35 @@
 import { forwardRef, type ButtonHTMLAttributes } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/utils";
-import { focusRingClasses } from "./interaction";
+import { focusRingClasses, pressableClasses } from "./interaction";
 
 export const buttonVariants = cva(
   [
-    "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+    "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
     focusRingClasses,
+    pressableClasses,
   ],
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground shadow hover:bg-primary/90",
-        destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
-        outline: "border border-input bg-background shadow-sm hover:bg-muted hover:text-foreground",
-        secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
+        default: "bg-primary text-primary-foreground shadow-raised hover:bg-primary/90",
+        destructive:
+          "bg-destructive text-destructive-foreground shadow-raised hover:bg-destructive/90",
+        outline:
+          "border border-input bg-background shadow-raised hover:bg-muted hover:text-foreground",
+        secondary: "bg-secondary text-secondary-foreground shadow-raised hover:bg-secondary/80",
         ghost: "hover:bg-muted hover:text-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         /** Text-action: no background, no border. Use when the activation is a click handler, not a route link. */
         action: "text-primary hover:text-primary/80",
         "action-destructive": "text-destructive hover:text-destructive/80",
         /** Floating action button — rounded full, primary bg. Combine with size="fab". */
-        fab: "rounded-full bg-primary text-white shadow-lg hover:bg-primary/90 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
+        fab: "rounded-full bg-primary text-white shadow-floating hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
         /** Dismiss button inside a colored notification banner — ghost with white text. */
         "ghost-dismiss":
           "flex-shrink-0 text-white opacity-70 hover:opacity-100 hover:bg-transparent hover:text-white",
         /** Card-style button (schema selector, interactive tiles). */
-        card: "w-full text-left rounded-lg border bg-card p-4 shadow-sm transition-shadow hover:shadow-lg hover:border-primary/50 cursor-pointer",
+        card: "w-full text-left rounded-lg border bg-card p-4 shadow-raised hover:shadow-floating hover:border-primary/50 cursor-pointer",
       },
       size: {
         default: "h-9 px-4 py-2",
