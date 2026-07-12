@@ -185,6 +185,12 @@ export const botaPreset = {
           "0%": { backgroundPosition: "200% 0" },
           "100%": { backgroundPosition: "-200% 0" },
         },
+        // Slow ambient drift for decorative background layers (hero aurora
+        // blobs). Transform-only so it stays on the compositor.
+        drift: {
+          "0%, 100%": { transform: "translate3d(-6%, -4%, 0) scale(1)" },
+          "50%": { transform: "translate3d(6%, 5%, 0) scale(1.1)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -192,6 +198,10 @@ export const botaPreset = {
         // Linear on purpose: an eased background-position sweep visibly
         // pulses at each loop boundary.
         shimmer: "shimmer 1.6s linear infinite",
+        // Two speeds so layered blobs never sync up; decorative infinite
+        // loops must pair with motion-reduce:animate-none at the call site.
+        drift: "drift 18s ease-in-out infinite",
+        "drift-reverse": "drift 26s ease-in-out infinite reverse",
       },
     },
   },

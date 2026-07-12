@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { Div, H, P, SectionEl } from "../html";
 import { cn } from "../lib/utils";
 import {
+  heroAuroraBlobVariants,
   heroContentVariants,
   heroTreatmentVariants,
   heroVariants,
@@ -29,10 +30,11 @@ export type HeroProps = {
 
 /**
  * Hero — the marketing/landing section: an h1-led content block over an
- * optional tokenized background treatment (glow / grid / tint). The treatment
- * layer is purely visual: aria-hidden, absolutely positioned,
+ * optional tokenized background treatment (glow / grid / tint / aurora). The
+ * treatment layer is purely visual: aria-hidden, absolutely positioned,
  * pointer-events-none — and because it resolves through the numeric ramps it
- * adapts to brands and dark mode with no extra variants.
+ * adapts to brands and dark mode with no extra variants. The animated aurora
+ * treatment is transform-only and stills itself under reduced motion.
  */
 export function Hero({
   treatment = "none",
@@ -47,7 +49,14 @@ export function Hero({
   return (
     <SectionEl className={cn(heroVariants({ align }), className)}>
       {treatment !== "none" && (
-        <Div aria-hidden="true" className={heroTreatmentVariants({ treatment })} />
+        <Div aria-hidden="true" className={heroTreatmentVariants({ treatment })}>
+          {treatment === "aurora" && (
+            <>
+              <Div className={heroAuroraBlobVariants({ blob: "primary" })} />
+              <Div className={heroAuroraBlobVariants({ blob: "accent" })} />
+            </>
+          )}
+        </Div>
       )}
       <Div className={heroContentVariants({ align })}>
         {title !== undefined && (
