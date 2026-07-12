@@ -65,4 +65,18 @@ describe("ReadinessSummary", () => {
 
     expect(screen.queryAllByRole("button")).toHaveLength(0);
   });
+
+  it("localizes the completeness caption via progressLabel", () => {
+    render(
+      <ReadinessSummary
+        title="Readiness"
+        progress={{ complete: 5, total: 8 }}
+        progressLabel={(complete, total) => `${complete} sur ${total} prêts`}
+        groups={groups}
+      />,
+    );
+
+    expect(screen.getByText("5 sur 8 prêts")).toBeTruthy();
+    expect(screen.queryByText("5 of 8 complete")).toBeNull();
+  });
 });

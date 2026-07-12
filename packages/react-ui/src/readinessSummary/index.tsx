@@ -55,6 +55,11 @@ export type ReadinessSummaryProps = {
   progress?: ReadinessProgress;
   /** Rendered when every group is empty. Defaults to a positive English state. */
   readyState?: ReactNode;
+  /**
+   * Formats the completeness caption beside the title. Defaults to English
+   * "{complete} of {total} complete".
+   */
+  progressLabel?: (complete: number, total: number) => ReactNode;
   ariaLabel?: string;
 };
 
@@ -107,6 +112,7 @@ export function ReadinessSummary({
   title,
   progress,
   readyState,
+  progressLabel,
   ariaLabel,
 }: ReadinessSummaryProps) {
   const issueCount = groups.reduce((sum, group) => sum + group.issues.length, 0);
@@ -128,7 +134,9 @@ export function ReadinessSummary({
             )}
             {progress !== undefined && (
               <Text as="span" size="sm" tone="muted">
-                {`${progress.complete} of ${progress.total} complete`}
+                {progressLabel
+                  ? progressLabel(progress.complete, progress.total)
+                  : `${progress.complete} of ${progress.total} complete`}
               </Text>
             )}
           </Div>

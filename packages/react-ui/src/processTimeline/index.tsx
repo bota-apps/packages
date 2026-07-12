@@ -73,6 +73,12 @@ export type ProcessTimelineProps = {
   ariaLabel?: string;
   /** English by default; override to localize the visually-hidden status text. */
   statusLabels?: Partial<Record<ProcessTimelineItemStatus, string>>;
+  /**
+   * Formats the compact "current step" summary shown below a horizontal
+   * timeline in narrow containers. Defaults to English
+   * "Step {step} of {total} — {label}".
+   */
+  summaryLabel?: (step: number, total: number, label: ReactNode) => ReactNode;
 };
 
 const defaultStatusLabels: Record<ProcessTimelineItemStatus, string> = {
@@ -117,6 +123,7 @@ export function ProcessTimeline({
   selectedItemId,
   ariaLabel,
   statusLabels,
+  summaryLabel,
 }: ProcessTimelineProps) {
   const interactive = onItemSelect !== undefined;
   const labels = {
@@ -223,8 +230,14 @@ export function ProcessTimeline({
         </Ol>
         {currentItem !== undefined && (
           <Text size="sm" weight="medium" className="mt-2 @2xl:hidden">
-            {`Step ${currentIndex + 1} of ${items.length} — `}
-            {currentItem.label}
+            {summaryLabel ? (
+              summaryLabel(currentIndex + 1, items.length, currentItem.label)
+            ) : (
+              <>
+                {`Step ${currentIndex + 1} of ${items.length} — `}
+                {currentItem.label}
+              </>
+            )}
           </Text>
         )}
       </Div>
