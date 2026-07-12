@@ -12,6 +12,7 @@ export * from "./lib/useBreakpoint";
 export * from "./lib/useCopyToClipboard";
 export * from "./print";
 export * from "./lib/formatRelativeTime";
+export * from "./lib/usePrefersReducedMotion";
 
 // Radix-based UI components
 export * from "./accordion";
@@ -71,6 +72,7 @@ export * from "./passwordInput";
 export * from "./progress";
 export * from "./quickLink";
 export * from "./radioGroup";
+export * from "./reveal";
 export * from "./scrollArea";
 export * from "./section";
 export * from "./sectionHeader";
@@ -83,8 +85,10 @@ export * from "./sidebarLayout";
 export * from "./sidebarNavLink";
 export * from "./skeleton";
 export * from "./stackedBar";
+export * from "./stepFlow";
 export * from "./stepper";
 export * from "./statCard";
+export * from "./animatedNumber";
 export * from "./currencyText";
 export * from "./dateTime";
 export * from "./numericText";

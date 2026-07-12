@@ -65,6 +65,14 @@ export const Tint: Story = {
   ),
 };
 
+export const Aurora: Story = {
+  render: () => (
+    <Hero treatment="aurora">
+      <HeroCopy />
+    </Hero>
+  ),
+};
+
 export const StartAligned: Story = {
   render: () => (
     <Hero treatment="glow" align="start">

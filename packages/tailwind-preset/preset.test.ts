@@ -81,6 +81,15 @@ describe("botaPreset color ramps", () => {
     expect(themeCss).toContain("@media (prefers-reduced-motion: reduce)");
   });
 
+  it("emits the ambient drift animations for decorative background layers", async () => {
+    const css = await compile("animate-drift animate-drift-reverse");
+    expect(css).toContain("drift 18s ease-in-out infinite");
+    expect(css).toContain("drift 26s ease-in-out infinite reverse");
+    // Transform-only keyframes: drifting layers must stay on the compositor.
+    expect(css).toContain("@keyframes drift");
+    expect(css).toContain("translate3d");
+  });
+
   it("emits selected-state utilities resolving through the interaction tokens", async () => {
     const css = await compile("bg-selected text-selected-foreground bg-selected/60");
     expect(css).toContain("hsl(var(--selected))");

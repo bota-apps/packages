@@ -35,6 +35,24 @@ describe("Hero", () => {
     );
   });
 
+  it("renders drifting, reduced-motion-aware blobs for the aurora treatment", () => {
+    const { container } = render(
+      <Hero treatment="aurora">
+        <p>Content</p>
+      </Hero>,
+    );
+    const layer = container.querySelector('[aria-hidden="true"]');
+    expect(layer).toBeTruthy();
+    const blobs = [...layer!.children];
+    expect(blobs).toHaveLength(2);
+    expect(blobs[0].className).toContain("animate-drift");
+    expect(blobs[1].className).toContain("animate-drift-reverse");
+    for (const blob of blobs) {
+      expect(blob.className).toContain("motion-reduce:animate-none");
+      expect(blob.className).toContain("blur-3xl");
+    }
+  });
+
   it("renders no decorative layer for the default treatment", () => {
     const { container } = render(
       <Hero>

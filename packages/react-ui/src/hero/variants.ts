@@ -46,12 +46,34 @@ export const heroTreatmentVariants = cva("pointer-events-none absolute inset-0",
       grid: "bg-[radial-gradient(hsl(var(--border))_1px,transparent_1px)] [background-size:24px_24px] [mask-image:linear-gradient(to_bottom,black,transparent)]",
       // Flat primary-tint wash.
       tint: "bg-primary-50",
+      // Animated: two blurred ramp-tinted blobs drifting slowly (blob styles
+      // live in heroAuroraBlobVariants; Hero renders them inside this layer).
+      aurora: "",
     },
   },
   defaultVariants: {
     treatment: "none",
   },
 });
+
+/**
+ * Aurora blobs — soft color fields behind the hero content, drifting on the
+ * preset's `drift` keyframes. Transform-only animation (compositor-friendly)
+ * and `motion-reduce:animate-none`, so reduced-motion users get a static
+ * gradient wash. Colors resolve through the numeric ramps: brands and the
+ * reversed dark ramps restyle them with no extra variants.
+ */
+export const heroAuroraBlobVariants = cva(
+  "absolute rounded-full blur-3xl motion-reduce:animate-none",
+  {
+    variants: {
+      blob: {
+        primary: "-top-1/4 left-[8%] h-[70%] w-[55%] bg-primary-200/60 animate-drift",
+        accent: "-bottom-1/4 right-[4%] h-[65%] w-1/2 bg-accent-100/60 animate-drift-reverse",
+      },
+    },
+  },
+);
 
 export type HeroTreatment = NonNullable<VariantProps<typeof heroTreatmentVariants>["treatment"]>;
 export type HeroAlign = NonNullable<VariantProps<typeof heroVariants>["align"]>;
