@@ -8,6 +8,11 @@
  * nothing and knows no routes, statuses, or labels beyond the five generic
  * lifecycle positions. Callers map their own domain state to these.
  *
+ * Choosing: ProcessTimeline is for a fixed, ordered process whose steps carry a
+ * lifecycle status. For a chronological stream of past events use ActivityFeed
+ * (or Timeline for a styled event rail); for a navigable wizard/pipeline with
+ * per-step content and click-through use Stepper.
+ *
  * Accessibility:
  *   - semantic `<ol>` / `<li>` ordering
  *   - the current step carries `aria-current="step"`
