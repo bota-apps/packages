@@ -1,5 +1,20 @@
 # @bota-apps/react-ui
 
+## 0.11.0
+
+### Minor Changes
+
+- 1df93c4: `Span` gains two responsive `display` variants for header-chrome composition, so apps can collapse control labels on phones without raw class overrides:
+
+  - `display="srOnlyMobile"` — visible from the `sm` viewport up, screen-reader-only below (button labels that cost too much header width on phones).
+  - `display="hiddenMobile"` — hidden below the `sm` viewport, `inline-flex` from it (decorative chrome such as keyboard-shortcut hints).
+
+  `AppShell`'s sign-out label now uses `srOnlyMobile`.
+
+### Patch Changes
+
+- 1df93c4: `TimelineItem`: the title/meta row now wraps in narrow containers — the timestamp drops under the title instead of pushing the row wider than the timeline's container.
+
 ## 0.10.0
 
 ### Minor Changes
