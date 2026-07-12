@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Copy, Check } from "lucide-react";
 import { Div, P, Span } from "../html";
+import { Text } from "../html/typography";
 import { Button } from "../button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 import { useCopyToClipboard } from "../lib/useCopyToClipboard";
@@ -25,7 +26,11 @@ export function DetailField({ icon, label, value, copyable, copyValue }: DetailF
       <Div>
         <P variant="label">{label}</P>
         <Div layout="row" gap="xs" className="items-center">
-          <P variant="muted">{value}</P>
+          {/* A div host: `value` accepts arbitrary nodes, and block-level
+              content (e.g. a Text paragraph) may not nest inside <p>. */}
+          <Text as="div" size="sm" tone="muted">
+            {value}
+          </Text>
           {copyable && copyValue && (
             <Tooltip>
               <TooltipTrigger asChild>
