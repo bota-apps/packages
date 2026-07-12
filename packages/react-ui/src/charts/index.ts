@@ -3,6 +3,8 @@ export * from "./lineChart";
 export * from "./sparkline";
 export * from "./areaChart";
 export * from "./pieChart";
+export * from "./waterfallChart";
+export * from "./varianceHeatmap";
 export { ChartLegend } from "./chartLegend";
 export { useChartHeight, type ChartHeightResult } from "./useChartSize";
 export {
