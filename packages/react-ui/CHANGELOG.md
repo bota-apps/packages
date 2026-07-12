@@ -1,5 +1,21 @@
 # @bota-apps/react-ui
 
+## 0.13.0
+
+### Minor Changes
+
+- d2ae36c: Make the remaining hardcoded English micro-copy in `DocumentChecklist`, `ReadinessSummary`, and `ProcessTimeline` overridable, so the components can be adopted in fully-translated apps without an i18n regression (per the repo's "English defaults, injectable translations" rule).
+
+  - `DocumentChecklist` gains `statusLabels` (per-key override of Provided/Missing/Pending/Expired), `requiredLabel`, `optionalLabel`, and `progressLabel(provided, total)` for the "{provided} of {total} provided" caption.
+  - `ReadinessSummary` gains `progressLabel(complete, total)` for the "{complete} of {total} complete" caption.
+  - `ProcessTimeline` gains `summaryLabel(step, total, label)` for the compact "Step {n} of {m} — …" summary shown below a horizontal timeline in narrow containers.
+
+  All new props are optional and default to the previous English strings — no change for existing callers.
+
+### Patch Changes
+
+- 4ca7727: Add "which one do I use" selection guidance to the doc comments of the three vertical marker-rail components — `Timeline`, `ActivityFeed`, and `ProcessTimeline` — so consumers pick the right primitive: `Timeline` for a styled rail of discrete events, `ActivityFeed` for a chronological stream of recent activity, and `ProcessTimeline` for a fixed lifecycle (complete/current/upcoming). No API changes.
+
 ## 0.12.0
 
 ### Minor Changes
