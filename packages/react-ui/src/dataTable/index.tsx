@@ -25,7 +25,7 @@ import {
 } from "../html";
 import { Div, Span } from "../html";
 import { Checkbox } from "../checkbox";
-import { useBreakpoint } from "../lib/useBreakpoint";
+import { useContainerWidth } from "../lib/useContainerWidth";
 import { useDataTableState } from "./useDataTableState";
 import { SortIndicator } from "./sortIndicator";
 import { DataTableToolbar } from "./dataTableToolbar";
@@ -42,6 +42,9 @@ const defaultTranslations: Required<DataTableTranslations> = {
   clear: "Clear",
   all: "All",
 };
+
+/** Container width (px) below which the table renders cards instead of rows. */
+const narrowContainerWidth = 640;
 
 type CellVariant = "default" | "muted";
 
@@ -117,8 +120,11 @@ export function DataTable<T>({
   const enableRowSelection =
     enableRowSelectionProp ?? (bulkActions !== undefined && bulkActions.length > 0);
 
-  const bp = useBreakpoint();
-  const isMobile = bp.below("md");
+  // Container-scoped narrow detection: the table adapts to the panel it was
+  // given, not the viewport. Unmeasured (first paint, jsdom) counts as wide so
+  // the table layout is the default.
+  const { ref: containerRef, width: containerWidth } = useContainerWidth<HTMLDivElement>();
+  const isNarrowContainer = containerWidth !== undefined && containerWidth < narrowContainerWidth;
 
   const resolvedTranslations: Required<DataTableTranslations> = useMemo(
     () => ({ ...defaultTranslations, ...translations }),
@@ -287,9 +293,9 @@ export function DataTable<T>({
 
   const selectedCount = Object.keys(rowSelection).length;
 
-  // Determine effective layout (mobile always uses cards if mobileRenderItem is provided)
-  const showMobileCards = isMobile && mobileRenderItem;
-  const effectiveLayout = showMobileCards ? "list" : layout;
+  // Narrow containers always use cards when a card renderer is provided.
+  const showNarrowCards = isNarrowContainer && mobileRenderItem;
+  const effectiveLayout = showNarrowCards ? "list" : layout;
 
   // Pagination bar
   const paginationBar = (isServerPagination || pagination) && (
@@ -430,7 +436,7 @@ export function DataTable<T>({
   }
 
   return (
-    <TableDataWrapperEl>
+    <TableDataWrapperEl ref={containerRef}>
       {hasToolbar && (
         <DataTableToolbar
           searchable={searchable}
@@ -443,6 +449,7 @@ export function DataTable<T>({
           layouts={effectiveLayouts}
           currentLayout={layout}
           onLayoutChange={setLayout}
+          narrow={isNarrowContainer}
           selectedCount={selectedCount}
           selectedRows={table.getSelectedRowModel().rows.map((r) => r.original)}
           bulkActions={bulkActions}

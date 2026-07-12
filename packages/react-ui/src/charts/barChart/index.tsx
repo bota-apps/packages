@@ -9,6 +9,7 @@ import {
   LabelList,
 } from "recharts";
 import { Stack } from "../../html/layout";
+import { Div } from "../../html";
 import { Heading } from "../../html/typography";
 import {
   chartColorByIndex,
@@ -56,79 +57,81 @@ export function BarChart<T extends Record<string, unknown>>({
   yAxisWidth,
 }: BarChartProps<T>) {
   const isVertical = layout === "vertical";
-  const height = useChartHeight(size);
+  const { ref: sizeRef, height } = useChartHeight(size);
   const showLegend = series.length > 1;
 
   return (
     <Stack gap="sm" className={barChartVariants()}>
       {title && <Heading size="sm">{title}</Heading>}
-      <ResponsiveContainer width="100%" height={height}>
-        <RechartsBarChart
-          data={data}
-          layout={isVertical ? "vertical" : "horizontal"}
-          margin={{ top: 8, right: showValues ? 40 : 8, bottom: 8, left: 8 }}
-        >
-          {showGrid && (
-            <CartesianGrid strokeDasharray="3 3" className="stroke-border" vertical={false} />
-          )}
-          {isVertical ? (
-            <>
-              <YAxis
-                dataKey={categoryKey}
-                type="category"
-                width={yAxisWidth ?? 120}
-                tick={{ fontSize: 12 }}
-                className="fill-muted-foreground"
-                axisLine={false}
-                tickLine={false}
-              />
-              <XAxis
-                type="number"
-                tick={{ fontSize: 12 }}
-                className="fill-muted-foreground"
-                axisLine={false}
-                tickLine={false}
-              />
-            </>
-          ) : (
-            <>
-              <XAxis
-                dataKey={categoryKey}
-                tick={{ fontSize: 12 }}
-                className="fill-muted-foreground"
-                axisLine={false}
-                tickLine={false}
-              />
-              <YAxis
-                tick={{ fontSize: 12 }}
-                className="fill-muted-foreground"
-                axisLine={false}
-                tickLine={false}
-              />
-            </>
-          )}
-          <Tooltip content={<ChartTooltipContent />} />
-          {series.map((s, i) => (
-            <Bar
-              key={s.dataKey}
-              dataKey={s.dataKey}
-              name={s.label}
-              fill={chartColorByIndex(s.color ? s.color - 1 : i)}
-              radius={[4, 4, 0, 0]}
-              stackId={stacked ? "stack" : undefined}
-            >
-              {showValues && (
-                <LabelList
-                  dataKey={s.dataKey}
-                  position={isVertical ? "right" : "top"}
-                  className="fill-muted-foreground text-xs"
-                  formatter={formatValue ?? formatChartValue}
+      <Div ref={sizeRef}>
+        <ResponsiveContainer width="100%" height={height}>
+          <RechartsBarChart
+            data={data}
+            layout={isVertical ? "vertical" : "horizontal"}
+            margin={{ top: 8, right: showValues ? 40 : 8, bottom: 8, left: 8 }}
+          >
+            {showGrid && (
+              <CartesianGrid strokeDasharray="3 3" className="stroke-border" vertical={false} />
+            )}
+            {isVertical ? (
+              <>
+                <YAxis
+                  dataKey={categoryKey}
+                  type="category"
+                  width={yAxisWidth ?? 120}
+                  tick={{ fontSize: 12 }}
+                  className="fill-muted-foreground"
+                  axisLine={false}
+                  tickLine={false}
                 />
-              )}
-            </Bar>
-          ))}
-        </RechartsBarChart>
-      </ResponsiveContainer>
+                <XAxis
+                  type="number"
+                  tick={{ fontSize: 12 }}
+                  className="fill-muted-foreground"
+                  axisLine={false}
+                  tickLine={false}
+                />
+              </>
+            ) : (
+              <>
+                <XAxis
+                  dataKey={categoryKey}
+                  tick={{ fontSize: 12 }}
+                  className="fill-muted-foreground"
+                  axisLine={false}
+                  tickLine={false}
+                />
+                <YAxis
+                  tick={{ fontSize: 12 }}
+                  className="fill-muted-foreground"
+                  axisLine={false}
+                  tickLine={false}
+                />
+              </>
+            )}
+            <Tooltip content={<ChartTooltipContent />} />
+            {series.map((s, i) => (
+              <Bar
+                key={s.dataKey}
+                dataKey={s.dataKey}
+                name={s.label}
+                fill={chartColorByIndex(s.color ? s.color - 1 : i)}
+                radius={[4, 4, 0, 0]}
+                stackId={stacked ? "stack" : undefined}
+              >
+                {showValues && (
+                  <LabelList
+                    dataKey={s.dataKey}
+                    position={isVertical ? "right" : "top"}
+                    className="fill-muted-foreground text-xs"
+                    formatter={formatValue ?? formatChartValue}
+                  />
+                )}
+              </Bar>
+            ))}
+          </RechartsBarChart>
+        </ResponsiveContainer>
+      </Div>
       {showLegend && (
         <ChartLegend items={series.map((s) => ({ label: s.label, color: s.color }))} />
       )}

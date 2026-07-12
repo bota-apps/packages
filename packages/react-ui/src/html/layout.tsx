@@ -257,16 +257,16 @@ export function Inline<T extends ElementType = "div">({
 }
 
 /* ------------------------------------------------------------------ */
-/* Grid — responsive CSS grid                                           */
+/* Grid — container-responsive CSS grid                                 */
 /* ------------------------------------------------------------------ */
 export const gridVariants = cva("grid", {
   variants: {
     gap: gapScale,
     columns: {
       1: "",
-      2: "grid-cols-1 md:grid-cols-2",
-      3: "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
-      4: "grid-cols-1 md:grid-cols-2 lg:grid-cols-4",
+      2: "grid-cols-1 @xl:grid-cols-2",
+      3: "grid-cols-1 @xl:grid-cols-2 @4xl:grid-cols-3",
+      4: "grid-cols-1 @xl:grid-cols-2 @4xl:grid-cols-4",
     },
   },
   defaultVariants: {
@@ -277,6 +277,12 @@ export const gridVariants = cva("grid", {
 
 type GridProps<T extends ElementType> = BaseLayoutProps<T> & VariantProps<typeof gridVariants>;
 
+/**
+ * Multi-column grids react to their own container width, not the viewport —
+ * a grid in a narrow panel collapses to one column even on a wide screen.
+ * The `@container` scope goes on a wrapper the component renders itself;
+ * the element carrying the `@…:` variants must live inside it.
+ */
 export function Grid<T extends ElementType = "div">({
   as,
   gap,
@@ -285,7 +291,11 @@ export function Grid<T extends ElementType = "div">({
   ...props
 }: GridProps<T>) {
   const Component = as ?? "div";
-  return <Component className={cn(gridVariants({ gap, columns }), className)} {...props} />;
+  const grid = <Component className={cn(gridVariants({ gap, columns }), className)} {...props} />;
+  if (columns == null || columns === 1) {
+    return grid;
+  }
+  return <div className="@container">{grid}</div>;
 }
 
 /* ------------------------------------------------------------------ */

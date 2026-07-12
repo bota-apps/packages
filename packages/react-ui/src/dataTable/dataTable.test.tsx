@@ -1,7 +1,11 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { DataTable, type ColumnDef } from "./index";
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
 
 type Project = {
   id: string;
@@ -67,6 +71,46 @@ describe("DataTable", () => {
       />,
     );
     expect(screen.getByText("No projects found.")).toBeTruthy();
+  });
+
+  // The table-to-cards switch is container-scoped: it reacts to the width the
+  // table was given, never the viewport.
+  describe("container-scoped card switch", () => {
+    const renderCard = (p: Project) => <span>{`card:${p.name}`}</span>;
+
+    it("renders cards when the measured container is narrow", () => {
+      vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockReturnValue(
+        DOMRect.fromRect({ width: 360, height: 400 }),
+      );
+      render(
+        <DataTable
+          data={projects}
+          columns={columns}
+          searchable={false}
+          mobileRenderItem={renderCard}
+          rowActions={[]}
+        />,
+      );
+      expect(screen.getByText("card:Noah Patel")).toBeTruthy();
+      expect(screen.queryByRole("table")).toBeNull();
+    });
+
+    it("renders the table when the measured container is wide", () => {
+      vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockReturnValue(
+        DOMRect.fromRect({ width: 900, height: 400 }),
+      );
+      render(
+        <DataTable
+          data={projects}
+          columns={columns}
+          searchable={false}
+          mobileRenderItem={renderCard}
+          rowActions={[]}
+        />,
+      );
+      expect(screen.getByRole("table")).toBeTruthy();
+      expect(screen.queryByText("card:Noah Patel")).toBeNull();
+    });
   });
 
   // Regression: with BOTH onRowClick and rowActions wired, the row-action menu

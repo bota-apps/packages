@@ -27,3 +27,53 @@ export const Default: Story = {
     </TabNav>
   ),
 };
+
+/**
+ * The bar adapts to its own container: in a narrow panel it becomes a
+ * full-width, horizontally scrollable strip with compact links; in a wide
+ * panel it is the inline pill row.
+ */
+export const ContainerScoped: Story = {
+  render: () => (
+    <div className="space-y-6">
+      <div className="w-72 rounded-lg border p-4">
+        <TabNav>
+          <a href="#overview" className={tabNavLinkClass(true)}>
+            Overview
+          </a>
+          <a href="#projects" className={tabNavLinkClass()}>
+            Projects
+          </a>
+          <a href="#customers" className={tabNavLinkClass()}>
+            Customers
+          </a>
+          <a href="#settings" className={tabNavLinkClass()}>
+            Settings
+          </a>
+          <a href="#billing" className={tabNavLinkClass()}>
+            Billing
+          </a>
+        </TabNav>
+      </div>
+      <div className="rounded-lg border p-4">
+        <TabNav>
+          <a href="#overview" className={tabNavLinkClass(true)}>
+            Overview
+          </a>
+          <a href="#projects" className={tabNavLinkClass()}>
+            Projects
+          </a>
+          <a href="#customers" className={tabNavLinkClass()}>
+            Customers
+          </a>
+          <a href="#settings" className={tabNavLinkClass()}>
+            Settings
+          </a>
+          <a href="#billing" className={tabNavLinkClass()}>
+            Billing
+          </a>
+        </TabNav>
+      </div>
+    </div>
+  ),
+};

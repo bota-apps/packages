@@ -29,4 +29,16 @@ describe("OnboardingSteps", () => {
     expect(current.className).toContain("font-semibold");
     expect(upcoming.className).not.toContain("font-semibold");
   });
+
+  it("collapses inactive labels in narrow containers while the active label stays visible", () => {
+    render(<OnboardingSteps steps={steps} current="business" />);
+
+    // Inactive labels and separators only show from the @2xl container width.
+    expect(screen.getByText("Profile").className).toContain("hidden @2xl:block");
+    expect(screen.getByText("Billing").className).toContain("hidden @2xl:block");
+    for (const separator of screen.getAllByText("\u2014")) {
+      expect(separator.className).toContain("hidden @2xl:block");
+    }
+    expect(screen.getByText("Business").className).not.toContain("hidden");
+  });
 });

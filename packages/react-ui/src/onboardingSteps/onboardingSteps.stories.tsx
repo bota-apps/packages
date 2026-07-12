@@ -27,3 +27,20 @@ export const FirstStep: Story = {
 export const LastStep: Story = {
   render: () => <OnboardingSteps steps={steps} current="billing" />,
 };
+
+/**
+ * In a narrow container only the active step keeps its label — the other
+ * steps collapse to bubbles so the strip fits a phone-width panel.
+ */
+export const ContainerScoped: Story = {
+  render: () => (
+    <div className="space-y-6">
+      <div className="w-72 rounded-lg border p-4">
+        <OnboardingSteps steps={steps} current="business" />
+      </div>
+      <div className="rounded-lg border p-4">
+        <OnboardingSteps steps={steps} current="business" />
+      </div>
+    </div>
+  ),
+};

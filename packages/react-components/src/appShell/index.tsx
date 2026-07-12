@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { useAuth } from "@bota-apps/auth-client";
-import { Button, Text } from "@bota-apps/react-ui";
+import { Button, Span, Text } from "@bota-apps/react-ui";
 import { LogOut } from "lucide-react";
 import { useAppearance } from "../appearanceProvider";
 import { AppShellLayout } from "../appShellLayout";
@@ -57,8 +57,9 @@ export function AppShell({ title, navItems, headerActions, children }: AppShellP
         user ? (
           // Inherit the chrome's sidebar-foreground (already a muted tone
           // relative to the chrome surface) — the page-scoped muted token can
-          // be unreadable on dark-chrome brands.
-          <Text size="sm">{`Signed in as ${user.name}`}</Text>
+          // be unreadable on dark-chrome brands. Truncates in narrow headers
+          // instead of wrapping word-per-line.
+          <Text as="div" size="sm" className="truncate">{`Signed in as ${user.name}`}</Text>
         ) : undefined
       }
       headerRight={
@@ -68,7 +69,9 @@ export function AppShell({ title, navItems, headerActions, children }: AppShellP
           <ThemeToggle />
           <Button variant="secondary" size="sm" onClick={handleSignOut}>
             <LogOut />
-            Sign out
+            {/* Icon-only on phones (label stays for screen readers) — the
+                visible label costs too much header width. */}
+            <Span className="sr-only sm:not-sr-only">Sign out</Span>
           </Button>
         </>
       }

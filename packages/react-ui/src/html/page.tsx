@@ -35,7 +35,12 @@ export const PageEl = forwardRef<HTMLDivElement, PageElProps>(function PageEl(
 /* PageContentEl — centred, padded content area                        */
 /* ------------------------------------------------------------------ */
 
-export const pageContentVariants = cva("mx-auto w-full px-3 md:px-4", {
+/**
+ * No gutters of its own: the app-shell content well owns page padding, and
+ * PageContent adding another layer doubled it — visibly wasteful on phones.
+ * PageContent contributes centring, width caps, and fixed-layout scrolling.
+ */
+export const pageContentVariants = cva("mx-auto w-full", {
   variants: {
     maxWidth: {
       default: "max-w-7xl",
@@ -43,12 +48,12 @@ export const pageContentVariants = cva("mx-auto w-full px-3 md:px-4", {
       full: "",
     },
     region: {
-      /** Fixed layout header — shrink-protect + top padding. */
-      header: "flex-shrink-0 pt-6",
+      /** Fixed layout header — shrink-protect. */
+      header: "flex-shrink-0",
       /** Fixed layout body — scrolls internally. */
-      body: "flex-1 overflow-y-auto pb-6",
-      /** Default — vertical padding both sides. */
-      default: "py-6",
+      body: "flex-1 overflow-y-auto",
+      /** Default — natural flow. */
+      default: "",
     },
   },
   defaultVariants: { maxWidth: "default", region: "default" },

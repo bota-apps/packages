@@ -4,7 +4,7 @@ export * from "./sparkline";
 export * from "./areaChart";
 export * from "./pieChart";
 export { ChartLegend } from "./chartLegend";
-export { useChartHeight } from "./useChartSize";
+export { useChartHeight, type ChartHeightResult } from "./useChartSize";
 export {
   chartColor,
   chartColorByIndex,

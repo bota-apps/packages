@@ -10,7 +10,9 @@ export const overlayVariants = cva(
 
 /** Centered modal panel shared by dialog and alert-dialog content. Renders on
  * the popover surface tier — identical to background in light, a lightness
- * step above the page in dark, where surface lightness carries elevation. */
+ * step above the page in dark, where surface lightness carries elevation.
+ * Capped to the small-viewport height (and scrollable past it) so long
+ * dialogs stay usable on phones. */
 export const modalContentVariants = cva(
-  "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-popover text-popover-foreground p-6 shadow-floating duration-base ease-standard data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 sm:rounded-lg",
+  "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-popover text-popover-foreground p-6 shadow-floating duration-base ease-standard data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 max-h-[calc(100dvh-2rem)] overflow-y-auto sm:rounded-lg",
 );

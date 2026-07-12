@@ -23,10 +23,13 @@ export const TableScrollContainerEl = forwardRef<HTMLDivElement, HTMLAttributes<
   },
 );
 
-/** Rounded-border wrapper for DataTable — wraps the scroll container + table. */
+/**
+ * Rounded-border wrapper for DataTable — wraps the toolbar, scroll container,
+ * and table, and provides the `@container` scope their layout adapts to.
+ */
 export const TableDataWrapperEl = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   function TableDataWrapperEl(props, ref) {
-    return <div ref={ref} className="rounded-md border" {...props} />;
+    return <div ref={ref} className="rounded-md border @container" {...props} />;
   },
 );
 

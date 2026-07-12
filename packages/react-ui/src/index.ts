@@ -9,6 +9,7 @@ export * from "./charts";
 // Utilities
 export * from "./lib/utils";
 export * from "./lib/useBreakpoint";
+export * from "./lib/useContainerWidth";
 export * from "./lib/useCopyToClipboard";
 export * from "./print";
 export * from "./lib/formatRelativeTime";
