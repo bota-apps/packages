@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import type { Money } from "@bota-apps/types";
 import { Heading } from "../html/typography";
@@ -27,6 +28,12 @@ type StatCardProps = {
   /** Card density. `sm` = compact for dense grids. `lg` = hero stats. */
   size?: StatCardSize;
   description?: string;
+  /**
+   * Optional trailing visual (e.g. a `Sparkline` from the `./charts`
+   * subpath). A slot, not a data prop, so the core bundle never pulls the
+   * charting runtime.
+   */
+  chart?: ReactNode;
   onClick?: () => void;
 };
 
@@ -60,6 +67,7 @@ export function StatCard({
   variant = "default",
   size = "default",
   description,
+  chart,
   onClick,
 }: StatCardProps) {
   const interactive = onClick !== undefined;
@@ -110,6 +118,7 @@ export function StatCard({
           </Text>
         )}
       </div>
+      {chart && <div className="shrink-0">{chart}</div>}
       {interactive && chevron}
     </div>
   );

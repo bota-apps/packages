@@ -40,4 +40,36 @@ describe("EmptyState", () => {
     expect(iconWrapper.className).toContain("text-muted-foreground");
     expect(emptyStateIconVariants()).toContain("mb-4");
   });
+
+  it("renders the tinted variant with a circular selected-tint icon chip", () => {
+    render(
+      <EmptyState
+        variant="tinted"
+        icon={<svg data-testid="tinted-icon" />}
+        title="No entries"
+        description="Add one to get started."
+      />,
+    );
+    const iconWrapper = screen.getByTestId("tinted-icon").parentElement as HTMLElement;
+    expect(iconWrapper.className).toContain("bg-selected");
+    expect(iconWrapper.className).toContain("text-selected-foreground");
+    expect(iconWrapper.className).toContain("rounded-full");
+    expect(iconWrapper.className).not.toContain("text-muted-foreground");
+  });
+
+  it("renders the action slot under the description in the tinted variant", () => {
+    render(
+      <EmptyState
+        variant="tinted"
+        icon={<svg data-testid="tinted-icon" />}
+        title="No entries"
+        description="Add one to get started."
+        action={<Button>Add entry</Button>}
+      />,
+    );
+    const description = screen.getByText("Add one to get started.");
+    const button = screen.getByRole("button", { name: "Add entry" });
+    const position = description.compareDocumentPosition(button);
+    expect(position & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
 });

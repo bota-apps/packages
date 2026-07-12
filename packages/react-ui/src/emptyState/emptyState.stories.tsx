@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { SearchX } from "lucide-react";
+import { Inbox, SearchX } from "lucide-react";
 import { EmptyState } from "./index";
 import { Button } from "../button";
 
@@ -22,6 +22,18 @@ export const WithIconAndAction: Story = {
       title="No projects found"
       description="Try a different search term or clear the filters."
       action={<Button variant="outline">Clear filters</Button>}
+    />
+  ),
+};
+
+export const Tinted: Story = {
+  render: () => (
+    <EmptyState
+      variant="tinted"
+      icon={<Inbox className="size-6" />}
+      title="Inbox is empty"
+      description="New items will show up here as they arrive."
+      action={<Button>Refresh</Button>}
     />
   ),
 };

@@ -97,6 +97,7 @@
     "@tanstack/react-table": "catalog:",
     "class-variance-authority": "catalog:",
     "clsx": "catalog:",
+    "cmdk": "^1.1.1",
     "date-fns": "catalog:",
     "dompurify": "catalog:",
     "lucide-react": "catalog:",

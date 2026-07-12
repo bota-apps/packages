@@ -1,5 +1,6 @@
 export * from "./barChart";
 export * from "./lineChart";
+export * from "./sparkline";
 export * from "./areaChart";
 export * from "./pieChart";
 export { ChartLegend } from "./chartLegend";

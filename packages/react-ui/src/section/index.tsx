@@ -68,27 +68,3 @@ export function CheckItem({ icon, children }: CheckItemProps) {
     </Div>
   );
 }
-
-type HeroProps = {
-  title: ReactNode;
-  description: string;
-  actions: ReactNode;
-};
-
-export function Hero({ title, description, actions }: HeroProps) {
-  return (
-    <SectionEl variant="hero">
-      <Div className="container mx-auto px-4 text-center">
-        <H as="h1" variant="display" className="mb-6">
-          {title}
-        </H>
-        <P className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-          {description}
-        </P>
-        <Div layout="row" gap="md" className="justify-center">
-          {actions}
-        </Div>
-      </Div>
-    </SectionEl>
-  );
-}
