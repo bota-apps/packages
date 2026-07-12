@@ -61,35 +61,71 @@ export const BadgeEl = forwardRef<HTMLSpanElement, BadgeElProps>(function BadgeE
 /* IconBadgeEl — circular icon container                                */
 /* ------------------------------------------------------------------ */
 
+/**
+ * The single icon-tile primitive of the kit. Every icon that sits on a card
+ * surface renders inside this tile so glyph weight and tint stay identical
+ * from one card to the next. The size ramp keeps a 2:1 tile-to-glyph ratio.
+ *
+ * Shape grammar: `square` for object/feature/navigation icons (the default),
+ * `circle` for people, status, and progress indicators.
+ */
 export const iconBadgeVariants = cva(
-  "inline-flex items-center justify-center rounded-full [&_svg]:shrink-0",
+  "inline-flex shrink-0 items-center justify-center [&_svg]:shrink-0",
   {
     variants: {
       size: {
-        md: "h-12 w-12 [&_svg]:size-6",
-        lg: "h-16 w-16 [&_svg]:size-8",
+        /** Dense rows and compact stat cards. */
+        sm: "h-8 w-8 [&_svg]:size-4",
+        /** Leading tiles on content, navigation, and feature cards. */
+        md: "h-10 w-10 [&_svg]:size-5",
+        /** Hero stat cards and empty states. */
+        lg: "h-12 w-12 [&_svg]:size-6",
+        /** Marketing spotlight surfaces. */
+        xl: "h-16 w-16 [&_svg]:size-8",
+      },
+      shape: {
+        square: "rounded-lg",
+        circle: "rounded-full",
       },
       tone: {
         primary: "bg-primary/10 text-primary",
+        info: "bg-blue-500/10 text-blue-500",
         success: "bg-emerald-500/10 text-emerald-500",
+        warning: "bg-amber-500/10 text-amber-500",
+        destructive: "bg-destructive/10 text-destructive",
         muted: "bg-muted text-muted-foreground",
       },
     },
+    compoundVariants: [
+      // The largest tile carries a proportionally larger radius.
+      { size: "xl", shape: "square", className: "rounded-xl" },
+    ],
     defaultVariants: {
-      size: "lg",
+      size: "md",
+      shape: "square",
       tone: "primary",
     },
   },
 );
 
+export type IconBadgeSize = NonNullable<VariantProps<typeof iconBadgeVariants>["size"]>;
+export type IconBadgeShape = NonNullable<VariantProps<typeof iconBadgeVariants>["shape"]>;
+export type IconBadgeTone = NonNullable<VariantProps<typeof iconBadgeVariants>["tone"]>;
+
 export type IconBadgeElProps = HTMLAttributes<HTMLSpanElement> &
   VariantProps<typeof iconBadgeVariants>;
 
 export const IconBadgeEl = forwardRef<HTMLSpanElement, IconBadgeElProps>(function IconBadgeEl(
-  { size, tone, className, ...props },
+  { size, shape, tone, className, ...props },
   ref,
 ) {
-  return <span ref={ref} className={cn(iconBadgeVariants({ size, tone }), className)} {...props} />;
+  return (
+    <span
+      ref={ref}
+      className={cn(iconBadgeVariants({ size, shape, tone }), className)}
+      {...props}
+    />
+  );
 });
 
 /* ------------------------------------------------------------------ */
@@ -104,6 +140,8 @@ export const stepBubbleVariants = cva(
         default: "h-7 w-7",
         lg: "h-9 w-9",
         xl: "h-11 w-11 text-sm",
+        /** Marketing step indicators — matches the lg icon-tile footprint. */
+        hero: "h-12 w-12 text-base",
       },
       state: {
         active: "bg-primary text-primary-foreground",

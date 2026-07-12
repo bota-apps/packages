@@ -4,11 +4,12 @@
  * Exports:
  *   CardEl         — bordered panel surface (Card component)
  *   TileEl         — interactive navigation tile (QuickLink component)
- *   TileIconEl     — icon container inside a tile
- *   CardIconEl     — feature icon container (feature card variant)
  *   CardHeaderEl   — card header row with spacing variant
  *   CardTitleGroupEl — title+description stack inside header
  *   CardButtonEl   — card-style interactive button
+ *
+ * Icon tiles on card surfaces render through IconBadgeEl (html/badge) — the
+ * single icon-container primitive — never through bespoke containers here.
  */
 import { forwardRef, type HTMLAttributes, type ButtonHTMLAttributes } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
@@ -26,8 +27,8 @@ export const cardVariants = cva("rounded-lg border bg-card text-card-foreground 
       /** Hover-lift card for grid listings. */
       interactive:
         "h-full transition-shadow duration-base ease-standard hover:shadow-floating hover:border-primary/50 group",
-      /** Icon-above-title feature card — caller provides internal layout. */
-      feature: "",
+      /** No internal padding — the caller composes the internal layout. */
+      flush: "",
       /** Tighter padding for dense contexts. */
       compact: "p-4",
       /** Content surface — slightly larger radius, subtle bg. */
@@ -84,46 +85,10 @@ export const TileEl = forwardRef<HTMLDivElement, TileElProps>(function TileEl(
 });
 
 /* ------------------------------------------------------------------ */
-/* TileIconEl — icon badge inside a TileEl                             */
-/* ------------------------------------------------------------------ */
-
-const tileIconVariants = cva(
-  "flex items-center justify-center rounded-lg shrink-0 [&>svg]:size-5",
-  {
-    variants: {
-      layout: {
-        row: "h-10 w-10 bg-primary/10 text-primary",
-        grid: "h-10 w-10 bg-primary/10 text-primary mb-1",
-      },
-    },
-    defaultVariants: {
-      layout: "row",
-    },
-  },
-);
-
-export type TileIconElProps = HTMLAttributes<HTMLDivElement> &
-  VariantProps<typeof tileIconVariants>;
-
-export const TileIconEl = forwardRef<HTMLDivElement, TileIconElProps>(function TileIconEl(
-  { layout, className, ...props },
-  ref,
-) {
-  return <div ref={ref} className={cn(tileIconVariants({ layout }), className)} {...props} />;
-});
-
-/* ------------------------------------------------------------------ */
 /* Card internal layout elements                                        */
 /* ------------------------------------------------------------------ */
 
-/** Icon container inside a feature card — sizes and colors the icon. */
-export const CardIconEl = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  function CardIconEl(props, ref) {
-    return <div ref={ref} className="[&>svg]:h-10 [&>svg]:w-10 text-primary mb-4" {...props} />;
-  },
-);
-
-const cardHeaderVariants = cva("flex items-start justify-between", {
+const cardHeaderVariants = cva("flex items-start justify-between gap-4", {
   variants: {
     /** Spacing after the header row. */
     spacing: {

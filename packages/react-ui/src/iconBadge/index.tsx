@@ -1,13 +1,13 @@
 import type { LucideIcon } from "lucide-react";
 import { IconBadgeEl, type IconBadgeElProps } from "../html";
 
-type IconBadgeProps = Pick<IconBadgeElProps, "size" | "tone"> & {
+type IconBadgeProps = Pick<IconBadgeElProps, "size" | "shape" | "tone"> & {
   icon: LucideIcon;
 };
 
-export function IconBadge({ icon: Icon, size, tone }: IconBadgeProps) {
+export function IconBadge({ icon: Icon, size, shape, tone }: IconBadgeProps) {
   return (
-    <IconBadgeEl size={size} tone={tone}>
+    <IconBadgeEl size={size} shape={shape} tone={tone}>
       <Icon />
     </IconBadgeEl>
   );

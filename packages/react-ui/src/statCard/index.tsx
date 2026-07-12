@@ -3,10 +3,10 @@ import type { LucideIcon } from "lucide-react";
 import type { Money } from "@bota-apps/types";
 import { Heading } from "../html/typography";
 import { Text } from "../html/typography";
+import { IconBadgeEl, type IconBadgeSize, type IconBadgeTone } from "../html";
 import { CurrencyText } from "../currencyText";
 import { NumericText } from "../numericText";
 import {
-  statCardIconVariants,
   statCardVariants,
   type StatCardSize,
   type StatCardTone,
@@ -37,11 +37,19 @@ type StatCardProps = {
   onClick?: () => void;
 };
 
-// Icon glyph sizing tracks the card density; applied to the SVG itself.
-const iconSvgClasses: Record<StatCardSize, string> = {
-  sm: "h-3.5 w-3.5",
-  default: "h-4 w-4",
-  lg: "h-5 w-5",
+// The icon tile tracks the card density along the shared icon-badge ramp.
+const iconBadgeSizes: Record<StatCardSize, IconBadgeSize> = {
+  sm: "sm",
+  default: "md",
+  lg: "lg",
+};
+
+const iconBadgeTones: Record<StatCardTone, IconBadgeTone> = {
+  default: "primary",
+  success: "success",
+  warning: "warning",
+  info: "info",
+  destructive: "destructive",
 };
 
 const chevron = (
@@ -90,9 +98,9 @@ export function StatCard({
       }
     >
       {Icon && (
-        <div className={statCardIconVariants({ tone, size })}>
-          <Icon className={iconSvgClasses[size]} />
-        </div>
+        <IconBadgeEl size={iconBadgeSizes[size]} tone={iconBadgeTones[tone]}>
+          <Icon />
+        </IconBadgeEl>
       )}
       <div className="min-w-0 flex-1">
         <Text size="sm" tone="muted" truncate>
