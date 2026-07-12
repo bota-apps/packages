@@ -8,6 +8,7 @@ import {
   Tooltip,
 } from "recharts";
 import { Stack } from "../../html/layout";
+import { Div } from "../../html";
 import { Heading } from "../../html/typography";
 import { chartColorByIndex, type ChartSeriesConfig, type ChartSize } from "../chartConfig";
 import { useChartHeight } from "../useChartSize";
@@ -38,45 +39,47 @@ export function LineChart<T extends Record<string, unknown>>({
   showGrid = true,
   curved = true,
 }: LineChartProps<T>) {
-  const height = useChartHeight(size);
+  const { ref: sizeRef, height } = useChartHeight(size);
   const showLegend = series.length > 1;
 
   return (
     <Stack gap="sm" className={lineChartVariants()}>
       {title && <Heading size="sm">{title}</Heading>}
-      <ResponsiveContainer width="100%" height={height}>
-        <RechartsLineChart data={data} margin={{ top: 8, right: 8, bottom: 8, left: 8 }}>
-          {showGrid && (
-            <CartesianGrid strokeDasharray="3 3" className="stroke-border" vertical={false} />
-          )}
-          <XAxis
-            dataKey={categoryKey}
-            tick={{ fontSize: 12 }}
-            className="fill-muted-foreground"
-            axisLine={false}
-            tickLine={false}
-          />
-          <YAxis
-            tick={{ fontSize: 12 }}
-            className="fill-muted-foreground"
-            axisLine={false}
-            tickLine={false}
-          />
-          <Tooltip content={<ChartTooltipContent />} />
-          {series.map((s, i) => (
-            <Line
-              key={s.dataKey}
-              type={curved ? "monotone" : "linear"}
-              dataKey={s.dataKey}
-              name={s.label}
-              stroke={chartColorByIndex(s.color ? s.color - 1 : i)}
-              strokeWidth={2}
-              dot={{ r: 3 }}
-              activeDot={{ r: 5 }}
+      <Div ref={sizeRef}>
+        <ResponsiveContainer width="100%" height={height}>
+          <RechartsLineChart data={data} margin={{ top: 8, right: 8, bottom: 8, left: 8 }}>
+            {showGrid && (
+              <CartesianGrid strokeDasharray="3 3" className="stroke-border" vertical={false} />
+            )}
+            <XAxis
+              dataKey={categoryKey}
+              tick={{ fontSize: 12 }}
+              className="fill-muted-foreground"
+              axisLine={false}
+              tickLine={false}
             />
-          ))}
-        </RechartsLineChart>
-      </ResponsiveContainer>
+            <YAxis
+              tick={{ fontSize: 12 }}
+              className="fill-muted-foreground"
+              axisLine={false}
+              tickLine={false}
+            />
+            <Tooltip content={<ChartTooltipContent />} />
+            {series.map((s, i) => (
+              <Line
+                key={s.dataKey}
+                type={curved ? "monotone" : "linear"}
+                dataKey={s.dataKey}
+                name={s.label}
+                stroke={chartColorByIndex(s.color ? s.color - 1 : i)}
+                strokeWidth={2}
+                dot={{ r: 3 }}
+                activeDot={{ r: 5 }}
+              />
+            ))}
+          </RechartsLineChart>
+        </ResponsiveContainer>
+      </Div>
       {showLegend && (
         <ChartLegend items={series.map((s) => ({ label: s.label, color: s.color }))} />
       )}

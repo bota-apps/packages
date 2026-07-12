@@ -34,7 +34,7 @@ describe("Layout primitives", () => {
     expect(inline.className).toContain("gap-2");
   });
 
-  it("renders Grid with responsive column classes", () => {
+  it("renders multi-column Grid with container-scoped columns inside its own @container wrapper", () => {
     render(
       <Grid columns={3} gap="lg" data-testid="grid">
         <span>Cell</span>
@@ -42,8 +42,22 @@ describe("Layout primitives", () => {
     );
     const grid = screen.getByTestId("grid");
     expect(grid.className).toContain("grid");
-    expect(grid.className).toContain("lg:grid-cols-3");
-    expect(gridVariants({ columns: 2 })).toContain("md:grid-cols-2");
+    expect(grid.className).toContain("@4xl:grid-cols-3");
+    // The @container scope lives on a wrapper, never on the grid itself.
+    expect(grid.parentElement?.className).toContain("@container");
+    expect(gridVariants({ columns: 2 })).toContain("@xl:grid-cols-2");
+  });
+
+  it("renders single-column Grid without a container wrapper", () => {
+    render(
+      <div data-testid="host">
+        <Grid data-testid="grid">
+          <span>Cell</span>
+        </Grid>
+      </div>,
+    );
+    const grid = screen.getByTestId("grid");
+    expect(grid.parentElement).toBe(screen.getByTestId("host"));
   });
 
   it("renders Stack as a fixed-width, non-shrinking column", () => {

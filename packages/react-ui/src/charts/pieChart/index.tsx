@@ -1,5 +1,6 @@
 import { ResponsiveContainer, PieChart as RechartsPieChart, Pie, Cell, Tooltip } from "recharts";
 import { Stack } from "../../html/layout";
+import { Div } from "../../html";
 import { Heading } from "../../html/typography";
 import {
   chartColorByIndex,
@@ -37,54 +38,59 @@ export function PieChart({
   centerValue,
   formatValue = formatChartValue,
 }: PieChartProps) {
-  const height = useChartHeight(size);
+  const { ref: sizeRef, height } = useChartHeight(size);
   const isDonut = innerRadius > 0;
 
   return (
     <Stack gap="sm" align="center" className={pieChartVariants()}>
       {title && <Heading size="sm">{title}</Heading>}
-      <ResponsiveContainer width="100%" height={height}>
-        <RechartsPieChart>
-          <Pie
-            data={data}
-            dataKey="value"
-            nameKey="label"
-            cx="50%"
-            cy="50%"
-            innerRadius={isDonut ? "55%" : 0}
-            outerRadius="85%"
-            label={isDonut ? undefined : renderValueLabel(formatValue)}
-            paddingAngle={2}
-          >
-            {data.map((entry, i) => (
-              <Cell key={entry.label} fill={chartColorByIndex(entry.color ? entry.color - 1 : i)} />
-            ))}
-          </Pie>
-          <Tooltip content={<ChartTooltipContent />} />
-          {isDonut && centerValue !== undefined && (
-            <text
-              x="50%"
-              y="46%"
-              textAnchor="middle"
-              dominantBaseline="central"
-              className="fill-foreground text-xl font-bold"
+      <Div ref={sizeRef}>
+        <ResponsiveContainer width="100%" height={height}>
+          <RechartsPieChart>
+            <Pie
+              data={data}
+              dataKey="value"
+              nameKey="label"
+              cx="50%"
+              cy="50%"
+              innerRadius={isDonut ? "55%" : 0}
+              outerRadius="85%"
+              label={isDonut ? undefined : renderValueLabel(formatValue)}
+              paddingAngle={2}
             >
-              {centerValue}
-            </text>
-          )}
-          {isDonut && centerLabel && (
-            <text
-              x="50%"
-              y="56%"
-              textAnchor="middle"
-              dominantBaseline="central"
-              className="fill-muted-foreground text-xs"
-            >
-              {centerLabel}
-            </text>
-          )}
-        </RechartsPieChart>
-      </ResponsiveContainer>
+              {data.map((entry, i) => (
+                <Cell
+                  key={entry.label}
+                  fill={chartColorByIndex(entry.color ? entry.color - 1 : i)}
+                />
+              ))}
+            </Pie>
+            <Tooltip content={<ChartTooltipContent />} />
+            {isDonut && centerValue !== undefined && (
+              <text
+                x="50%"
+                y="46%"
+                textAnchor="middle"
+                dominantBaseline="central"
+                className="fill-foreground text-xl font-bold"
+              >
+                {centerValue}
+              </text>
+            )}
+            {isDonut && centerLabel && (
+              <text
+                x="50%"
+                y="56%"
+                textAnchor="middle"
+                dominantBaseline="central"
+                className="fill-muted-foreground text-xs"
+              >
+                {centerLabel}
+              </text>
+            )}
+          </RechartsPieChart>
+        </ResponsiveContainer>
+      </Div>
       <ChartLegend items={data} />
     </Stack>
   );

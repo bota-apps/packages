@@ -38,7 +38,8 @@ type ButtonGroupProps = {
 
 export function ButtonGroup({ children }: ButtonGroupProps) {
   return (
-    <Div layout="row" gap="md">
+    // Wraps so long action rows stack in narrow containers instead of overflowing.
+    <Div layout="row" gap="md" className="flex-wrap">
       {children}
     </Div>
   );

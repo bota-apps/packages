@@ -29,13 +29,22 @@ export const Header = forwardRef<HTMLElement, HeaderProps>(function Header(
 /* ------------------------------------------------------------------ */
 
 export const sectionHeaderVariants = cva(
-  "pb-4 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between",
+  "pb-4 flex flex-col @xl:flex-row gap-4 @xl:items-center @xl:justify-between",
 );
 
-/** Outer row for a page section header (title + actions). Responsive column-to-row. */
+/**
+ * Outer row for a page section header (title + actions). The column-to-row
+ * switch reacts to the header's own container width (the element renders its
+ * own `@container` wrapper), so a header in a narrow panel stacks even on a
+ * wide viewport.
+ */
 export const SectionHeaderEl = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   function SectionHeaderEl(props, ref) {
-    return <div ref={ref} className={sectionHeaderVariants()} {...props} />;
+    return (
+      <div className="@container">
+        <div ref={ref} className={sectionHeaderVariants()} {...props} />
+      </div>
+    );
   },
 );
 
@@ -46,13 +55,13 @@ export const SectionHeaderTitleGroupEl = forwardRef<HTMLDivElement, HTMLAttribut
   },
 );
 
-/** Actions row inside a SectionHeader — wraps and aligns action buttons. */
+/** Actions row inside a SectionHeader — wraps in narrow containers, single row otherwise. */
 export const SectionHeaderActionsEl = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   function SectionHeaderActionsEl(props, ref) {
     return (
       <div
         ref={ref}
-        className="flex gap-2 flex-wrap sm:flex-nowrap sm:shrink-0 justify-end"
+        className="flex gap-2 flex-wrap @xl:flex-nowrap @xl:shrink-0 justify-end"
         {...props}
       />
     );
@@ -63,7 +72,14 @@ export const SectionHeaderActionsEl = forwardRef<HTMLDivElement, HTMLAttributes<
 /* Page header elements                                                 */
 /* ------------------------------------------------------------------ */
 
-export const pageHeaderVariants = cva("flex items-center justify-between mb-6");
+/**
+ * Wrap-capable page header row: when title and action don't fit side by side
+ * in the page column, the action drops below the title instead of squeezing
+ * the title into a word-per-line stack.
+ */
+export const pageHeaderVariants = cva(
+  "flex flex-wrap items-center justify-between gap-x-4 gap-y-3 mb-6",
+);
 
 /** Row header for a page — description + optional action, with bottom margin. */
 export const PageHeaderEl = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(

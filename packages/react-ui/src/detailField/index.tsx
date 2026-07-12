@@ -23,12 +23,14 @@ export function DetailField({ icon, label, value, copyable, copyValue }: DetailF
   return (
     <Div layout="rowStart" gap="md">
       {icon && <Div className={detailFieldIconVariants()}>{icon}</Div>}
-      <Div>
+      {/* min-w-0 lets the value column shrink inside the flex row so long
+          values wrap instead of pushing the field wider than its container. */}
+      <Div className="min-w-0">
         <P variant="label">{label}</P>
         <Div layout="row" gap="xs" className="items-center">
           {/* A div host: `value` accepts arbitrary nodes, and block-level
               content (e.g. a Text paragraph) may not nest inside <p>. */}
-          <Text as="div" size="sm" tone="muted">
+          <Text as="div" size="sm" tone="muted" className="min-w-0 break-words">
             {value}
           </Text>
           {copyable && copyValue && (

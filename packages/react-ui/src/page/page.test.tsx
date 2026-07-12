@@ -30,7 +30,9 @@ describe("Page", () => {
     expect(screen.getByText("narrow").className).toContain("max-w-2xl");
     const body = screen.getByText("body");
     expect(body.className).toContain("overflow-y-auto");
-    expect(pageContentVariants({ region: "header" })).toContain("pt-6");
+    // The shell content well owns page gutters — PageContent adds none of its own.
+    expect(pageContentVariants({ region: "header" })).not.toContain("p");
+    expect(pageContentVariants()).not.toContain("px-");
   });
 
   it("renders ContentSurface children", () => {

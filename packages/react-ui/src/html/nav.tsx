@@ -9,8 +9,13 @@ export const navVariants = cva("", {
   variants: {
     variant: {
       sidebar: "flex-1 space-y-1 px-4",
+      /**
+       * Container-scoped: in narrow containers the bar is a full-width
+       * horizontally scrollable strip; from @2xl it becomes the compact
+       * inline pill row. TabNavContainerEl provides the `@container` scope.
+       */
       tabBar:
-        "inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground max-md:flex max-md:w-full max-md:h-auto max-md:justify-start max-md:overflow-x-auto max-md:[scrollbar-width:none] max-md:[&::-webkit-scrollbar]:hidden",
+        "flex w-full h-auto justify-start overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden items-center rounded-lg bg-muted p-1 text-muted-foreground @2xl:inline-flex @2xl:w-auto @2xl:h-9 @2xl:justify-center @2xl:overflow-visible",
     },
   },
 });
@@ -29,7 +34,7 @@ export const Nav = forwardRef<HTMLElement, NavProps>(function Nav(
 /* ------------------------------------------------------------------ */
 
 export const tabNavLinkVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 max-md:shrink-0 max-md:px-2.5 max-md:py-1.5 max-md:text-xs",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-md shrink-0 px-2.5 py-1.5 text-xs font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 @2xl:shrink @2xl:px-3 @2xl:py-1 @2xl:text-sm",
   {
     variants: {
       active: {
@@ -50,9 +55,10 @@ export function tabNavLinkClass(active?: boolean): string {
 /* TabNavContainerEl — outer wrapper for the tab nav bar              */
 /* ------------------------------------------------------------------ */
 
+/** Outer wrapper for the tab nav bar — also the `@container` scope its links adapt to. */
 export const TabNavContainerEl = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   function TabNavContainerEl(props, ref) {
-    return <div ref={ref} className="mb-6" {...props} />;
+    return <div ref={ref} className="mb-6 @container" {...props} />;
   },
 );
 

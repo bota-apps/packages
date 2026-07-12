@@ -4,7 +4,6 @@ import { InputEl } from "../html/input";
 import { Button } from "../button";
 import { ToggleGroup, ToggleGroupItem } from "../toggleGroup";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../select";
-import { useBreakpoint } from "../lib/useBreakpoint";
 
 type DataTableToolbarProps<T> = {
   searchable?: boolean;
@@ -19,6 +18,8 @@ type DataTableToolbarProps<T> = {
   layouts?: readonly DataTableLayout[];
   currentLayout: DataTableLayout;
   onLayoutChange: (layout: DataTableLayout) => void;
+  /** True when the table's own container is narrow — cards are forced, so the layout picker hides. */
+  narrow: boolean;
 
   // Bulk bar (inline in toolbar when rows selected)
   selectedCount: number;
@@ -46,13 +47,13 @@ export function DataTableToolbar<T>({
   layouts,
   currentLayout,
   onLayoutChange,
+  narrow,
   selectedCount,
   selectedRows,
   bulkActions,
   onClearSelection,
   translations: tt,
 }: DataTableToolbarProps<T>) {
-  const bp = useBreakpoint();
   const hasSearch = searchable;
   const hasDropdownFilters = dropdownFilters && dropdownFilters.length > 0;
   const hasLayouts = layouts && layouts.length > 1;
@@ -64,7 +65,7 @@ export function DataTableToolbar<T>({
   }
 
   return (
-    <div className="flex flex-wrap items-center gap-2 border-b px-2 py-2 md:px-4 md:py-3">
+    <div className="flex flex-wrap items-center gap-2 border-b px-2 py-2 @2xl:px-4 @2xl:py-3">
       {showBulkBar ? (
         <>
           <span className="text-sm font-medium">
@@ -128,7 +129,7 @@ export function DataTableToolbar<T>({
       )}
 
       <div className="ml-auto flex items-center gap-2">
-        {hasLayouts && bp.above("md") && (
+        {hasLayouts && !narrow && (
           <ToggleGroup
             type="single"
             value={currentLayout}

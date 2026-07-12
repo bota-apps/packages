@@ -47,6 +47,39 @@ export const GridExample: Story = {
   ),
 };
 
+/**
+ * Grid columns react to the grid's own container, not the viewport: the same
+ * `columns={3}` grid renders one column in a narrow panel, two at a medium
+ * width, and three when the panel is wide enough.
+ */
+export const GridContainerScoped: Story = {
+  render: () => (
+    <Stack gap="md">
+      <div className="w-72 rounded-lg border p-4">
+        <Grid columns={3} gap="md">
+          <Card title="Alpha" />
+          <Card title="Beta" />
+          <Card title="Gamma" />
+        </Grid>
+      </div>
+      <div className="w-[40rem] max-w-full rounded-lg border p-4">
+        <Grid columns={3} gap="md">
+          <Card title="Alpha" />
+          <Card title="Beta" />
+          <Card title="Gamma" />
+        </Grid>
+      </div>
+      <div className="rounded-lg border p-4">
+        <Grid columns={3} gap="md">
+          <Card title="Alpha" />
+          <Card title="Beta" />
+          <Card title="Gamma" />
+        </Grid>
+      </div>
+    </Stack>
+  ),
+};
+
 export const CenterAndContainer: Story = {
   render: () => (
     <Container padding="md">

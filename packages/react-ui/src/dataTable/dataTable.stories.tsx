@@ -186,3 +186,49 @@ export const Empty: Story = {
     />
   ),
 };
+
+/**
+ * The table-to-cards switch is container-scoped: the same table renders cards
+ * in a narrow panel (below ~640px of its own width) and rows in a wide one —
+ * regardless of the viewport.
+ */
+export const ContainerScopedCards: Story = {
+  render: () => (
+    <div className="flex flex-wrap gap-6">
+      <div className="w-80">
+        <DataTable
+          data={projects}
+          columns={columns}
+          searchable={false}
+          mobileRenderItem={(row) => (
+            <div className="space-y-1">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-sm font-medium">{row.name}</span>
+                <Badge variant={statusBadge[row.status].variant}>
+                  {statusBadge[row.status].label}
+                </Badge>
+              </div>
+              <div className="text-xs text-muted-foreground">{row.department}</div>
+              <CurrencyText value={row.budget} size="sm" />
+            </div>
+          )}
+          rowActions={[]}
+        />
+      </div>
+      <div className="min-w-[42rem] flex-1">
+        <DataTable
+          data={projects}
+          columns={columns}
+          searchable={false}
+          mobileRenderItem={(row) => (
+            <div className="space-y-1">
+              <span className="text-sm font-medium">{row.name}</span>
+              <div className="text-xs text-muted-foreground">{row.department}</div>
+            </div>
+          )}
+          rowActions={[]}
+        />
+      </div>
+    </div>
+  ),
+};
