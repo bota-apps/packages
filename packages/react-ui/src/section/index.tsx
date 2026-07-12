@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { SectionEl, Div, H, P, Span } from "../html";
+import { SectionEl, StepBubbleEl, Div, H, P, Span } from "../html";
 
 export * from "./variants";
 
@@ -44,9 +44,9 @@ type StepIndicatorProps = {
 export function StepIndicator({ step, title, description }: StepIndicatorProps) {
   return (
     <Div layout="colCenter" className="text-center">
-      <Span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground text-xl font-bold mb-4">
+      <StepBubbleEl size="hero" state="active" className="mb-4">
         {step}
-      </Span>
+      </StepBubbleEl>
       <H as="h3" variant="h5" className="mb-2">
         {title}
       </H>

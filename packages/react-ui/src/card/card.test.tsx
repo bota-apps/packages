@@ -1,4 +1,5 @@
 import { cleanup, render, screen } from "@testing-library/react";
+import { Rocket } from "lucide-react";
 import { afterEach, describe, expect, it } from "vitest";
 import { Badge } from "../badge";
 import { Card } from "./index";
@@ -20,6 +21,18 @@ describe("Card", () => {
   it("applies variant classes from cardVariants", () => {
     const { container } = render(<Card variant="compact" title="Dense" />);
     expect((container.firstChild as HTMLElement).className).toContain("p-4");
+  });
+
+  it("renders a leading icon tile in the header with the given tone", () => {
+    const { container } = render(
+      <Card icon={Rocket} iconTone="success" title="Launched" description="With a tile." />,
+    );
+    const tile = container.querySelector("span");
+    expect(tile?.querySelector("svg")).toBeTruthy();
+    // Leading tiles sit on the md ramp step of the shared icon badge.
+    expect(tile?.className).toContain("h-10");
+    expect(tile?.className).toContain("rounded-lg");
+    expect(tile?.className).toContain("bg-emerald-500/10");
   });
 
   it("stretches to the parent cell with the fill prop", () => {

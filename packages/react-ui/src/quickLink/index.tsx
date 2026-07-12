@@ -1,7 +1,7 @@
 import { ChevronRight } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
-import { TileEl, TileIconEl, Div, P } from "../html";
+import { TileEl, IconBadgeEl, Div, P } from "../html";
 import { cn } from "../lib/utils";
 import { quickLinkGridVariants } from "./variants";
 
@@ -30,9 +30,9 @@ export function QuickLink({
   const layout = variant === "grid" ? "grid" : "row";
   return (
     <TileEl layout={layout} className={className}>
-      <TileIconEl layout={layout}>
+      <IconBadgeEl size="md">
         <Icon />
-      </TileIconEl>
+      </IconBadgeEl>
 
       <Div layout="col" className="flex-1 min-w-0">
         <P className="text-sm font-semibold text-foreground leading-snug group-hover:text-primary transition-colors">

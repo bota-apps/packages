@@ -1,11 +1,27 @@
 import type { ReactNode } from "react";
-import { CardEl, CardIconEl, CardHeaderEl, CardTitleGroupEl, type CardElProps } from "../html";
+import type { LucideIcon } from "lucide-react";
+import {
+  CardEl,
+  CardHeaderEl,
+  CardTitleGroupEl,
+  IconBadgeEl,
+  type CardElProps,
+  type IconBadgeTone,
+} from "../html";
 import { Div, H, P } from "../html";
 
 type CardProps = Omit<CardElProps, "title"> & {
   title?: string;
   description?: string;
-  icon?: ReactNode;
+  /**
+   * Leading icon tile in the header, aligned to the title block. The sole
+   * sanctioned icon placement on a content card — icons never render in
+   * `headerRight`.
+   */
+  icon?: LucideIcon;
+  /** Tint of the leading icon tile. */
+  iconTone?: IconBadgeTone;
+  /** Trailing header slot for actions and badges — never icon tiles. */
   headerRight?: ReactNode;
   children?: ReactNode;
   footer?: ReactNode;
@@ -16,39 +32,38 @@ function Card({
   fill,
   title,
   description,
-  icon,
+  icon: Icon,
+  iconTone,
   headerRight,
   children,
   footer,
   className,
 }: CardProps) {
-  const hasHeader = Boolean(title || headerRight);
+  const hasHeader = Boolean(title || Icon || headerRight);
 
   return (
     <CardEl variant={variant} fill={fill} className={className}>
-      {variant === "feature" && (
-        <Div padding="lg">
-          {icon && <CardIconEl>{icon}</CardIconEl>}
-          {title && (
-            <H as="h3" variant="h5" mb="2">
-              {title}
-            </H>
-          )}
-          {description && <P variant="muted">{description}</P>}
-        </Div>
-      )}
-
-      {variant !== "feature" && hasHeader && (
+      {hasHeader && (
         <CardHeaderEl spacing={variant === "interactive" ? "compact" : "default"}>
-          <CardTitleGroupEl>
-            {title && (
-              <H as="h3" variant={variant === "interactive" ? "interactiveCardTitle" : "cardTitle"}>
-                {title}
-              </H>
+          <Div layout="row" gap="md" grow>
+            {Icon && (
+              <IconBadgeEl size="md" tone={iconTone}>
+                <Icon />
+              </IconBadgeEl>
             )}
-            {description && <P variant="muted">{description}</P>}
-          </CardTitleGroupEl>
-          {headerRight && <Div>{headerRight}</Div>}
+            <CardTitleGroupEl>
+              {title && (
+                <H
+                  as="h3"
+                  variant={variant === "interactive" ? "interactiveCardTitle" : "cardTitle"}
+                >
+                  {title}
+                </H>
+              )}
+              {description && <P variant="muted">{description}</P>}
+            </CardTitleGroupEl>
+          </Div>
+          {headerRight && <Div shrink="0">{headerRight}</Div>}
         </CardHeaderEl>
       )}
 

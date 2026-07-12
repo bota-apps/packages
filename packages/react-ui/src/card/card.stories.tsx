@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Rocket } from "lucide-react";
+import { FileText, Rocket } from "lucide-react";
 import { Button } from "../button";
 import { Card } from "./index";
 
@@ -41,11 +41,24 @@ export const Variants: Story = {
         title="Surface"
         description="Content surface with subtle background."
       />
+    </div>
+  ),
+};
+
+export const LeadingIcon: Story = {
+  render: () => (
+    <div className="grid w-[28rem] gap-4">
       <Card
-        variant="feature"
-        icon={<Rocket />}
-        title="Feature"
-        description="Icon-above-title feature card."
+        icon={FileText}
+        title="Documents"
+        description="Leading icon tile aligned to the title block."
+      />
+      <Card
+        icon={Rocket}
+        iconTone="success"
+        title="Launched"
+        description="Tone tints the tile without changing its geometry."
+        headerRight={<Button variant="outline">View</Button>}
       />
     </div>
   ),
