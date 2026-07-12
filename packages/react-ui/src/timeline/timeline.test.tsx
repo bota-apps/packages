@@ -47,6 +47,14 @@ describe("Timeline", () => {
     expect(screen.getByText("Queued for processing.")).toBeTruthy();
   });
 
+  it("lets the meta wrap under the title in narrow containers", () => {
+    renderTimeline();
+
+    const row = screen.getByText("Jun 24").parentElement;
+    expect(row?.className).toContain("flex-wrap");
+    expect(screen.getByText("Order placed").className).toContain("min-w-0");
+  });
+
   it("applies the tone classes to the marker chip and dot", () => {
     renderTimeline();
 

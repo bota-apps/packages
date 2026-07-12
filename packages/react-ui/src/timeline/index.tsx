@@ -60,8 +60,10 @@ export function TimelineItem({
         {icon ?? <span className={cn(timelineDotVariants({ tone }))} />}
       </span>
       <div className="flex min-w-0 flex-1 flex-col gap-1">
-        <div className="flex items-baseline justify-between gap-3">
-          <Text as="span" size="sm" weight="medium" tone="default">
+        {/* Wraps so the meta drops under the title in narrow containers
+            instead of pushing the row wider than the timeline. */}
+        <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
+          <Text as="span" size="sm" weight="medium" tone="default" className="min-w-0">
             {title}
           </Text>
           {meta !== undefined && <span className={timelineMetaVariants()}>{meta}</span>}
