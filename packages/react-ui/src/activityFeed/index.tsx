@@ -5,6 +5,11 @@
  * exact provenance. Pair it with a dedicated audit surface where exact history
  * is required.
  *
+ * Choosing between the vertical rails: ActivityFeed is for a chronological
+ * stream of recent activity. For a fixed lifecycle (complete / current /
+ * upcoming steps) use ProcessTimeline; for a styled rail of discrete events
+ * with per-item marker tones use Timeline.
+ *
  * Domain-neutral: callers supply entries with a tone, an optional icon, and
  * arbitrary title/description nodes. Semantic `<ol>` markup with a connecting
  * rail; a zero-state renders when there is nothing to show.
