@@ -1,5 +1,82 @@
 # @bota-apps/react-ui
 
+## 0.12.0
+
+### Minor Changes
+
+- ab5fed8: Add five foundational, domain-neutral surfaces for detail pages and dashboards,
+  plus `Dl`/`Dt`/`Dd` html primitives:
+
+  - **`StatusLegend`** — a compact key mapping colored (and optionally icon-shaped)
+    swatches to labels; horizontal or vertical; semantic list; color is never the
+    only signal.
+  - **`EntitySummary`** — a label/value fact surface using semantic `<dl>` markup;
+    container-query column reflow (1→2→3), comfortable/compact density, full-width
+    items for long values.
+  - **`ActivityFeed`** — a human-readable, chronological event feed (distinct from a
+    compliance audit log); tone-tinted markers, optional connectors, density, and a
+    zero-state.
+  - **`ReadinessSummary`** — an optional progress bar with a worded count plus
+    grouped, optionally-actionable issues (router-neutral `onSelect`); positive
+    zero-state; readiness never communicated by color alone.
+  - **`ActionCenter`** — a router-neutral "next actions" panel; each action renders
+    as a keyboard-operable button (via `onSelect`) or a static row, with an urgency
+    icon tone and a trailing slot. Exposes `actionCenterItemVariants` as the shared
+    styling recipe for a future router-aware wrapper.
+
+  Each ships its cva variants (`<name>Variants` + tone/status/density unions),
+  stories, and tests. Interaction states use `muted`/`selected` (never `accent`),
+  and all motion respects `prefers-reduced-motion`.
+
+- b32b034: Add domain-neutral visualization and comparison surfaces to `@bota-apps/react-ui`
+  and its `./charts` subpath:
+
+  - **`ComparisonTable`** — a typed, generic (`<T>`) side-by-side comparison of a
+    bounded set of options across labeled attributes. Column states
+    (recommended/lowest/highest/selected/unavailable) are shown with badges + text
+    (never color alone); accessible selection; container-query reflow from table to
+    stacked cards in narrow containers.
+  - **`MoneyBreakdown`** — a financial summary using semantic `<dl>` markup:
+    optional grouped sections + subtotals, positive/negative values (rendered with a
+    real minus glyph), a distinguished total, and `default`/`document` (print) variants.
+    Values are caller-formatted — the component never formats currency.
+  - **`RouteDiagram`** — a 2D SVG diagram of a staged, multi-leg journey. Node status
+    (complete/current/upcoming) is conveyed by shape + text, not color alone; a
+    semantic ordered-list summary backs the SVG for screen readers and print; optional
+    CSS path-draw reveal that is static under `prefers-reduced-motion`; container-query
+    switch to a vertical layout in narrow containers.
+  - **`DocumentChecklist`** — a document-completeness surface: per-item status
+    (provided/missing/pending/expired) with icon + text, required/optional in words, a
+    worded completeness count and progress bar, router-neutral `onSelect`, trailing
+    action slot, and a zero-state. Presentational only — no upload/routing.
+  - **`WaterfallChart`** (`./charts`) — a Recharts waterfall explaining how a starting
+    value becomes an ending value via signed steps; injectable value formatter; tooltip;
+    a required accessible table alternative; standard/compact variants; animation gated
+    on `prefers-reduced-motion`.
+  - **`VarianceHeatmap`** (`./charts`) — an accessible `<table>` heatmap (no Recharts)
+    with a diverging token color scale; every cell shows its numeric value as text plus
+    a per-cell `aria-label`; a scale legend; horizontal scroll in narrow containers.
+
+  Each ships cva variants (`<name>Variants` + state/variant unions), stories, and tests.
+  Interaction states use `muted`/`selected` (never `accent`).
+
+- 17efd87: Add `ProcessTimeline` — a domain-neutral process-status component for ordered
+  lifecycle steps. Each item is `complete`, `current`, `upcoming`, `blocked`, or
+  `skipped`; the component renders a semantic `<ol>`, marks the active step with
+  `aria-current="step"`, and never conveys status by color alone (every marker
+  carries a default shape icon and each item a visually-hidden, overridable
+  status label).
+
+  - `orientation` (`vertical` | `horizontal`) and `density` (`comfortable` |
+    `compact`) variants; horizontal collapses per-step labels to a compact
+    "Step x of n" summary below the `@2xl` container width.
+  - Optional `showConnectors`, controlled selection via `selectedItemId` +
+    `onItemSelect` (items become keyboard-operable buttons only when selectable).
+  - Exposes `processTimelineVariants` and the marker/connector/item cva recipes,
+    plus the `ProcessTimelineItemStatus` / orientation / density unions.
+  - Color transitions collapse to instant under `prefers-reduced-motion`; no
+    JS-driven animation.
+
 ## 0.11.0
 
 ### Minor Changes
