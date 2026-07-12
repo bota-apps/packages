@@ -34,14 +34,7 @@ export const botaPreset = {
         // so a brand block can change the app's typeface, not just its palette.
         sans: "var(--font-sans)",
         display: "var(--font-display)",
-        mono: [
-          "JetBrains Mono",
-          "SF Mono",
-          "Fira Code",
-          "ui-monospace",
-          "SFMono-Regular",
-          "monospace",
-        ],
+        mono: "var(--font-mono)",
       },
       colors: {
         // Numeric ramps resolve through CSS variables whose defaults live in
@@ -110,16 +103,16 @@ export const botaPreset = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         destructive: {
-          50: "#FEF2F2",
-          100: "#FEE2E2",
-          200: "#FECACA",
-          300: "#FCA5A5",
-          400: "#F87171",
-          500: "#EF4444",
-          600: "#DC2626",
-          700: "#B91C1C",
-          800: "#991B1B",
-          900: "#7F1D1D",
+          50: "hsl(var(--destructive-50))",
+          100: "hsl(var(--destructive-100))",
+          200: "hsl(var(--destructive-200))",
+          300: "hsl(var(--destructive-300))",
+          400: "hsl(var(--destructive-400))",
+          500: "hsl(var(--destructive-500))",
+          600: "hsl(var(--destructive-600))",
+          700: "hsl(var(--destructive-700))",
+          800: "hsl(var(--destructive-800))",
+          900: "hsl(var(--destructive-900))",
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
@@ -161,6 +154,24 @@ export const botaPreset = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      // Semantic elevation tiers (raised < overlay < floating); values live in
+      // theme.css so brands can retune depth. shadow-<color> composition does
+      // not apply to these (the full shadow lives in the variable), which is
+      // fine — depth is a token decision, not a per-call-site tint.
+      boxShadow: {
+        raised: "var(--shadow-raised)",
+        overlay: "var(--shadow-overlay)",
+        floating: "var(--shadow-floating)",
+      },
+      transitionDuration: {
+        fast: "var(--duration-fast)",
+        base: "var(--duration-base)",
+        slow: "var(--duration-slow)",
+      },
+      transitionTimingFunction: {
+        standard: "var(--ease-standard)",
+        emphasized: "var(--ease-emphasized)",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -170,10 +181,17 @@ export const botaPreset = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        shimmer: {
+          "0%": { backgroundPosition: "200% 0" },
+          "100%": { backgroundPosition: "-200% 0" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        // Linear on purpose: an eased background-position sweep visibly
+        // pulses at each loop boundary.
+        shimmer: "shimmer 1.6s linear infinite",
       },
     },
   },

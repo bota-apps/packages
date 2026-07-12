@@ -32,6 +32,27 @@ const rampLightness = {
   900: 24,
 };
 
+/**
+ * Dark-mode lightness ladder — REVERSED semantics: in dark, the shade number
+ * means "contrast steps from the (dark) background", not absolute lightness.
+ * 50 is a whisper above the page, 900 is near-white text. Not a pure mirror of
+ * the light ladder: 500 lifts to 57 so bg-*-500 stays legible on near-black.
+ * This is what lets bg-*-100 / text-*-800 pairings (and the --selected alias)
+ * hold in both modes with zero dark: variants.
+ */
+const darkRampLightness = {
+  50: 14,
+  100: 18,
+  200: 24,
+  300: 33,
+  400: 44,
+  500: 57,
+  600: 66,
+  700: 75,
+  800: 84,
+  900: 92,
+};
+
 function parseHex(hex) {
   const match = /^#?([0-9a-fA-F]{6})$/.exec(hex);
   if (!match) {
@@ -96,6 +117,21 @@ export function colorRamp(hex) {
   const { h, s } = toHsl(hex);
   const ramp = {};
   for (const [shade, l] of Object.entries(rampLightness)) {
+    ramp[shade] = channels({ h, s, l });
+  }
+  return ramp;
+}
+
+/**
+ * Dark-mode 50–900 ramp for a base color: same hue/saturation, but lightness
+ * follows the reversed dark ladder (shade = contrast steps from the dark
+ * background). Apps that hand-write their own dark ramp overrides should
+ * derive them with this so tint/text pairings match the theme's semantics.
+ */
+export function darkColorRamp(hex) {
+  const { h, s } = toHsl(hex);
+  const ramp = {};
+  for (const [shade, l] of Object.entries(darkRampLightness)) {
     ramp[shade] = channels({ h, s, l });
   }
   return ramp;
@@ -197,8 +233,12 @@ ${rampLines("accent", colorRamp(accent))}
 :root[data-brand="${name}"].dark {
   --primary: ${channels(primaryHsl)};
   --primary-foreground: ${primaryFg};
+${rampLines("primary", darkColorRamp(primary))}
+
   --accent: ${channels(accentHsl)};
   --accent-foreground: ${accentFg};
+${rampLines("accent", darkColorRamp(accent))}
+
   --ring: ${channels(primaryHsl)};
   --sidebar-primary: ${channels(primaryHsl)};
   --sidebar-ring: ${channels(primaryHsl)};

@@ -1,7 +1,13 @@
 import { readFileSync } from "node:fs";
 import { format, resolveConfig } from "prettier";
 import { describe, expect, it } from "vitest";
-import { brandCss, colorRamp, hexToHslChannels, type BrandCssOptions } from "./brand.js";
+import {
+  brandCss,
+  colorRamp,
+  darkColorRamp,
+  hexToHslChannels,
+  type BrandCssOptions,
+} from "./brand.js";
 
 // Every chromatic token a brand must redefine; anything beyond these is
 // opt-in per brand via the tokens/darkTokens overrides.
@@ -21,8 +27,10 @@ const lightTokens = [
 const darkTokens = [
   "--primary",
   "--primary-foreground",
+  ...[50, 100, 200, 300, 400, 500, 600, 700, 800, 900].map((shade) => `--primary-${shade}`),
   "--accent",
   "--accent-foreground",
+  ...[50, 100, 200, 300, 400, 500, 600, 700, 800, 900].map((shade) => `--accent-${shade}`),
   "--ring",
   "--sidebar-primary",
   "--sidebar-ring",
@@ -278,6 +286,29 @@ describe("colorRamp", () => {
       expect(lightness).toBeLessThan(previousLightness);
       previousLightness = lightness;
     }
+  });
+});
+
+describe("darkColorRamp", () => {
+  it("preserves hue/saturation and walks lightness upward (reversed dark semantics)", () => {
+    const ramp = darkColorRamp("#7C3AED");
+    const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900] as const;
+    let previousLightness = 0;
+    for (const shade of shades) {
+      const match = /^(\S+) (\S+)% (\S+)%$/.exec(ramp[shade]);
+      expect(match, `ramp ${shade} is a channel triple`).toBeTruthy();
+      if (!match) {
+        continue;
+      }
+      expect(match[1]).toBe("262.1");
+      expect(match[2]).toBe("83.3");
+      const lightness = Number(match[3]);
+      expect(lightness).toBeGreaterThan(previousLightness);
+      previousLightness = lightness;
+    }
+    // 100 must read as a tint on a near-black page, 800 as readable text.
+    expect(Number(/(\S+)%$/.exec(ramp[100])?.[1])).toBeLessThan(25);
+    expect(Number(/(\S+)%$/.exec(ramp[800])?.[1])).toBeGreaterThan(75);
   });
 });
 

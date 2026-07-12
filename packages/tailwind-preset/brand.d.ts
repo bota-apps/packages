@@ -34,5 +34,12 @@ export declare function hexToHslChannels(hex: string): string;
 /** 50–900 ramp derived from a base color (hue/saturation preserved, shared lightness ladder). */
 export declare function colorRamp(hex: string): Record<RampShade, string>;
 
+/**
+ * Dark-mode 50–900 ramp (reversed semantics: shade = contrast steps from the
+ * dark background). Use this to derive hand-written dark ramp overrides so
+ * tint/text pairings match the theme's dark semantics.
+ */
+export declare function darkColorRamp(hex: string): Record<RampShade, string>;
+
 /** Complete brand stylesheet (light + dark blocks) from one or two colors. */
 export declare function brandCss(options: BrandCssOptions): string;
