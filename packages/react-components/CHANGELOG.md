@@ -1,5 +1,16 @@
 # @bota-apps/react-components
 
+## 0.11.2
+
+### Patch Changes
+
+- Updated dependencies [3dc31c8]
+- Updated dependencies [3dc31c8]
+- Updated dependencies [3dc31c8]
+  - @bota-apps/react-ui@0.14.0
+  - @bota-apps/gql-client@0.3.0
+  - @bota-apps/hooks@0.6.0
+
 ## 0.11.1
 
 ### Patch Changes
