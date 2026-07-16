@@ -8,5 +8,6 @@ export * from "./useQueryPipeline";
 export * from "./useMutationPipeline";
 export * from "./usePaginatedQueryPipeline";
 export * from "./useGqlOperations";
+export * from "./useGqlSubscription";
 export * from "./react/queryProvider";
 export * from "./react/graphqlProvider";
