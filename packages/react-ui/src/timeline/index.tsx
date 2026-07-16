@@ -2,6 +2,11 @@
  * Timeline — vertical event list: a rail of markers (dot or icon chip)
  * connected by a line, one entry per event.
  *
+ * Choosing between the vertical rails: use Timeline for a styled rail of
+ * discrete events with rich per-item markers/tones. For a fixed process whose
+ * steps are complete / current / upcoming, use ProcessTimeline; for a readable
+ * stream of recent activity (newest first), use ActivityFeed.
+ *
  * Compound API: `Timeline` renders the <ol> wrapper, `TimelineItem` renders
  * each <li>. The connector is the item's ::before pseudo-element, running
  * from below the marker to the bottom of the row; `last:before:hidden`

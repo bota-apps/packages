@@ -44,6 +44,12 @@ export * from "./featureCard";
 // Audit log
 export * from "./entityAuditLog";
 
+// Reusable page/entity compositions
+export * from "./entityWorkspace";
+export * from "./lifecyclePageSection";
+export * from "./operationalDashboard";
+export * from "./routeActionCenter";
+
 // Composed provider stack
 export * from "./createAppRoot";
 export * from "./createHostRouter";
