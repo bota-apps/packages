@@ -1,6 +1,6 @@
 {
   "name": "@bota-apps/gql-client",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "A tiny cookie-credentialed GraphQL client factory built on graphql-request. createGraphQLClient(endpoint) → a client whose every request carries the HttpOnly session cookie.",
   "keywords": [
     "bota-apps",
