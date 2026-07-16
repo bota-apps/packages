@@ -45,6 +45,7 @@ export * from "./combobox";
 export * from "./errorState";
 export * from "./fab";
 export * from "./featureTile";
+export * from "./fileUpload";
 // Note: form.tsx (RHF low-level form integration) is omitted from barrel to
 // avoid naming collisions with formLayout.tsx's FormField layout helper.
 // Import directly: import { ... } from "@bota-apps/react-ui/form"
