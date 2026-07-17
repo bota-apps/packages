@@ -1,5 +1,12 @@
 # @bota-apps/testing
 
+## 0.1.6
+
+### Patch Changes
+
+- Updated dependencies [8eb9615]
+  - @bota-apps/react-components@0.12.0
+
 ## 0.1.5
 
 ### Patch Changes
