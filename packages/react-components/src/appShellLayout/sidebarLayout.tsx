@@ -4,7 +4,7 @@ import { Menu } from "lucide-react";
 import type { AppShellSlots } from "./types";
 import { appShellLayoutVariants } from "./variants";
 
-/** Sidebar navigation + top bar + centered content well. */
+/** Sidebar navigation + top bar + content well anchored to the rail. */
 export function SidebarLayout({ brand, nav, headerLeft, headerRight, children }: AppShellSlots) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
@@ -56,9 +56,10 @@ export function SidebarLayout({ brand, nav, headerLeft, headerRight, children }:
           <div className="flex shrink-0 items-center gap-1 sm:gap-2">{headerRight}</div>
         </header>
 
-        <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-6 sm:px-6 sm:py-8 min-[1800px]:max-w-7xl">
-          {children}
-        </main>
+        {/* Anchored to the rail, not centered: a centered column next to a
+            fixed rail reads as a giant left gutter on wide screens. The cap
+            keeps line lengths sane; spare width stays on the right. */}
+        <main className="w-full max-w-7xl flex-1 px-4 py-6 sm:px-6 sm:py-8">{children}</main>
       </div>
     </div>
   );

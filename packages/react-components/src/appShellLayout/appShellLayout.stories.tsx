@@ -37,7 +37,7 @@ export const Default: Story = {
       }
     >
       <div className="rounded-lg border border-dashed border-border p-8 text-muted-foreground">
-        Page content renders in the centered content well.
+        Page content renders in the content well beside the rail.
       </div>
     </AppShellLayout>
   ),

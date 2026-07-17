@@ -98,7 +98,9 @@ The shipped brands are complete looks. Import the ones your app offers, after
 
 ```css
 @import "@bota-apps/tailwind-preset/theme.css";
-@import "@bota-apps/tailwind-preset/brands/ledger.css"; /* manila paper forms, ink-blue + stamp-red, typewriter headings */
+@import "@bota-apps/tailwind-preset/brands/ledger.css"; /* manila paper, ink rail, stamp red, typewriter headings */
+@import "@bota-apps/tailwind-preset/brands/kraft.css"; /* brown wrapping paper, stamp green, slab headings */
+@import "@bota-apps/tailwind-preset/brands/blueprint.css"; /* drafting paper, deep blue rail, square corners */
 @import "@bota-apps/tailwind-preset/brands/manuscript.css"; /* warm paper, serif voice, hairline borders */
 @import "@bota-apps/tailwind-preset/brands/terminal.css"; /* monospace, square corners, console chrome */
 @import "@bota-apps/tailwind-preset/brands/sorbet.css"; /* soft rounded corners, berry brights */
@@ -128,13 +130,13 @@ writeFileSync(
 
 ## Subpaths
 
-| Import                                    | What                                                                                    |
-| ----------------------------------------- | --------------------------------------------------------------------------------------- |
-| `@bota-apps/tailwind-preset/preset`       | Tailwind preset (`darkMode: class`, color tokens, radii, typography + animate plugins)  |
-| `@bota-apps/tailwind-preset/theme.css`    | CSS variables for light + `.dark`, plus the `@tailwind` layers                          |
-| `@bota-apps/tailwind-preset/brands/*.css` | Shipped complete-look brands (`ledger`, `manuscript`, `terminal`, `sorbet`, `graphite`) |
-| `@bota-apps/tailwind-preset/brand`        | `brandCss` / `colorRamp` / `darkColorRamp` / `hexToHslChannels` brand generators        |
-| `@bota-apps/tailwind-preset/fonts/*.css`  | Typeface pairings (`inter`) — token-only, fonts load via `@fontsource`                  |
-| `@bota-apps/tailwind-preset/postcss`      | `{ tailwindcss, autoprefixer }` PostCSS config                                          |
+| Import                                    | What                                                                                                          |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `@bota-apps/tailwind-preset/preset`       | Tailwind preset (`darkMode: class`, color tokens, radii, typography + animate plugins)                        |
+| `@bota-apps/tailwind-preset/theme.css`    | CSS variables for light + `.dark`, plus the `@tailwind` layers                                                |
+| `@bota-apps/tailwind-preset/brands/*.css` | Shipped complete-look brands (`ledger`, `kraft`, `blueprint`, `manuscript`, `terminal`, `sorbet`, `graphite`) |
+| `@bota-apps/tailwind-preset/brand`        | `brandCss` / `colorRamp` / `darkColorRamp` / `hexToHslChannels` brand generators                              |
+| `@bota-apps/tailwind-preset/fonts/*.css`  | Typeface pairings (`inter`) — token-only, fonts load via `@fontsource`                                        |
+| `@bota-apps/tailwind-preset/postcss`      | `{ tailwindcss, autoprefixer }` PostCSS config                                                                |
 
 Part of the [`@bota-apps` packages monorepo](https://github.com/bota-apps/packages).
