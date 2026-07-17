@@ -1,5 +1,17 @@
 # @bota-apps/react-components
 
+## 0.11.3
+
+### Patch Changes
+
+- 0e2d5b4: New shipped brand: `ledger` — a paper-form look with manila surfaces, stamp
+  ink-blue primary, stamp-red accent, ruled borders, square corners, and a
+  typewriter display voice. Import
+  `@bota-apps/tailwind-preset/brands/ledger.css` after `theme.css` and switch
+  with `data-brand="ledger"`. The PresetSelect story now demos it alongside the
+  other shipped looks.
+  - @bota-apps/react-ui@0.14.1
+
 ## 0.11.2
 
 ### Patch Changes
