@@ -4,6 +4,8 @@
    each one a complete look (surfaces, chrome, typeface, radius). */
 @import "@bota-apps/tailwind-preset/theme.css";
 @import "@bota-apps/tailwind-preset/brands/ledger.css";
+@import "@bota-apps/tailwind-preset/brands/kraft.css";
+@import "@bota-apps/tailwind-preset/brands/blueprint.css";
 @import "@bota-apps/tailwind-preset/brands/manuscript.css";
 @import "@bota-apps/tailwind-preset/brands/terminal.css";
 @import "@bota-apps/tailwind-preset/brands/sorbet.css";

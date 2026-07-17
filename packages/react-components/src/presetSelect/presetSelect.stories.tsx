@@ -1,5 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { BookOpenText, Droplet, IceCreamCone, Layers, SquareTerminal, Stamp } from "lucide-react";
+import {
+  BookOpenText,
+  DraftingCompass,
+  Droplet,
+  IceCreamCone,
+  Layers,
+  Package,
+  SquareTerminal,
+  Stamp,
+} from "lucide-react";
 import { AppearanceProvider, type AppearancePreset } from "../appearanceProvider";
 import { PresetSelect } from "./index";
 
@@ -18,8 +27,23 @@ const shippedPresets: readonly AppearancePreset[] = [
     value: "ledger",
     label: "Ledger",
     icon: Stamp,
-    description: "Manila paper forms, ink and stamp red",
+    description: "Manila paper, ink rail, typewriter headings",
     brand: "ledger",
+  },
+  {
+    value: "kraft",
+    label: "Kraft",
+    icon: Package,
+    description: "Brown paper, stamp green, slab headings",
+    brand: "kraft",
+  },
+  {
+    value: "blueprint",
+    label: "Blueprint",
+    icon: DraftingCompass,
+    description: "Drafting paper, square corners, dense",
+    brand: "blueprint",
+    density: "compact",
   },
   {
     value: "manuscript",
