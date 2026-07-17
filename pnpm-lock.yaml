@@ -276,6 +276,9 @@ importers:
 
   mocks:
     dependencies:
+      '@bota-apps/gql-client':
+        specifier: workspace:^
+        version: link:../packages/gql-client
       '@bota-apps/types':
         specifier: workspace:^
         version: link:../packages/types
