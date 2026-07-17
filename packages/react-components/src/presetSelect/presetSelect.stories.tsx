@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { BookOpenText, Droplet, IceCreamCone, Layers, SquareTerminal } from "lucide-react";
+import { BookOpenText, Droplet, IceCreamCone, Layers, SquareTerminal, Stamp } from "lucide-react";
 import { AppearanceProvider, type AppearancePreset } from "../appearanceProvider";
 import { PresetSelect } from "./index";
 
@@ -13,6 +13,13 @@ const shippedPresets: readonly AppearancePreset[] = [
     label: "Bota",
     icon: Droplet,
     description: "The signature look — cool blue, roomy",
+  },
+  {
+    value: "ledger",
+    label: "Ledger",
+    icon: Stamp,
+    description: "Manila paper forms, ink and stamp red",
+    brand: "ledger",
   },
   {
     value: "manuscript",
