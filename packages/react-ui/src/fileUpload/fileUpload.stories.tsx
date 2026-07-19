@@ -85,9 +85,36 @@ function MultipleWithPreviewDemo() {
   return <FileUpload multiple files={files} onFilesChange={setFiles} />;
 }
 
-/** Controlled multi selection: new picks accumulate, duplicates are skipped. */
+/**
+ * Controlled multi selection: new picks accumulate, duplicates are skipped.
+ * Activating a row opens the full-size lightbox; Previous/Next (or arrow
+ * keys) page through the whole selection.
+ */
 export const MultipleWithPreview: Story = {
   render: () => <MultipleWithPreviewDemo />,
+};
+
+function LightboxDemo() {
+  const [files, setFiles] = useState<File[]>([
+    sampleImage("scan-front.png"),
+    sampleImage("scan-back.png"),
+    sampleDocument("annual-statement.pdf", "application/pdf", 48 * 1024),
+    sampleDocument("line-items.csv", "text/csv", 3 * 1024),
+  ]);
+  return (
+    <div className="flex flex-col gap-4">
+      <FileUpload multiple accept=".pdf,.csv,image/*" files={files} onFilesChange={setFiles} />
+      <P variant="muted">
+        Click a row to inspect it full-size; page with the footer buttons or arrow keys. Images and
+        PDFs embed inline, other formats fall back to their format icon.
+      </P>
+    </div>
+  );
+}
+
+/** Row click → full-size lightbox with paging across the selection. */
+export const PreviewLightbox: Story = {
+  render: () => <LightboxDemo />,
 };
 
 function ButtonWithPreviewDemo() {
