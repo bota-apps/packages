@@ -1,17 +1,22 @@
 import { useId, useRef, useState, type ChangeEvent, type DragEvent, type ReactNode } from "react";
 import { UploadCloud } from "lucide-react";
 import { Button } from "../button";
+import { Div } from "../html/div";
 import { SpinnerEl } from "../html";
+import { FileUploadPreview } from "./preview";
+import { fileKey, formatBytes } from "./shared";
 import {
   fileUploadDescriptionVariants,
   fileUploadDropzoneVariants,
   fileUploadIconVariants,
   fileUploadInputVariants,
   fileUploadLabelVariants,
+  fileUploadRootVariants,
   type FileUploadSize,
 } from "./variants";
 
 export * from "./variants";
+export { FileUploadPreview, type FileUploadPreviewProps } from "./preview";
 
 export type FileUploadRejection = {
   file: File;
@@ -20,9 +25,7 @@ export type FileUploadRejection = {
 
 export type FileUploadVariant = "dropzone" | "button";
 
-export type FileUploadProps = {
-  /** Receives the files that passed validation. */
-  onFilesSelected: (files: File[]) => void;
+type FileUploadCommonProps = {
   /** Native `accept` filter (extensions and/or MIME types, comma-separated). */
   accept?: string;
   /** Allow selecting more than one file. Default `false`. */
@@ -44,7 +47,39 @@ export type FileUploadProps = {
   /** `dropzone` = bordered drop target; `button` = compact button trigger. */
   variant?: FileUploadVariant;
   size?: FileUploadSize;
+  /** Accessible name of the selection preview list. Default "Selected files". */
+  selectedListLabel?: string;
+  /** Builds the accessible name of a preview row's remove button. Default `Remove ${fileName}`. */
+  removeFileLabel?: (fileName: string) => string;
+  /** Preview clear-all action label. Default "Clear all". */
+  clearAllLabel?: ReactNode;
 };
+
+export type FileUploadProps = FileUploadCommonProps &
+  (
+    | {
+        /**
+         * Fire-and-forget mode: receives each batch of files that passed
+         * validation; the component keeps no selection state.
+         */
+        onFilesSelected: (files: File[]) => void;
+        files?: undefined;
+        onFilesChange?: undefined;
+      }
+    | {
+        /**
+         * Controlled selection mode: the app owns the file list and a
+         * confirmation preview renders under the trigger. New selections
+         * replace the list in single mode and accumulate (skipping duplicate
+         * files) when `multiple`.
+         */
+        files: File[];
+        /** Receives the full next list after every select, remove, or clear. */
+        onFilesChange: (files: File[]) => void;
+        /** Optional in this mode: still receives each newly accepted batch. */
+        onFilesSelected?: (files: File[]) => void;
+      }
+  );
 
 /**
  * `accept` matching mirrors the native picker filter: `.ext` suffixes match
@@ -72,19 +107,6 @@ function matchesAccept(file: File, accept: string): boolean {
   });
 }
 
-const byteUnits = ["B", "KB", "MB", "GB", "TB"];
-
-function formatBytes(bytes: number): string {
-  let value = bytes;
-  let unit = 0;
-  while (value >= 1024 && unit < byteUnits.length - 1) {
-    value /= 1024;
-    unit += 1;
-  }
-  const rounded = Number.isInteger(value) ? String(value) : value.toFixed(1);
-  return `${rounded} ${byteUnits[unit]}`;
-}
-
 function defaultDescription(accept: string | undefined, maxSizeBytes: number | undefined) {
   const parts: string[] = [];
   if (accept !== undefined && accept.trim().length > 0) {
@@ -104,19 +126,52 @@ function defaultDescription(accept: string | undefined, maxSizeBytes: number | u
   return parts.join(" · ");
 }
 
-export function FileUpload({
-  onFilesSelected,
-  accept,
-  multiple = false,
-  disabled = false,
-  maxSizeBytes,
-  onInvalidFiles,
-  label,
-  description,
-  busy = false,
-  variant = "dropzone",
-  size = "default",
-}: FileUploadProps) {
+/**
+ * Single mode replaces the selection; multiple mode appends, skipping files
+ * already in the list (same name, size, mtime, and type). Returns `current`
+ * unchanged when nothing new arrived so callers can skip a no-op change.
+ */
+function mergeSelection(current: File[], accepted: File[], multiple: boolean): File[] {
+  if (!multiple) {
+    return accepted.slice(0, 1);
+  }
+  const seen = new Set(current.map(fileKey));
+  const fresh = accepted.filter((file) => {
+    const key = fileKey(file);
+    if (seen.has(key)) {
+      return false;
+    }
+    seen.add(key);
+    return true;
+  });
+  if (fresh.length === 0) {
+    return current;
+  }
+  return [...current, ...fresh];
+}
+
+export function FileUpload(props: FileUploadProps) {
+  const {
+    accept,
+    multiple = false,
+    disabled = false,
+    maxSizeBytes,
+    onInvalidFiles,
+    label,
+    description,
+    busy = false,
+    variant = "dropzone",
+    size = "default",
+    selectedListLabel,
+    removeFileLabel,
+    clearAllLabel,
+  } = props;
+  const selection =
+    props.files === undefined
+      ? undefined
+      : { files: props.files, onFilesChange: props.onFilesChange };
+  const notifySelected = props.onFilesSelected;
+
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragOver, setDragOver] = useState(false);
   const labelId = useId();
@@ -144,9 +199,16 @@ export function FileUpload({
     if (rejections.length > 0) {
       onInvalidFiles?.(rejections);
     }
-    if (accepted.length > 0) {
-      onFilesSelected(accepted);
+    if (accepted.length === 0) {
+      return;
     }
+    if (selection !== undefined) {
+      const next = mergeSelection(selection.files, accepted, multiple);
+      if (next !== selection.files) {
+        selection.onFilesChange(next);
+      }
+    }
+    notifySelected?.(accepted);
   };
 
   const openPicker = () => {
@@ -196,9 +258,24 @@ export function FileUpload({
     />
   );
 
+  const preview =
+    selection === undefined ? undefined : (
+      <FileUploadPreview
+        files={selection.files}
+        disabled={disabled || busy}
+        onRemove={(file) =>
+          selection.onFilesChange(selection.files.filter((candidate) => candidate !== file))
+        }
+        onClearAll={() => selection.onFilesChange([])}
+        listLabel={selectedListLabel}
+        removeLabel={removeFileLabel}
+        clearAllLabel={clearAllLabel}
+      />
+    );
+
   if (variant === "button") {
     return (
-      <>
+      <Div className={fileUploadRootVariants({ trigger: "button" })}>
         <Button
           type="button"
           variant="outline"
@@ -211,12 +288,13 @@ export function FileUpload({
           {labelContent}
         </Button>
         {input}
-      </>
+        {preview}
+      </Div>
     );
   }
 
   return (
-    <>
+    <Div className={fileUploadRootVariants({ trigger: "dropzone" })}>
       <button
         type="button"
         className={fileUploadDropzoneVariants({
@@ -249,6 +327,7 @@ export function FileUpload({
         )}
       </button>
       {input}
-    </>
+      {preview}
+    </Div>
   );
 }
