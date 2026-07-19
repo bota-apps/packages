@@ -44,6 +44,11 @@ export * from "./featureCard";
 // Audit log
 export * from "./entityAuditLog";
 
+// Issue reporting
+export * from "./issueReporter";
+export * from "./issueList";
+export * from "./issueDetails";
+
 // Reusable page/entity compositions
 export * from "./entityWorkspace";
 export * from "./lifecyclePageSection";
