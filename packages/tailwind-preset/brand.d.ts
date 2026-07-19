@@ -26,6 +26,18 @@ export type BrandCssOptions = {
   tokens?: Record<string, string>;
   /** Dark-block token overrides — same shape as `tokens`. */
   darkTokens?: Record<string, string>;
+  /**
+   * Per-product-surface override blocks, scoped to
+   * `:root[data-brand="<name>"][data-product-surface="<surface>"]` (and its
+   * `.dark` variant). One brand can serve several product surfaces (an
+   * operations console vs. a customer portal) without forking; apps declare
+   * their surface statically on <html>. Override only what meaningfully
+   * differs from the shared brand blocks.
+   */
+  surfaces?: Record<
+    string,
+    { tokens?: Record<string, string>; darkTokens?: Record<string, string> }
+  >;
 };
 
 /** HSL channel triple for a hex color, e.g. hexToHslChannels("#2563EB") → "217.2 91.2% 53.3%". */

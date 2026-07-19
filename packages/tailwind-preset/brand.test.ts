@@ -418,6 +418,140 @@ const shippedBrands: readonly { file: string; options: BrandCssOptions }[] = [
       },
     },
   },
+  {
+    file: "freight.css",
+    options: {
+      name: "freight",
+      // Corridor blue: the system/network color — primary actions, links,
+      // focus, selected entities, planned movement.
+      primary: "#15467A",
+      // Signal orange: manual intervention — human-entered updates, handoffs,
+      // action-required states. Never a decorative highlight.
+      accent: "#D96830",
+      radius: "0.25rem",
+      fontSans:
+        '"Inter Variable", Inter, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+      tokens: {
+        background: "210 25% 96%",
+        foreground: "212 44% 12%",
+        card: "0 0% 100%",
+        cardForeground: "212 44% 12%",
+        popover: "0 0% 100%",
+        popoverForeground: "212 44% 12%",
+        secondary: "210 24% 91%",
+        secondaryForeground: "212 32% 18%",
+        muted: "210 24% 91%",
+        mutedForeground: "211 14% 40%",
+        border: "211 24% 84%",
+        input: "211 24% 84%",
+        sidebarBackground: "212 56% 13%",
+        sidebarForeground: "210 28% 80%",
+        sidebarAccent: "212 46% 20%",
+        sidebarAccentForeground: "210 44% 93%",
+        sidebarBorder: "212 46% 19%",
+        sidebarPrimary: "209 70% 60%",
+        sidebarRing: "209 70% 60%",
+        // Geo/map tokens — panels, markers, routes, and location-freshness
+        // treatments for map-centric screens. Freshness must never be carried
+        // by color alone (pair with shape/dash/label at the call site).
+        mapPanelBackground: "0 0% 100%",
+        mapPanelForeground: "212 44% 12%",
+        mapPanelBorder: "211 24% 84%",
+        mapPanelShadow:
+          "0 4px 6px -1px hsl(212 45% 15% / 0.1), 0 2px 4px -2px hsl(212 45% 15% / 0.1)",
+        mapMarkerDefault: "211 40% 45%",
+        mapMarkerSelected: "209 73% 42%",
+        mapMarkerWarning: "32 95% 44%",
+        mapMarkerCritical: "0 72% 46%",
+        mapClusterBackground: "211 71% 28%",
+        mapClusterForeground: "0 0% 100%",
+        mapRoutePlanned: "209 73% 42%",
+        mapRouteObserved: "187 52% 36%",
+        mapRouteCompleted: "211 14% 58%",
+        mapRouteException: "0 72% 46%",
+        mapLocationLive: "142 64% 33%",
+        mapLocationReported: "20 69% 48%",
+        mapLocationEstimated: "262 55% 52%",
+        mapLocationStale: "211 12% 55%",
+        mapOverlayScrim: "hsl(212 50% 10% / 0.5)",
+      },
+      darkTokens: {
+        primary: "209 72% 58%",
+        ring: "209 72% 58%",
+        background: "213 42% 7%",
+        foreground: "210 30% 88%",
+        card: "213 38% 10%",
+        cardForeground: "210 30% 88%",
+        popover: "213 36% 12%",
+        popoverForeground: "210 30% 88%",
+        secondary: "213 30% 15%",
+        secondaryForeground: "210 30% 88%",
+        muted: "213 30% 15%",
+        mutedForeground: "211 16% 62%",
+        border: "213 30% 19%",
+        input: "213 30% 19%",
+        sidebarBackground: "213 48% 5%",
+        sidebarForeground: "210 26% 78%",
+        sidebarAccent: "213 34% 12%",
+        sidebarAccentForeground: "210 44% 93%",
+        sidebarBorder: "213 34% 13%",
+        sidebarPrimary: "209 72% 62%",
+        sidebarRing: "209 72% 62%",
+        mapPanelBackground: "213 38% 10%",
+        mapPanelForeground: "210 30% 88%",
+        mapPanelBorder: "213 30% 21%",
+        mapPanelShadow: "0 4px 6px -1px hsl(0 0% 0% / 0.5), 0 2px 4px -2px hsl(0 0% 0% / 0.4)",
+        mapMarkerDefault: "211 25% 62%",
+        mapMarkerSelected: "209 72% 60%",
+        mapMarkerWarning: "38 90% 56%",
+        mapMarkerCritical: "0 78% 58%",
+        mapClusterBackground: "209 72% 58%",
+        mapClusterForeground: "213 45% 8%",
+        mapRoutePlanned: "209 72% 58%",
+        mapRouteObserved: "187 55% 48%",
+        mapRouteCompleted: "211 12% 48%",
+        mapRouteException: "0 78% 58%",
+        mapLocationLive: "142 58% 48%",
+        mapLocationReported: "20 75% 58%",
+        mapLocationEstimated: "262 62% 66%",
+        mapLocationStale: "211 10% 48%",
+        mapOverlayScrim: "hsl(213 55% 3% / 0.6)",
+      },
+      // One brand, two product surfaces: a dense operations console and a
+      // comfortable customer portal. Each overrides only what meaningfully
+      // differs; density itself stays on the data-density axis.
+      surfaces: {
+        operations: {
+          tokens: {
+            background: "211 22% 94.5%",
+            border: "211 26% 79%",
+            input: "211 26% 79%",
+            shadowRaised: "0 1px 1px 0 hsl(212 45% 15% / 0.05)",
+          },
+          darkTokens: {
+            border: "213 30% 23%",
+            input: "213 30% 23%",
+          },
+        },
+        customer: {
+          tokens: {
+            radius: "0.375rem",
+            background: "210 33% 97.5%",
+            secondary: "210 26% 93%",
+            muted: "210 26% 93%",
+            border: "211 22% 87%",
+            input: "211 22% 87%",
+          },
+          darkTokens: {
+            background: "213 36% 8%",
+            card: "213 32% 11%",
+            border: "213 26% 18%",
+            input: "213 26% 18%",
+          },
+        },
+      },
+    },
+  },
 ];
 
 describe("hexToHslChannels", () => {
@@ -551,6 +685,52 @@ describe("brandCss", () => {
     );
     // The header names the full recipe so the file can be regenerated verbatim.
     expect(css).toContain('tokens: {"background":"220 20% 97%"');
+  });
+
+  it("emits surface blocks ordered so dark mode wins its specificity ties", () => {
+    const css = brandCss({
+      name: "duo",
+      primary: "#15467A",
+      accent: "#D96830",
+      tokens: { background: "210 25% 96%" },
+      darkTokens: { background: "213 42% 7%" },
+      surfaces: {
+        operations: {
+          tokens: { border: "211 26% 79%" },
+          darkTokens: { border: "213 30% 23%" },
+        },
+        customer: { tokens: { radius: "0.375rem" } },
+      },
+    });
+    const lightSurface = css.indexOf(
+      ':root[data-brand="duo"][data-product-surface="operations"] {',
+    );
+    const dark = css.indexOf(':root[data-brand="duo"].dark {');
+    const darkSurface = css.indexOf(
+      ':root[data-brand="duo"][data-product-surface="operations"].dark {',
+    );
+    // Surface-light (0,3,0) ties with brand-dark (0,3,0): the dark block must
+    // come later in the file so dark mode wins by source order; surface-dark
+    // (0,4,0) emits last.
+    expect(lightSurface).toBeGreaterThan(-1);
+    expect(dark).toBeGreaterThan(lightSurface);
+    expect(darkSurface).toBeGreaterThan(dark);
+    expect(css).toContain(':root[data-brand="duo"][data-product-surface="customer"] {');
+    // A surface with no darkTokens emits no empty dark block.
+    expect(css).not.toContain('[data-product-surface="customer"].dark');
+    // The header names the full recipe, surfaces included.
+    expect(css).toContain('surfaces: {"operations"');
+  });
+
+  it("rejects surface names that are not camelCase identifiers", () => {
+    expect(() =>
+      brandCss({
+        name: "duo",
+        primary: "#15467A",
+        accent: "#D96830",
+        surfaces: { "back office": { tokens: { border: "0 0% 0%" } } },
+      }),
+    ).toThrow(/camelCase/);
   });
 
   // The shipped brand files are the generator's own output (run through the

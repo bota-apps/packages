@@ -24,7 +24,7 @@ describe("IconBadge", () => {
     const badge = container.firstChild as HTMLElement;
     expect(badge.className).toContain("h-12");
     expect(badge.className).toContain("rounded-full");
-    expect(badge.className).toContain("bg-emerald-500/10");
+    expect(badge.className).toContain("bg-status-success/10");
   });
 
   it("scales the tile radius with the xl square size", () => {

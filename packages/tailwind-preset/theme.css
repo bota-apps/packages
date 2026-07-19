@@ -65,6 +65,34 @@
     --destructive-700: 0 73.7% 41.8%;
     --destructive-800: 0 70% 35.3%;
     --destructive-900: 0 62.8% 30.6%;
+
+    /* Semantic status tokens — durable meaning, independent of the brand's
+       primary/accent: info = active/processing, success = healthy/completed,
+       warning = at risk/attention, danger = blocked/failed, neutral =
+       draft/inactive. Each has a solid pair (badge fills, markers) and a
+       subtle pair (tinted chips, row highlights). Brands restyle chrome, not
+       status meaning, so these stay stable across data-brand switches. */
+    --status-info: 217 85% 46%;
+    --status-info-foreground: 0 0% 100%;
+    --status-info-subtle: 214 90% 93%;
+    --status-info-subtle-foreground: 224 70% 34%;
+    --status-success: 142 70% 29%;
+    --status-success-foreground: 0 0% 100%;
+    --status-success-subtle: 141 75% 92%;
+    --status-success-subtle-foreground: 143 65% 22%;
+    --status-warning: 30 92% 39%;
+    --status-warning-foreground: 0 0% 100%;
+    --status-warning-subtle: 46 95% 89%;
+    --status-warning-subtle-foreground: 26 80% 28%;
+    --status-danger: 0 72% 46%;
+    --status-danger-foreground: 0 0% 100%;
+    --status-danger-subtle: 0 90% 94%;
+    --status-danger-subtle-foreground: 0 68% 33%;
+    --status-neutral: 215 18% 40%;
+    --status-neutral-foreground: 0 0% 100%;
+    --status-neutral-subtle: 214 25% 93%;
+    --status-neutral-subtle-foreground: 215 24% 28%;
+
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 217 91% 53%;
@@ -202,6 +230,31 @@
     --destructive-700: 0 84.2% 75%;
     --destructive-800: 0 84.2% 84%;
     --destructive-900: 0 84.2% 92%;
+
+    /* Status tokens in dark: solids lift and flip to dark foregrounds (white
+       on a lifted mid-tone fails contrast); subtles become deep tints with
+       bright text — same pairing semantics as the reversed ramps. */
+    --status-info: 213 90% 66%;
+    --status-info-foreground: 222 50% 10%;
+    --status-info-subtle: 220 55% 19%;
+    --status-info-subtle-foreground: 212 92% 80%;
+    --status-success: 142 55% 52%;
+    --status-success-foreground: 145 65% 8%;
+    --status-success-subtle: 143 45% 15%;
+    --status-success-subtle-foreground: 141 55% 74%;
+    --status-warning: 40 90% 58%;
+    --status-warning-foreground: 28 75% 10%;
+    --status-warning-subtle: 35 55% 16%;
+    --status-warning-subtle-foreground: 43 90% 72%;
+    --status-danger: 0 84% 66%;
+    --status-danger-foreground: 0 60% 10%;
+    --status-danger-subtle: 0 45% 17%;
+    --status-danger-subtle-foreground: 0 90% 80%;
+    --status-neutral: 214 15% 65%;
+    --status-neutral-foreground: 217 30% 10%;
+    --status-neutral-subtle: 216 24% 17%;
+    --status-neutral-subtle-foreground: 214 18% 74%;
+
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 217 91% 53%;

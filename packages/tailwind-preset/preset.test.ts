@@ -90,6 +90,28 @@ describe("botaPreset color ramps", () => {
     expect(css).toContain("translate3d");
   });
 
+  it("emits semantic status utilities resolving through the status tokens — in BOTH modes", async () => {
+    const css = await compile(
+      "bg-status-info text-status-info-foreground bg-status-success-subtle text-status-warning-subtle-foreground border-status-danger bg-status-neutral/50",
+    );
+    expect(css).toContain("hsl(var(--status-info))");
+    expect(css).toContain("hsl(var(--status-info-foreground))");
+    expect(css).toContain("hsl(var(--status-success-subtle))");
+    expect(css).toContain("hsl(var(--status-warning-subtle-foreground))");
+    expect(css).toContain("hsl(var(--status-danger))");
+    expect(css).toContain("hsl(var(--status-neutral) / 0.5)");
+    const themeCss = readFileSync("packages/tailwind-preset/theme.css", "utf8");
+    const darkBlock = themeCss.slice(themeCss.indexOf(".dark {"));
+    for (const family of ["info", "success", "warning", "danger", "neutral"]) {
+      for (const suffix of ["", "-foreground", "-subtle", "-subtle-foreground"]) {
+        const token = `--status-${family}${suffix}:`;
+        expect(themeCss, `${token} defined`).toContain(token);
+        // Solids lift and subtles deepen in dark — every pair re-tunes there.
+        expect(darkBlock, `${token} redefined in .dark`).toContain(token);
+      }
+    }
+  });
+
   it("emits selected-state utilities resolving through the interaction tokens", async () => {
     const css = await compile("bg-selected text-selected-foreground bg-selected/60");
     expect(css).toContain("hsl(var(--selected))");

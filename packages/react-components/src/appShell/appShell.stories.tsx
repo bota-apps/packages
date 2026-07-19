@@ -8,6 +8,7 @@ import {
 } from "@tanstack/react-router";
 import {
   BookOpenText,
+  Container,
   Droplet,
   FileText,
   Home,
@@ -134,6 +135,13 @@ const shippedPresets: readonly AppearancePreset[] = [
     description: "Charcoal chrome, crisp and dense",
     brand: "graphite",
     density: "compact",
+  },
+  {
+    value: "freight",
+    label: "Freight",
+    icon: Container,
+    description: "Corridor blue, navy rail, signal orange",
+    brand: "freight",
   },
 ];
 
