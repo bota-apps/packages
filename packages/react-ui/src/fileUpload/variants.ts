@@ -95,6 +95,17 @@ export const fileUploadPreviewItemVariants = cva(
   "flex min-w-0 items-center gap-3 rounded-md border border-input bg-background p-2",
 );
 
+/**
+ * Row body (thumbnail + name + size) doubling as the lightbox trigger.
+ * Negative margin lets the hover/focus surface bleed to the row padding
+ * without moving the content.
+ */
+export const fileUploadPreviewTriggerVariants = cva([
+  "-m-1 flex min-w-0 flex-1 cursor-zoom-in items-center gap-3 rounded-md p-1 text-left transition-colors",
+  "hover:bg-muted",
+  focusRingClasses,
+]);
+
 /** Image thumbnail (and its pre-load placeholder) in a preview row. */
 export const fileUploadPreviewThumbVariants = cva(
   "size-9 shrink-0 rounded-md border border-input bg-muted object-cover",
@@ -113,3 +124,29 @@ export const fileUploadPreviewSizeVariants = cva("block text-xs text-muted-foreg
 
 /** Footer holding the clear-all action, aligned to the row edge. */
 export const fileUploadPreviewFooterVariants = cva("flex justify-end");
+
+/**
+ * Lightbox dialog panel — wider than the default dialog so documents get
+ * room. The dialog is viewport-owned chrome (like the base modal), so its
+ * sizing is the exception to container-scoped responsiveness.
+ */
+export const fileUploadLightboxContentVariants = cva("max-w-3xl");
+
+/** Fixed-height centered stage the staged image/document fills. */
+export const fileUploadLightboxStageVariants = cva(
+  "flex h-[min(60dvh,36rem)] items-center justify-center overflow-hidden rounded-md border border-input bg-muted",
+);
+
+/** Staged image — letterboxed to fit, never cropped. */
+export const fileUploadLightboxImageVariants = cva("max-h-full max-w-full object-contain");
+
+/** Lightbox footer: remove action on one edge, pager on the other. */
+export const fileUploadLightboxFooterVariants = cva("flex items-center justify-between gap-2");
+
+/** Pager cluster (previous / position / next). */
+export const fileUploadLightboxNavVariants = cva("ml-auto flex items-center gap-1");
+
+/** "n of m" position readout between the pager buttons. */
+export const fileUploadLightboxPositionVariants = cva(
+  "min-w-14 text-center text-sm tabular-nums text-muted-foreground",
+);
