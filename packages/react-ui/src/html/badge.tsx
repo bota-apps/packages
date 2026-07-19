@@ -27,10 +27,10 @@ export const badgeVariants = cva(
           "border-transparent bg-destructive text-destructive-foreground shadow-raised hover:bg-destructive/80",
         outline: "text-foreground",
         success:
-          "border-transparent bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200",
+          "border-transparent bg-status-success-subtle text-status-success-subtle-foreground",
         warning:
-          "border-transparent bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200",
-        muted: "border-transparent bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200",
+          "border-transparent bg-status-warning-subtle text-status-warning-subtle-foreground",
+        muted: "border-transparent bg-status-neutral-subtle text-status-neutral-subtle-foreground",
       },
       size: {
         default: "px-2.5 py-0.5 text-xs",
@@ -89,9 +89,9 @@ export const iconBadgeVariants = cva(
       },
       tone: {
         primary: "bg-primary/10 text-primary",
-        info: "bg-blue-500/10 text-blue-500",
-        success: "bg-emerald-500/10 text-emerald-500",
-        warning: "bg-amber-500/10 text-amber-500",
+        info: "bg-status-info/10 text-status-info",
+        success: "bg-status-success/10 text-status-success",
+        warning: "bg-status-warning/10 text-status-warning",
         destructive: "bg-destructive/10 text-destructive",
         muted: "bg-muted text-muted-foreground",
       },
@@ -147,9 +147,9 @@ export const stepBubbleVariants = cva(
         active: "bg-primary text-primary-foreground",
         done: "bg-primary/20 text-primary",
         upcoming: "bg-muted text-muted-foreground",
-        warning: "bg-amber-500/15 text-amber-600 dark:text-amber-400",
-        success: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400",
-        info: "bg-blue-500/15 text-blue-600 dark:text-blue-400",
+        warning: "bg-status-warning-subtle text-status-warning-subtle-foreground",
+        success: "bg-status-success-subtle text-status-success-subtle-foreground",
+        info: "bg-status-info-subtle text-status-info-subtle-foreground",
       },
     },
     defaultVariants: {

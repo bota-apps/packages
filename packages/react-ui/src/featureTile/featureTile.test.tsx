@@ -35,7 +35,7 @@ describe("FeatureTile", () => {
       </FeatureTile>,
     );
     const tile = container.querySelector("span");
-    expect(tile?.className).toContain("bg-emerald-500/10");
+    expect(tile?.className).toContain("bg-status-success/10");
     expect(screen.getByTestId("body-slot")).toBeTruthy();
     expect(screen.getByText("More")).toBeTruthy();
   });
