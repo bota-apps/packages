@@ -32,7 +32,7 @@ describe("Card", () => {
     // Leading tiles sit on the md ramp step of the shared icon badge.
     expect(tile?.className).toContain("h-10");
     expect(tile?.className).toContain("rounded-lg");
-    expect(tile?.className).toContain("bg-emerald-500/10");
+    expect(tile?.className).toContain("bg-status-success/10");
   });
 
   it("stretches to the parent cell with the fill prop", () => {

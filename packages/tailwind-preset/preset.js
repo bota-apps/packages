@@ -116,6 +116,44 @@ export const botaPreset = {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+        // Semantic status colors (bg-status-info, text-status-success-subtle-
+        // foreground, …). Durable meaning — info/success/warning/danger/
+        // neutral — that stays stable across brand switches: brands restyle
+        // chrome, never what "blocked" or "healthy" looks like. Each family
+        // pairs a solid (DEFAULT/foreground) with a subtle tint
+        // (subtle/subtle-foreground) that holds in both modes.
+        status: {
+          info: {
+            DEFAULT: "hsl(var(--status-info))",
+            foreground: "hsl(var(--status-info-foreground))",
+            subtle: "hsl(var(--status-info-subtle))",
+            "subtle-foreground": "hsl(var(--status-info-subtle-foreground))",
+          },
+          success: {
+            DEFAULT: "hsl(var(--status-success))",
+            foreground: "hsl(var(--status-success-foreground))",
+            subtle: "hsl(var(--status-success-subtle))",
+            "subtle-foreground": "hsl(var(--status-success-subtle-foreground))",
+          },
+          warning: {
+            DEFAULT: "hsl(var(--status-warning))",
+            foreground: "hsl(var(--status-warning-foreground))",
+            subtle: "hsl(var(--status-warning-subtle))",
+            "subtle-foreground": "hsl(var(--status-warning-subtle-foreground))",
+          },
+          danger: {
+            DEFAULT: "hsl(var(--status-danger))",
+            foreground: "hsl(var(--status-danger-foreground))",
+            subtle: "hsl(var(--status-danger-subtle))",
+            "subtle-foreground": "hsl(var(--status-danger-subtle-foreground))",
+          },
+          neutral: {
+            DEFAULT: "hsl(var(--status-neutral))",
+            foreground: "hsl(var(--status-neutral-foreground))",
+            subtle: "hsl(var(--status-neutral-subtle))",
+            "subtle-foreground": "hsl(var(--status-neutral-subtle-foreground))",
+          },
+        },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
