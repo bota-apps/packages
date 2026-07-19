@@ -1,5 +1,61 @@
 # @bota-apps/react-components
 
+## 0.12.0
+
+### Minor Changes
+
+- 8eb9615: Paper-look brand family and a stronger brand voice end to end:
+
+  - **New brands `kraft` and `blueprint`**, and a bolder `ledger`: ledger now
+    pairs its manila page with a dark ink-navy rail; kraft is brown wrapping
+    paper with stamp-green primary and slab display headings; blueprint is pale
+    drafting paper with a deep blue rail, square corners, and a monospace
+    display voice.
+  - **Headings now render in the theme's display face** (`font-display`). The
+    token defaults to `var(--font-sans)`, so nothing changes until a brand sets
+    its own display stack — then every heading carries the brand (manuscript's
+    serif headings finally show).
+  - **Sidebar layout: the content well is anchored to the rail** instead of
+    centered in the remaining space, which read as a giant left gutter on wide
+    screens. The well keeps a `max-w-7xl` cap and its gutters; spare width now
+    stays on the right.
+
+### Patch Changes
+
+- Updated dependencies [8eb9615]
+  - @bota-apps/react-ui@0.15.0
+
+## 0.11.3
+
+### Patch Changes
+
+- 0e2d5b4: New shipped brand: `ledger` — a paper-form look with manila surfaces, stamp
+  ink-blue primary, stamp-red accent, ruled borders, square corners, and a
+  typewriter display voice. Import
+  `@bota-apps/tailwind-preset/brands/ledger.css` after `theme.css` and switch
+  with `data-brand="ledger"`. The PresetSelect story now demos it alongside the
+  other shipped looks.
+  - @bota-apps/react-ui@0.14.1
+
+## 0.11.2
+
+### Patch Changes
+
+- Updated dependencies [3dc31c8]
+- Updated dependencies [3dc31c8]
+- Updated dependencies [3dc31c8]
+  - @bota-apps/react-ui@0.14.0
+  - @bota-apps/gql-client@0.3.0
+  - @bota-apps/hooks@0.6.0
+
+## 0.11.1
+
+### Patch Changes
+
+- Updated dependencies [d2ae36c]
+- Updated dependencies [4ca7727]
+  - @bota-apps/react-ui@0.13.0
+
 ## 0.11.0
 
 ### Minor Changes

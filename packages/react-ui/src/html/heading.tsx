@@ -6,7 +6,10 @@ import { forwardRef, type HTMLAttributes, type ElementType } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/utils";
 
-const headingVariants = cva("", {
+// Headings speak in the theme's display voice. --font-display defaults to
+// var(--font-sans), so this is invisible until a brand sets its own display
+// stack (serif, slab, mono, …) — then every heading carries the brand.
+const headingVariants = cva("font-display", {
   variants: {
     mb: {
       "2": "mb-2",

@@ -35,6 +35,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@bota-apps/gql-client": "workspace:^",
     "@bota-apps/types": "workspace:^",
     "graphql": "catalog:",
     "graphql-request": "catalog:"

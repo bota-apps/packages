@@ -33,13 +33,25 @@ const flaky = createMockAuthClient({
 
 ## `createMockGraphQLClient({ schema, rootValue, contextValue, endpoint, overrides })`
 
-A real `GraphQLClient` whose `fetch` is swapped for an in-process executor that
-runs each operation against `schema` (pass the app's in-memory schema — e.g. the
-one the mock backend is built from). Tests exercise the real generated documents
-against the real resolvers, not per-test response stubs. `contextValue` may be a
-factory to derive per-request context (e.g. an authenticated viewer).
+A real `SubscribableGraphQLClient` (the exact type `createGraphQLClient`
+returns) whose `fetch` is swapped for an in-process executor that runs each
+operation against `schema` (pass the app's in-memory schema — e.g. the one the
+mock backend is built from). Tests exercise the real generated documents
+against the real resolvers, not per-test response stubs. `contextValue` may be
+a factory to derive per-request context (e.g. an authenticated viewer);
+subscriptions resolve it once per `subscribe` call.
+
+`subscribe` runs the schema's real subscription resolvers in-process and
+mirrors the SSE transport's observable behavior: a subscribe-time failure
+arrives as a single error result followed by completion, aborting the signal
+rejects the pending read with an `AbortError`, and every payload crosses a
+JSON boundary — the same shape a result has after the wire.
 
 ```ts
 const client = createMockGraphQLClient({ schema: mockSchema, rootValue });
 const data = await client.request(DepartmentsDocument);
+
+for await (const result of client.subscribe({ query: "subscription { … }" })) {
+  // each pushed ExecutionResult, as the hooks would receive it
+}
 ```

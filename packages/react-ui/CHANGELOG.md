@@ -1,5 +1,59 @@
 # @bota-apps/react-ui
 
+## 0.15.0
+
+### Minor Changes
+
+- 8eb9615: Paper-look brand family and a stronger brand voice end to end:
+
+  - **New brands `kraft` and `blueprint`**, and a bolder `ledger`: ledger now
+    pairs its manila page with a dark ink-navy rail; kraft is brown wrapping
+    paper with stamp-green primary and slab display headings; blueprint is pale
+    drafting paper with a deep blue rail, square corners, and a monospace
+    display voice.
+  - **Headings now render in the theme's display face** (`font-display`). The
+    token defaults to `var(--font-sans)`, so nothing changes until a brand sets
+    its own display stack — then every heading carries the brand (manuscript's
+    serif headings finally show).
+  - **Sidebar layout: the content well is anchored to the rail** instead of
+    centered in the remaining space, which read as a giant left gutter on wide
+    screens. The well keeps a `max-w-7xl` cap and its gutters; spare width now
+    stays on the right.
+
+### Patch Changes
+
+- Updated dependencies [8eb9615]
+  - @bota-apps/tailwind-preset@0.11.0
+
+## 0.14.1
+
+### Patch Changes
+
+- Updated dependencies [0e2d5b4]
+  - @bota-apps/tailwind-preset@0.10.0
+
+## 0.14.0
+
+### Minor Changes
+
+- 3dc31c8: Add `FileUpload` — a file selection control with `dropzone` and `button` variants. A visually hidden `<input type="file">` is driven by a real button (full keyboard support), the dropzone accepts drag-and-drop with a visible drag-over state, and client-side validation routes files failing `accept`/`maxSizeBytes` to `onInvalidFiles` with a typed reason (`"size" | "type"`). Labels and the hint line are injectable with English defaults (the hint derives from `accept`/`maxSizeBytes` when set), and `busy`/`disabled` states are announced via `aria-busy`/`aria-disabled`. Exports `FileUploadProps`, `FileUploadRejection`, `FileUploadVariant`, `FileUploadSize`, and the cva variants.
+
+## 0.13.0
+
+### Minor Changes
+
+- d2ae36c: Make the remaining hardcoded English micro-copy in `DocumentChecklist`, `ReadinessSummary`, and `ProcessTimeline` overridable, so the components can be adopted in fully-translated apps without an i18n regression (per the repo's "English defaults, injectable translations" rule).
+
+  - `DocumentChecklist` gains `statusLabels` (per-key override of Provided/Missing/Pending/Expired), `requiredLabel`, `optionalLabel`, and `progressLabel(provided, total)` for the "{provided} of {total} provided" caption.
+  - `ReadinessSummary` gains `progressLabel(complete, total)` for the "{complete} of {total} complete" caption.
+  - `ProcessTimeline` gains `summaryLabel(step, total, label)` for the compact "Step {n} of {m} — …" summary shown below a horizontal timeline in narrow containers.
+
+  All new props are optional and default to the previous English strings — no change for existing callers.
+
+### Patch Changes
+
+- 4ca7727: Add "which one do I use" selection guidance to the doc comments of the three vertical marker-rail components — `Timeline`, `ActivityFeed`, and `ProcessTimeline` — so consumers pick the right primitive: `Timeline` for a styled rail of discrete events, `ActivityFeed` for a chronological stream of recent activity, and `ProcessTimeline` for a fixed lifecycle (complete/current/upcoming). No API changes.
+
 ## 0.12.0
 
 ### Minor Changes
