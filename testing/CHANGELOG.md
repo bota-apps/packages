@@ -1,5 +1,12 @@
 # @bota-apps/testing
 
+## 0.1.7
+
+### Patch Changes
+
+- Updated dependencies [9d18b35]
+  - @bota-apps/mocks@0.3.0
+
 ## 0.1.6
 
 ### Patch Changes
