@@ -6,6 +6,7 @@ import { Div } from "../html/div";
 import { Img } from "../html/img";
 import { Span } from "../html/span";
 import { Li, Ul } from "../html/ul";
+import { FileUploadLightbox } from "./lightbox";
 import { fileKey, formatBytes } from "./shared";
 import {
   fileUploadPreviewFooterVariants,
@@ -15,6 +16,7 @@ import {
   fileUploadPreviewNameVariants,
   fileUploadPreviewSizeVariants,
   fileUploadPreviewThumbVariants,
+  fileUploadPreviewTriggerVariants,
   fileUploadPreviewVariants,
 } from "./variants";
 
@@ -33,6 +35,18 @@ export type FileUploadPreviewProps = {
   removeLabel?: (fileName: string) => string;
   /** Clear-all action label. Default "Clear all". */
   clearAllLabel?: ReactNode;
+  /** Builds the accessible name of a row's open-preview trigger. Default `Preview ${fileName}`. */
+  previewLabel?: (fileName: string) => string;
+  /** Accessible name of the lightbox close button. Default "Close". */
+  closeLabel?: string;
+  /** Accessible name of the lightbox previous-file button. Default "Previous file". */
+  previousLabel?: string;
+  /** Accessible name of the lightbox next-file button. Default "Next file". */
+  nextLabel?: string;
+  /** Builds the lightbox "n of m" position readout. Default `${position} of ${total}`. */
+  positionLabel?: (position: number, total: number) => string;
+  /** Lightbox fallback for formats with no inline preview. Default "Preview not available". */
+  previewUnavailableLabel?: ReactNode;
 };
 
 /**
@@ -69,7 +83,8 @@ function PreviewThumb({ file }: { file: File }) {
  * usable standalone when an app lays out the trigger and the list apart.
  * Rows show a thumbnail (images) or format icon, the name, and a
  * human-readable size; each row is removable, and a clear-all action appears
- * for multi-file selections.
+ * for multi-file selections. Activating a row opens a full-size lightbox
+ * that pages through the whole selection.
  */
 export function FileUploadPreview({
   files,
@@ -79,22 +94,48 @@ export function FileUploadPreview({
   listLabel = "Selected files",
   removeLabel = (fileName: string) => `Remove ${fileName}`,
   clearAllLabel = "Clear all",
+  previewLabel = (fileName: string) => `Preview ${fileName}`,
+  closeLabel = "Close",
+  previousLabel = "Previous file",
+  nextLabel = "Next file",
+  positionLabel = (position: number, total: number) => `${position} of ${total}`,
+  previewUnavailableLabel = "Preview not available",
 }: FileUploadPreviewProps) {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  // Removing the staged file shifts the next one onto the stage; removing the
+  // last file (or clearing) leaves nothing to stage, so the lightbox closes.
+  const stagedIndex = lightboxIndex === null ? null : Math.min(lightboxIndex, files.length - 1);
+
+  useEffect(() => {
+    if (lightboxIndex !== null && files.length === 0) {
+      setLightboxIndex(null);
+    }
+  }, [lightboxIndex, files.length]);
+
   if (files.length === 0) {
     return null;
   }
   return (
     <Div className={fileUploadPreviewVariants()}>
       <Ul aria-label={listLabel} className={fileUploadPreviewListVariants()}>
-        {files.map((file) => (
+        {files.map((file, index) => (
           <Li key={fileKey(file)} className={fileUploadPreviewItemVariants()}>
-            <PreviewThumb file={file} />
-            <Div className={fileUploadPreviewMetaVariants()}>
-              <Span className={fileUploadPreviewNameVariants()} title={file.name}>
-                {file.name}
-              </Span>
-              <Span className={fileUploadPreviewSizeVariants()}>{formatBytes(file.size)}</Span>
-            </Div>
+            <button
+              type="button"
+              className={fileUploadPreviewTriggerVariants()}
+              aria-label={previewLabel(file.name)}
+              aria-haspopup="dialog"
+              onClick={() => setLightboxIndex(index)}
+            >
+              <PreviewThumb file={file} />
+              <Div className={fileUploadPreviewMetaVariants()}>
+                <Span className={fileUploadPreviewNameVariants()} title={file.name}>
+                  {file.name}
+                </Span>
+                <Span className={fileUploadPreviewSizeVariants()}>{formatBytes(file.size)}</Span>
+              </Div>
+            </button>
             <Button
               type="button"
               variant="ghost"
@@ -115,6 +156,22 @@ export function FileUploadPreview({
             {clearAllLabel}
           </Button>
         </Div>
+      )}
+      {stagedIndex !== null && stagedIndex >= 0 && (
+        <FileUploadLightbox
+          files={files}
+          index={stagedIndex}
+          onIndexChange={setLightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+          onRemove={onRemove}
+          removeDisabled={disabled}
+          removeLabel={removeLabel}
+          closeLabel={closeLabel}
+          previousLabel={previousLabel}
+          nextLabel={nextLabel}
+          positionLabel={positionLabel}
+          unavailableLabel={previewUnavailableLabel}
+        />
       )}
     </Div>
   );

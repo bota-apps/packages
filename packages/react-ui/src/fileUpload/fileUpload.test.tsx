@@ -1,4 +1,5 @@
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { useState } from "react";
+import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { FileUpload, FileUploadPreview } from "./index";
@@ -336,6 +337,141 @@ describe("FileUpload controlled selection", () => {
     render(<FileUpload variant="button" files={[doc]} onFilesChange={vi.fn()} />);
     expect(screen.getByRole("list", { name: "Selected files" })).toBeDefined();
     expect(screen.getByText("agreement.pdf")).toBeDefined();
+  });
+});
+
+/** Owns the file list so lightbox interactions that mutate it can play out. */
+function ControlledUpload({ initial }: { initial: File[] }) {
+  const [files, setFiles] = useState(initial);
+  return <FileUpload multiple files={files} onFilesChange={setFiles} />;
+}
+
+describe("FileUpload preview lightbox", () => {
+  it("opens a full-size preview from a row trigger and closes on Escape", async () => {
+    const user = userEvent.setup();
+    const image = makeFile("photo.png", "image/png");
+    render(<FileUpload files={[image]} onFilesChange={vi.fn()} />);
+
+    await user.click(screen.getByRole("button", { name: "Preview photo.png" }));
+    const dialog = screen.getByRole("dialog");
+    expect(within(dialog).getByText("photo.png")).toBeDefined();
+    // Thumbnail and stage each own an object URL for the same file.
+    expect(createObjectUrl).toHaveBeenCalledTimes(2);
+    expect(within(dialog).getByAltText("photo.png").getAttribute("src")).toBe("blob:photo.png");
+
+    await user.keyboard("{Escape}");
+    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
+    // Closing unmounts the stage and revokes its URL; the thumbnail keeps its own.
+    expect(revokeObjectUrl).toHaveBeenCalledTimes(1);
+  });
+
+  it("pages through the selection with buttons and arrow keys, clamping at the ends", async () => {
+    const user = userEvent.setup();
+    const files = [
+      makeFile("a.png", "image/png"),
+      makeFile("b.pdf", "application/pdf"),
+      makeFile("c.txt", "text/plain"),
+    ];
+    render(<FileUpload multiple files={files} onFilesChange={vi.fn()} />);
+
+    await user.click(screen.getByRole("button", { name: "Preview a.png" }));
+    const dialog = screen.getByRole("dialog");
+    expect(within(dialog).getByText("1 of 3")).toBeDefined();
+    const previous = within(dialog).getByRole("button", { name: "Previous file" });
+    expect(previous.hasAttribute("disabled")).toBe(true);
+
+    await user.click(within(dialog).getByRole("button", { name: "Next file" }));
+    expect(within(dialog).getByText("2 of 3")).toBeDefined();
+    const frame = dialog.querySelector("iframe");
+    expect(frame?.getAttribute("title")).toBe("b.pdf");
+    expect(frame?.getAttribute("src")).toBe("blob:b.pdf");
+
+    await user.keyboard("{ArrowRight}");
+    expect(within(dialog).getByText("3 of 3")).toBeDefined();
+    expect(within(dialog).getByText("Preview not available")).toBeDefined();
+    const next = within(dialog).getByRole("button", { name: "Next file" });
+    expect(next.hasAttribute("disabled")).toBe(true);
+    await user.keyboard("{ArrowRight}");
+    expect(within(dialog).getByText("3 of 3")).toBeDefined();
+
+    await user.keyboard("{ArrowLeft}");
+    expect(within(dialog).getByText("2 of 3")).toBeDefined();
+  });
+
+  it("removes the staged file from the lightbox, staging the next and closing on the last", async () => {
+    const user = userEvent.setup();
+    render(
+      <ControlledUpload
+        initial={[makeFile("a.png", "image/png"), makeFile("b.pdf", "application/pdf")]}
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: "Preview a.png" }));
+    const dialog = screen.getByRole("dialog");
+    await user.click(within(dialog).getByRole("button", { name: "Remove a.png" }));
+
+    // The next file takes the stage; with one file left the pager disappears.
+    expect(within(dialog).getByText("b.pdf")).toBeDefined();
+    expect(within(dialog).queryByRole("button", { name: "Next file" })).toBeNull();
+
+    await user.click(within(dialog).getByRole("button", { name: "Remove b.pdf" }));
+    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
+    expect(screen.queryByRole("list")).toBeNull();
+  });
+
+  it("keeps the lightbox open for viewing while busy but suspends its remove action", async () => {
+    const user = userEvent.setup();
+    const doc = makeFile("agreement.pdf", "application/pdf");
+    render(<FileUpload busy files={[doc]} onFilesChange={vi.fn()} />);
+
+    await user.click(screen.getByRole("button", { name: "Preview agreement.pdf" }));
+    const dialog = screen.getByRole("dialog");
+    const remove = within(dialog).getByRole("button", { name: "Remove agreement.pdf" });
+    expect(remove.hasAttribute("disabled")).toBe(true);
+  });
+
+  it("supports overriding every lightbox label", async () => {
+    const user = userEvent.setup();
+    const files = [makeFile("one.txt", "text/plain"), makeFile("two.txt", "text/plain")];
+    render(
+      <FileUploadPreview
+        files={files}
+        onRemove={vi.fn()}
+        previewLabel={(fileName) => `Open ${fileName}`}
+        closeLabel="Dismiss"
+        previousLabel="Back"
+        nextLabel="Forward"
+        positionLabel={(position, total) => `${position}/${total}`}
+        previewUnavailableLabel="No inline view"
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: "Open one.txt" }));
+    const dialog = screen.getByRole("dialog");
+    expect(within(dialog).getByText("No inline view")).toBeDefined();
+    expect(within(dialog).getByText("1/2")).toBeDefined();
+    expect(within(dialog).getByRole("button", { name: "Back" })).toBeDefined();
+    await user.click(within(dialog).getByRole("button", { name: "Forward" }));
+    expect(within(dialog).getByText("2/2")).toBeDefined();
+    await user.click(within(dialog).getByRole("button", { name: "Dismiss" }));
+    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
+  });
+
+  it("passes the lightbox labels through the FileUpload surface", async () => {
+    const user = userEvent.setup();
+    const doc = makeFile("agreement.pdf", "application/pdf");
+    render(
+      <FileUpload
+        files={[doc]}
+        onFilesChange={vi.fn()}
+        previewFileLabel={(fileName) => `Inspect ${fileName}`}
+        previewCloseLabel="Done"
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: "Inspect agreement.pdf" }));
+    const dialog = screen.getByRole("dialog");
+    expect(within(dialog).getByRole("button", { name: "Done" })).toBeDefined();
   });
 });
 

@@ -53,6 +53,18 @@ type FileUploadCommonProps = {
   removeFileLabel?: (fileName: string) => string;
   /** Preview clear-all action label. Default "Clear all". */
   clearAllLabel?: ReactNode;
+  /** Builds the accessible name of a preview row's open-lightbox trigger. Default `Preview ${fileName}`. */
+  previewFileLabel?: (fileName: string) => string;
+  /** Accessible name of the lightbox close button. Default "Close". */
+  previewCloseLabel?: string;
+  /** Accessible name of the lightbox previous-file button. Default "Previous file". */
+  previewPreviousLabel?: string;
+  /** Accessible name of the lightbox next-file button. Default "Next file". */
+  previewNextLabel?: string;
+  /** Builds the lightbox "n of m" position readout. Default `${position} of ${total}`. */
+  previewPositionLabel?: (position: number, total: number) => string;
+  /** Lightbox fallback for formats with no inline preview. Default "Preview not available". */
+  previewUnavailableLabel?: ReactNode;
 };
 
 export type FileUploadProps = FileUploadCommonProps &
@@ -165,6 +177,12 @@ export function FileUpload(props: FileUploadProps) {
     selectedListLabel,
     removeFileLabel,
     clearAllLabel,
+    previewFileLabel,
+    previewCloseLabel,
+    previewPreviousLabel,
+    previewNextLabel,
+    previewPositionLabel,
+    previewUnavailableLabel,
   } = props;
   const selection =
     props.files === undefined
@@ -270,6 +288,12 @@ export function FileUpload(props: FileUploadProps) {
         listLabel={selectedListLabel}
         removeLabel={removeFileLabel}
         clearAllLabel={clearAllLabel}
+        previewLabel={previewFileLabel}
+        closeLabel={previewCloseLabel}
+        previousLabel={previewPreviousLabel}
+        nextLabel={previewNextLabel}
+        positionLabel={previewPositionLabel}
+        previewUnavailableLabel={previewUnavailableLabel}
       />
     );
 
