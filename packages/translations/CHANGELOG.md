@@ -1,5 +1,13 @@
 # @bota-apps/translations
 
+## 0.3.5
+
+### Patch Changes
+
+- Updated dependencies [ed5439e]
+  - @bota-apps/types@0.11.0
+  - @bota-apps/schema-utils@0.9.4
+
 ## 0.3.4
 
 ### Patch Changes

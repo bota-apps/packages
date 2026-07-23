@@ -1,5 +1,12 @@
 # @bota-apps/extension-sdk
 
+## 0.2.16
+
+### Patch Changes
+
+- Updated dependencies [ed5439e]
+  - @bota-apps/react-ui@0.20.0
+
 ## 0.2.15
 
 ### Patch Changes
