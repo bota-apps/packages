@@ -306,6 +306,7 @@ export function IssueReporter({
   const previousPrefillKey = useRef(prefillKey);
   const captureCounter = useRef(0);
 
+  const formId = useId();
   const featureFieldId = useId();
   const descriptionFieldId = useId();
   const reproStepsFieldId = useId();
@@ -435,8 +436,22 @@ export function IssueReporter({
     }
   };
 
+  // In the panel the actions live in the SidePanel's pinned footer (outside
+  // the <form> element — the submit button targets it via the form id), so
+  // they stay visible however long the form scrolls.
+  const actions = (
+    <Inline gap="sm" justify="end">
+      <Button type="button" variant="outline" disabled={pending} onClick={() => setOpen(false)}>
+        {t.cancelLabel}
+      </Button>
+      <Button type="submit" form={formId} disabled={pending || succeeded}>
+        {pending ? t.submittingLabel : t.submitLabel}
+      </Button>
+    </Inline>
+  );
+
   const form = (
-    <form onSubmit={handleSubmit} noValidate>
+    <form id={formId} onSubmit={handleSubmit} noValidate>
       <Stack gap="lg">
         <Stack gap="xs">
           <Label htmlFor={featureFieldId}>{t.featureLabel}</Label>
@@ -585,14 +600,7 @@ export function IssueReporter({
           </Text>
         )}
 
-        <Inline gap="sm" justify="end">
-          <Button type="button" variant="outline" disabled={pending} onClick={() => setOpen(false)}>
-            {t.cancelLabel}
-          </Button>
-          <Button type="submit" disabled={pending || succeeded}>
-            {pending ? t.submittingLabel : t.submitLabel}
-          </Button>
-        </Inline>
+        {variant !== "panel" && actions}
       </Stack>
     </form>
   );
@@ -607,6 +615,7 @@ export function IssueReporter({
         closeLabel={t.closePanelLabel}
         widenLabel={t.widenPanelLabel}
         narrowLabel={t.narrowPanelLabel}
+        footer={actions}
       >
         {form}
       </SidePanel>

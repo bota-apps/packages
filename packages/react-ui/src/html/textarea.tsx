@@ -7,7 +7,9 @@ import { cn } from "../lib/utils";
 import { formControlInteractionClasses } from "./interaction";
 
 export const textareaVariants = cva([
-  "flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-raised placeholder:text-muted-foreground",
+  // bg-background (not transparent): recessed-well reading on elevated
+  // surfaces — see html/trigger.ts.
+  "flex min-h-[60px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-raised placeholder:text-muted-foreground",
   formControlInteractionClasses,
 ]);
 
