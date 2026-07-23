@@ -11,5 +11,6 @@ export const badgeTones = [
   "outline",
   "success",
   "warning",
+  "info",
   "muted",
 ] as const;
