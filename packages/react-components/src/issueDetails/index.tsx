@@ -20,6 +20,8 @@ import {
 export type IssueDetailsTranslations = {
   descriptionHeading: string;
   reproStepsHeading: string;
+  /** Heading for the machine-captured diagnostics attached at filing time. */
+  technicalContextHeading: string;
   screenshotsHeading: string;
   contactHeading: string;
   createdLabel: string;
@@ -32,6 +34,7 @@ export type IssueDetailsTranslations = {
 const defaultTranslations: IssueDetailsTranslations = {
   descriptionHeading: "Description",
   reproStepsHeading: "Steps to reproduce",
+  technicalContextHeading: "Technical details",
   screenshotsHeading: "Screenshots",
   contactHeading: "Reported by",
   createdLabel: "Created",
@@ -72,6 +75,7 @@ export function IssueDetails<TIssue extends Issue = Issue>({
   const appearance = statusAppearance?.[issue.status] ?? defaultIssueStatusAppearance(issue.status);
   const screenshots = issue.screenshots ?? [];
   const reproSteps = issue.reproSteps ?? undefined;
+  const technicalContext = issue.technicalContext ?? undefined;
   const hasContact =
     (issue.contactName ?? undefined) !== undefined ||
     (issue.contactEmail ?? undefined) !== undefined;
@@ -129,6 +133,19 @@ export function IssueDetails<TIssue extends Issue = Issue>({
           <Text size="sm" className="whitespace-pre-wrap">
             {reproSteps}
           </Text>
+        </Stack>
+      )}
+
+      {technicalContext !== undefined && (
+        <Stack gap="xs" as="section">
+          <Heading as="h3" size="xs">
+            {t.technicalContextHeading}
+          </Heading>
+          {/* Machine-captured payload — mono block, scrolls instead of blowing
+              up the column width. */}
+          <pre className="max-h-64 overflow-auto rounded-md border border-border bg-muted/40 p-3 font-mono text-xs whitespace-pre-wrap break-all">
+            {technicalContext}
+          </pre>
         </Stack>
       )}
 

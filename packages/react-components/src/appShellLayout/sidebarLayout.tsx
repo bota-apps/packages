@@ -5,7 +5,7 @@ import type { AppShellSlots } from "./types";
 import { appShellLayoutVariants } from "./variants";
 
 /** Sidebar navigation + top bar + content well anchored to the rail. */
-export function SidebarLayout({ brand, nav, headerLeft, headerRight, children }: AppShellSlots) {
+export function SidebarLayout({ brand, nav, headerLeft, headerRight, panel, children }: AppShellSlots) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   return (
@@ -59,8 +59,16 @@ export function SidebarLayout({ brand, nav, headerLeft, headerRight, children }:
         {/* Anchored to the rail, not centered: a centered column next to a
             fixed rail reads as a floating left gutter. The generous cap exists
             for wide work surfaces; page-level width policy (PageContent
-            maxWidth) does the line-length work inside it, also rail-anchored. */}
-        <main className="w-full max-w-[96rem] flex-1 px-4 py-6 sm:px-6 sm:py-8">{children}</main>
+            maxWidth) does the line-length work inside it, also rail-anchored.
+            The optional docked panel shares this row: it pushes the content
+            well narrower instead of overlaying it, and never covers the
+            header or the rail. */}
+        <div className="flex min-w-0 flex-1 items-stretch">
+          <main className="w-full min-w-0 max-w-[96rem] flex-1 px-4 py-6 sm:px-6 sm:py-8">
+            {children}
+          </main>
+          {panel}
+        </div>
       </div>
     </div>
   );

@@ -13,11 +13,22 @@ export const sampleFeatureTree: FeatureNodeDef = {
     {
       id: "projects",
       label: "Projects",
+      description: "Plan and track project work",
       target: "module",
       meta: { icon: FolderKanban },
       children: [
-        { id: "projects.list", label: "Project list", target: "page" },
-        { id: "projects.create", label: "Create project", target: "action" },
+        {
+          id: "projects.list",
+          label: "Project list",
+          description: "Browse and filter every project",
+          target: "page",
+        },
+        {
+          id: "projects.create",
+          label: "Create project",
+          description: "Start a new project from scratch or a template",
+          target: "action",
+        },
         {
           id: "projects.archive",
           label: "Archive",
