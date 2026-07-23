@@ -62,11 +62,11 @@ describe("Timeline", () => {
     expect(marker?.className).toContain("bg-muted");
 
     const toned = screen.getByText("Order shipped").closest("li")?.firstElementChild;
-    expect(toned?.className).toContain("bg-emerald-500/15");
+    expect(toned?.className).toContain("bg-status-success/15");
 
     expect(timelineMarkerVariants({ tone: "primary" })).toContain("bg-selected");
     expect(timelineMarkerVariants({ tone: "destructive" })).toContain("bg-destructive/15");
-    expect(timelineDotVariants({ tone: "warning" })).toContain("bg-amber-500");
+    expect(timelineDotVariants({ tone: "warning" })).toContain("bg-status-warning");
   });
 
   it("renders a solid dot when no icon is given and the icon when provided", () => {

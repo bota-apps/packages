@@ -23,8 +23,8 @@ describe("Alert", () => {
     render(<Alert variant="warning" description="Double-check the input." />);
 
     const alert = screen.getByRole("alert");
-    expect(alert.className).toContain("bg-yellow-50");
-    expect(alertVariants({ variant: "warning" })).toContain("border-yellow-200");
+    expect(alert.className).toContain("bg-status-warning-subtle");
+    expect(alertVariants({ variant: "warning" })).toContain("border-status-warning/30");
   });
 
   it("supports MessageProps passthrough like title/description props", () => {

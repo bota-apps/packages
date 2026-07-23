@@ -24,8 +24,8 @@ export const timelineMarkerVariants = cva(
       tone: {
         default: "bg-muted text-muted-foreground",
         primary: "bg-selected text-selected-foreground",
-        success: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400",
-        warning: "bg-amber-500/15 text-amber-600 dark:text-amber-400",
+        success: "bg-status-success/15 text-status-success",
+        warning: "bg-status-warning/15 text-status-warning",
         destructive: "bg-destructive/15 text-destructive",
       },
     },
@@ -41,8 +41,8 @@ export const timelineDotVariants = cva("h-2 w-2 rounded-full", {
     tone: {
       default: "bg-muted-foreground",
       primary: "bg-primary",
-      success: "bg-emerald-500",
-      warning: "bg-amber-500",
+      success: "bg-status-success",
+      warning: "bg-status-warning",
       destructive: "bg-destructive",
     },
   },

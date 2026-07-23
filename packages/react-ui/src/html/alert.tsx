@@ -13,10 +13,10 @@ export const alertVariants = cva("rounded-md border p-3 text-sm", {
     variant: {
       error: "bg-destructive/10 text-destructive border-destructive/30",
       success:
-        "bg-green-50 text-green-800 border-green-200 dark:bg-green-950 dark:text-green-300 dark:border-green-800",
+        "bg-status-success-subtle text-status-success-subtle-foreground border-status-success/30",
       warning:
-        "bg-yellow-50 text-yellow-800 border-yellow-200 dark:bg-yellow-950 dark:text-yellow-300 dark:border-yellow-800",
-      info: "bg-blue-50 text-blue-800 border-blue-200 dark:bg-blue-950 dark:text-blue-300 dark:border-blue-800",
+        "bg-status-warning-subtle text-status-warning-subtle-foreground border-status-warning/30",
+      info: "bg-status-info-subtle text-status-info-subtle-foreground border-status-info/30",
       neutral: "bg-muted text-muted-foreground border-border",
     },
   },

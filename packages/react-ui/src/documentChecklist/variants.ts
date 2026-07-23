@@ -13,10 +13,10 @@ export const documentChecklistIconVariants = cva(
   {
     variants: {
       status: {
-        provided: "text-emerald-600 dark:text-emerald-400",
+        provided: "text-status-success",
         missing: "text-destructive",
         pending: "text-muted-foreground",
-        expired: "text-amber-600 dark:text-amber-400",
+        expired: "text-status-warning",
       },
     },
     defaultVariants: {

@@ -81,9 +81,8 @@ export const trVariants = cva(
         true: "cursor-pointer",
       },
       severity: {
-        warning:
-          "bg-yellow-50 hover:bg-yellow-100 dark:bg-yellow-950/40 dark:hover:bg-yellow-950/60",
-        error: "bg-red-50 hover:bg-red-100 dark:bg-red-950/40 dark:hover:bg-red-950/60",
+        warning: "bg-status-warning-subtle/60 hover:bg-status-warning-subtle",
+        error: "bg-status-danger-subtle/60 hover:bg-status-danger-subtle",
       },
     },
   },

@@ -5,9 +5,9 @@ export const numericTextVariants = cva("tabular-nums", {
     tone: {
       default: "text-foreground",
       muted: "text-muted-foreground",
-      success: "text-chart-2",
+      success: "text-status-success",
       destructive: "text-destructive",
-      warning: "text-amber-500",
+      warning: "text-status-warning",
     },
     size: {
       sm: "text-sm",

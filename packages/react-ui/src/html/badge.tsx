@@ -30,6 +30,7 @@ export const badgeVariants = cva(
           "border-transparent bg-status-success-subtle text-status-success-subtle-foreground",
         warning:
           "border-transparent bg-status-warning-subtle text-status-warning-subtle-foreground",
+        info: "border-transparent bg-status-info-subtle text-status-info-subtle-foreground",
         muted: "border-transparent bg-status-neutral-subtle text-status-neutral-subtle-foreground",
       },
       size: {

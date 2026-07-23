@@ -14,7 +14,7 @@ export function Page({ children, layout = "flow" }: PageProps) {
 
 type PageContentProps = {
   children: ReactNode;
-  variant?: "default" | "narrow" | "full";
+  variant?: "default" | "narrow" | "wide" | "full";
   region?: "header" | "body";
 };
 

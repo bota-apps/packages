@@ -64,7 +64,7 @@ export type PageContainerProps = {
   /** Escape hatch for non-standard header content (badges, confirm dialogs, toggles). */
   headerRight?: ReactNode;
   /** Content area width. */
-  variant?: "default" | "narrow" | "full";
+  variant?: "default" | "narrow" | "wide" | "full";
   /** Page scroll model — "fixed" pins the header and scrolls only the body. */
   layout?: "flow" | "fixed";
   /** Unified page state. */
