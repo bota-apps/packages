@@ -140,7 +140,7 @@ const shippedPresets: readonly AppearancePreset[] = [
     value: "freight",
     label: "Freight",
     icon: Container,
-    description: "Corridor blue, navy rail, signal orange",
+    description: "Corridor blue, signage headings, signal orange",
     brand: "freight",
   },
 ];
