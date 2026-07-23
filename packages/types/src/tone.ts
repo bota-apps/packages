@@ -3,4 +3,4 @@
 // no cast. (Diverges from a generic six-tone set on purpose — alignment with the
 // canonical Badge is what makes the assignment typecheck.)
 export type BadgeTone =
-  "default" | "secondary" | "destructive" | "outline" | "success" | "warning" | "muted";
+  "default" | "secondary" | "destructive" | "outline" | "success" | "warning" | "info" | "muted";
