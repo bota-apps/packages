@@ -1,5 +1,12 @@
 # @bota-apps/schema-utils
 
+## 0.9.3
+
+### Patch Changes
+
+- 55e8afc: Add `info` to the runtime `badgeTones` list, keeping it aligned with the
+  widened `BadgeTone` union in @bota-apps/types 0.10.4.
+
 ## 0.9.2
 
 ### Patch Changes
