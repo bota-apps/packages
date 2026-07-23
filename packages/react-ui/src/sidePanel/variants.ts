@@ -14,8 +14,10 @@ export type SidePanelWidth = (typeof sidePanelWidths)[number];
  */
 export const sidePanelVariants = cva(
   [
-    "fixed inset-y-0 right-0 z-50 w-screen max-w-full border-l border-border bg-background shadow-xl",
-    "md:sticky md:top-0 md:z-auto md:max-h-dvh md:shrink-0 md:self-stretch md:shadow-none",
+    // Card surface, not the page background: the panel must read as its own
+    // raised layer next to the content well, in every brand.
+    "fixed inset-y-0 right-0 z-50 w-screen max-w-full border-l border-border bg-card text-card-foreground shadow-xl",
+    "md:sticky md:top-0 md:z-auto md:max-h-dvh md:shrink-0 md:self-stretch md:shadow-overlay",
     "md:transition-[width] md:duration-200",
   ].join(" "),
   {
