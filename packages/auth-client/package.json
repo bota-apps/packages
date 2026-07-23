@@ -1,6 +1,6 @@
 {
   "name": "@bota-apps/auth-client",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "Cookie-based auth client for @bota-apps apps: a session endpoint, an external auth store, a root-route guard, and React bindings — composed via createAuthClient.",
   "keywords": [
     "bota-apps",

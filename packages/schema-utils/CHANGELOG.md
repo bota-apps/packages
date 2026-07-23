@@ -1,5 +1,12 @@
 # @bota-apps/schema-utils
 
+## 0.9.4
+
+### Patch Changes
+
+- Updated dependencies [ed5439e]
+  - @bota-apps/types@0.11.0
+
 ## 0.9.3
 
 ### Patch Changes

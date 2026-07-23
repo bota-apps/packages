@@ -1,5 +1,12 @@
 # @bota-apps/fm
 
+## 0.8.4
+
+### Patch Changes
+
+- Updated dependencies [ed5439e]
+  - @bota-apps/types@0.11.0
+
 ## 0.8.3
 
 ### Patch Changes

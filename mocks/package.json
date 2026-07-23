@@ -1,6 +1,6 @@
 {
   "name": "@bota-apps/mocks",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "In-memory test/story doubles for @bota-apps packages, organized by module (./auth, …). Every mock conforms to the real client type it stands in for.",
   "license": "MIT",
   "author": "bota-apps",

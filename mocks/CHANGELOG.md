@@ -1,5 +1,12 @@
 # @bota-apps/mocks
 
+## 0.3.1
+
+### Patch Changes
+
+- Updated dependencies [ed5439e]
+  - @bota-apps/types@0.11.0
+
 ## 0.3.0
 
 ### Minor Changes

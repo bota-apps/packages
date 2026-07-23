@@ -1,5 +1,15 @@
 # @bota-apps/testing
 
+## 0.1.11
+
+### Patch Changes
+
+- Updated dependencies [ed5439e]
+  - @bota-apps/react-components@0.16.0
+  - @bota-apps/types@0.11.0
+  - @bota-apps/mocks@0.3.1
+  - @bota-apps/fm@0.8.4
+
 ## 0.1.10
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @bota-apps/auth-client
 
+## 0.6.3
+
+### Patch Changes
+
+- Updated dependencies [ed5439e]
+  - @bota-apps/types@0.11.0
+
 ## 0.6.2
 
 ### Patch Changes
