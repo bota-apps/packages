@@ -90,6 +90,18 @@ describe("SidePanel", () => {
     expect(onWidthChange).toHaveBeenCalledWith("xl");
   });
 
+  it("pins the footer below the scrollable body", () => {
+    render(
+      <SidePanel open title="Companion" footer={<button type="button">Save</button>}>
+        <p>Body</p>
+      </SidePanel>,
+    );
+    const footer = screen.getByText("Save").closest("footer");
+    expect(footer).toBeTruthy();
+    // Sibling of the scroll container, not inside it — it never scrolls away.
+    expect(footer?.previousElementSibling?.textContent).toContain("Body");
+  });
+
   it("can hide the width controls", () => {
     render(
       <SidePanel open title="Companion" widthControls={false}>

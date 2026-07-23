@@ -301,6 +301,18 @@ describe("IssueReporter panel variant", () => {
     expect(description.value).toBe("Half-written report");
   });
 
+  it("submits from the pinned footer action outside the form element", async () => {
+    const user = userEvent.setup();
+    const { onCreateIssue } = renderPanel({ defaultFeatureId: "reports.usage" });
+
+    await user.type(screen.getByLabelText("What happened?"), "Numbers are shifted");
+    const submit = screen.getByRole("button", { name: "Submit issue" });
+    // The footer button is form-associated, not nested in the form.
+    expect(submit.closest("form")).toBeNull();
+    await user.click(submit);
+    await waitFor(() => expect(onCreateIssue).toHaveBeenCalledOnce());
+  });
+
   it("replaces the draft when the prefill key changes", async () => {
     const user = userEvent.setup();
     const { view, onCreateIssue } = renderPanel({ prefillKey: 1 });

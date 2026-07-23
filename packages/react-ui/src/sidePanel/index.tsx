@@ -36,6 +36,11 @@ export type SidePanelProps = {
   closeLabel?: string;
   widenLabel?: string;
   narrowLabel?: string;
+  /**
+   * Pinned action row below the scrollable body (e.g. cancel/submit). Stays
+   * visible however long the content grows.
+   */
+  footer?: ReactNode;
   children: ReactNode;
 };
 
@@ -51,6 +56,7 @@ export function SidePanel({
   closeLabel = "Close panel",
   widenLabel = "Widen panel",
   narrowLabel = "Narrow panel",
+  footer,
   children,
 }: SidePanelProps) {
   const [uncontrolledWidth, setUncontrolledWidth] = useState<SidePanelWidth>(defaultWidth);
@@ -127,6 +133,9 @@ export function SidePanel({
           </Button>
         </header>
         <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4">{children}</div>
+        {footer !== undefined && (
+          <footer className="border-t border-border bg-muted/30 px-4 py-3">{footer}</footer>
+        )}
       </div>
     </aside>
   );
