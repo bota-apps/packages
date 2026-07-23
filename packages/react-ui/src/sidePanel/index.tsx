@@ -69,6 +69,12 @@ export function SidePanel({
       role="complementary"
       aria-label={title}
       data-state={open ? "open" : "closed"}
+      // Closed means gone: the children stay mounted (drafts survive), but
+      // the region leaves the accessibility tree and tab order entirely —
+      // the CSS `hidden` alone wouldn't do that in every environment.
+      hidden={!open}
+      aria-hidden={!open || undefined}
+      inert={!open || undefined}
       className={sidePanelVariants({ width, open })}
     >
       {/* Sticky wrapper: the panel column spans the whole content row, but the
