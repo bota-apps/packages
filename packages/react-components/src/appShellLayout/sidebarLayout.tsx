@@ -56,13 +56,11 @@ export function SidebarLayout({ brand, nav, headerLeft, headerRight, children }:
           <div className="flex shrink-0 items-center gap-1 sm:gap-2">{headerRight}</div>
         </header>
 
-        {/* The well centers under a generous cap; page-level width policy
-            (PageContent maxWidth) does the line-length work inside it. A
-            left-anchored narrower cap read as a dead right gutter on wide
-            screens — centering splits the spare width symmetrically. */}
-        <main className="mx-auto w-full max-w-[96rem] flex-1 px-4 py-6 sm:px-6 sm:py-8">
-          {children}
-        </main>
+        {/* Anchored to the rail, not centered: a centered column next to a
+            fixed rail reads as a floating left gutter. The generous cap exists
+            for wide work surfaces; page-level width policy (PageContent
+            maxWidth) does the line-length work inside it, also rail-anchored. */}
+        <main className="w-full max-w-[96rem] flex-1 px-4 py-6 sm:px-6 sm:py-8">{children}</main>
       </div>
     </div>
   );

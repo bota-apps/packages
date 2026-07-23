@@ -38,13 +38,15 @@ export const PageEl = forwardRef<HTMLDivElement, PageElProps>(function PageEl(
 /**
  * No gutters of its own: the app-shell content well owns page padding, and
  * PageContent adding another layer doubled it — visibly wasteful on phones.
- * PageContent contributes centring, width caps, and fixed-layout scrolling.
+ * PageContent contributes width caps and fixed-layout scrolling. Capped
+ * content stays anchored to the well's start edge (matching the sidebar
+ * rail); only `narrow` centers itself — a slim column reads better centered.
  */
-export const pageContentVariants = cva("mx-auto w-full", {
+export const pageContentVariants = cva("w-full", {
   variants: {
     maxWidth: {
       default: "max-w-7xl",
-      narrow: "max-w-2xl",
+      narrow: "mx-auto max-w-2xl",
       /** Dense work surfaces (wide tables, boards) — fills the shell well's cap. */
       wide: "max-w-[96rem]",
       full: "",
