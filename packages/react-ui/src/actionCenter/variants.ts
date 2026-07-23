@@ -15,7 +15,7 @@ export const actionCenterIconVariants = cva(
       tone: {
         default: "bg-muted text-muted-foreground",
         primary: "bg-selected text-selected-foreground",
-        warning: "bg-amber-500/15 text-amber-600 dark:text-amber-400",
+        warning: "bg-status-warning/15 text-status-warning",
         destructive: "bg-destructive/15 text-destructive",
       },
     },

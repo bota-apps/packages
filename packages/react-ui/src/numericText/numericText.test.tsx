@@ -24,7 +24,7 @@ describe("NumericText", () => {
     render(<NumericText value={7} tone="success" size="xl" weight="bold" />);
     const el = screen.getByText("7");
     expect(el.className).toContain("tabular-nums");
-    expect(el.className).toContain("text-chart-2");
+    expect(el.className).toContain("text-status-success");
     expect(el.className).toContain("text-2xl");
     expect(el.className).toContain("font-bold");
   });

@@ -20,7 +20,7 @@ describe("StatCard", () => {
     );
     const root = container.firstChild as HTMLElement;
     expect(root.className).toContain("border-l-[3px]");
-    expect(root.className).toContain("border-l-emerald-500");
+    expect(root.className).toContain("border-l-status-success");
     expect(root.className).toContain("p-2");
   });
 

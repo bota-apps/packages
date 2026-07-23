@@ -146,7 +146,7 @@ export function ReadinessSummary({
 
       {ready ? (
         <Div className="flex items-center gap-2">
-          <Span className="shrink-0 text-emerald-600 dark:text-emerald-400 [&_svg]:size-4">
+          <Span className="shrink-0 text-status-success [&_svg]:size-4">
             <CircleCheckBig aria-hidden />
           </Span>
           <Text as="span" size="sm" tone="default">

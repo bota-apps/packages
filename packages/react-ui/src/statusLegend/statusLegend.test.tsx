@@ -27,7 +27,7 @@ describe("StatusLegend", () => {
     render(<StatusLegend items={items} />);
 
     const swatch = screen.getByText("Pending").previousSibling as HTMLElement;
-    expect(swatch.className).toContain("bg-amber-500/15");
+    expect(swatch.className).toContain("bg-status-warning/15");
   });
 
   it("stacks vertically when requested", () => {

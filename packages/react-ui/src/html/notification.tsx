@@ -8,15 +8,15 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/utils";
 
 export const notificationVariants = cva(
-  "flex items-center gap-3 text-white p-4 rounded-lg shadow-floating pointer-events-auto",
+  "flex items-center gap-3 p-4 rounded-lg shadow-floating pointer-events-auto",
   {
     variants: {
       variant: {
-        success: "bg-green-500 dark:bg-green-600",
-        error: "bg-red-500 dark:bg-red-600",
-        warning: "bg-yellow-500 dark:bg-yellow-600",
-        info: "bg-blue-500 dark:bg-blue-600",
-        notification: "bg-purple-500 dark:bg-purple-600",
+        success: "bg-status-success text-status-success-foreground",
+        error: "bg-status-danger text-status-danger-foreground",
+        warning: "bg-status-warning text-status-warning-foreground",
+        info: "bg-status-info text-status-info-foreground",
+        notification: "bg-primary text-primary-foreground",
       },
     },
   },
@@ -40,11 +40,11 @@ export const NotificationEl = forwardRef<HTMLDivElement, NotificationElProps>(
 export const notificationIconVariants = cva("flex-shrink-0", {
   variants: {
     variant: {
-      success: "text-green-50",
-      error: "text-red-50",
-      warning: "text-yellow-50",
-      info: "text-blue-50",
-      notification: "text-purple-50",
+      success: "text-status-success-foreground",
+      error: "text-status-danger-foreground",
+      warning: "text-status-warning-foreground",
+      info: "text-status-info-foreground",
+      notification: "text-primary-foreground",
     },
   },
 });

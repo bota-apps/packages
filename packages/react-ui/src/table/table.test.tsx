@@ -53,7 +53,7 @@ describe("Table", () => {
   });
 
   it("exposes the tr severity variants for consumers", () => {
-    expect(trVariants({ severity: "warning" })).toContain("bg-yellow-50");
+    expect(trVariants({ severity: "warning" })).toContain("bg-status-warning-subtle/60");
     expect(trVariants({ clickable: true })).toContain("cursor-pointer");
   });
 
