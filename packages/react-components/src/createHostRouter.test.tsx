@@ -46,6 +46,7 @@ describe("createHostRouter", () => {
     const router = buildRouter("/boom");
     render(<RouterProvider router={router} />);
     expect(await screen.findByText("Something went wrong")).toBeTruthy();
-    expect(await screen.findByText("exploded in render")).toBeTruthy();
+    // Raw thrown messages never render — classified copy takes their place.
+    expect(screen.queryByText(/exploded in render/)).toBeNull();
   });
 });
