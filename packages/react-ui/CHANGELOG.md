@@ -1,5 +1,16 @@
 # @bota-apps/react-ui
 
+## 0.20.1
+
+### Patch Changes
+
+- 23f1bd9: SidePanel: a closed panel now carries the HTML `hidden` attribute plus
+  `aria-hidden` and `inert`. Children stay mounted (drafts still survive
+  close/reopen), but the region fully leaves the accessibility tree and tab
+  order — previously only a CSS class hid it, so its controls could still be
+  reached by assistive tech and shadow the page's own controls in
+  accessibility-based queries.
+
 ## 0.20.0
 
 ### Minor Changes
