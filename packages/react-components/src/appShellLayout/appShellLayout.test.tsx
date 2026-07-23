@@ -95,4 +95,28 @@ describe("AppShellLayout", () => {
     expect(screen.getByRole("navigation").textContent).toContain("Home");
     expect(screen.getByRole("main").textContent).toContain("Page content");
   });
+
+  it.each(["sidebar", "topnav"] as const)(
+    "docks the panel slot beside the content well (%s layout)",
+    (layout) => {
+      render(
+        <AppShellLayout
+          layout={layout}
+          brand={<span>Bota Console</span>}
+          nav={<a href="#home">Home</a>}
+          panel={<aside aria-label="Companion">Panel content</aside>}
+        >
+          <p>Page content</p>
+        </AppShellLayout>,
+      );
+
+      const main = screen.getByRole("main");
+      const panel = screen.getByRole("complementary", { name: "Companion" });
+      // Siblings in the same content row — pushed aside, not overlaid, and
+      // below the header rather than covering it.
+      expect(panel.parentElement).toBe(main.parentElement);
+      expect(main.parentElement?.className).toContain("flex");
+      expect(screen.getByRole("banner").contains(panel)).toBe(false);
+    },
+  );
 });

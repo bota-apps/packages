@@ -22,6 +22,11 @@ type AppShellProps = {
    * the shell can't own because the supported languages are app data.
    */
   headerActions?: ReactNode;
+  /**
+   * Companion panel docked at the right edge of the content row (typically a
+   * SidePanel) — non-modal, so the app stays navigable while it is open.
+   */
+  panel?: ReactNode;
   children: ReactNode;
 };
 
@@ -31,7 +36,7 @@ type AppShellProps = {
 // density together, plus the personal light/dark toggle. Apps wanting granular
 // axis controls mount LayoutToggle/DensityToggle themselves. The sign-out
 // bounce uses the auth client's own loginUrl — no BFF origin prop needed.
-export function AppShell({ title, navItems, headerActions, children }: AppShellProps) {
+export function AppShell({ title, navItems, headerActions, panel, children }: AppShellProps) {
   const { user, logout, loginUrl } = useAuth();
   const { layout } = useAppearance();
 
@@ -75,6 +80,7 @@ export function AppShell({ title, navItems, headerActions, children }: AppShellP
           </Button>
         </>
       }
+      panel={panel}
     >
       {children}
     </AppShellLayout>
