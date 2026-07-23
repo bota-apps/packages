@@ -1,5 +1,12 @@
 # @bota-apps/types
 
+## 0.10.4
+
+### Patch Changes
+
+- a490ee6: Add `info` to the `BadgeTone` union, matching the Badge `info` variant added
+  in @bota-apps/react-ui 0.19.0.
+
 ## 0.10.3
 
 ### Patch Changes
