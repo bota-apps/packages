@@ -29,6 +29,9 @@ describe("Page", () => {
     );
     expect(screen.getByText("default").className).toContain("max-w-7xl");
     expect(screen.getByText("narrow").className).toContain("max-w-2xl");
+    // Every width cap stays anchored to the well's start edge — narrow
+    // must not re-center itself against its left-anchored siblings.
+    expect(screen.getByText("narrow").className).not.toContain("mx-auto");
     expect(screen.getByText("wide").className).toContain("max-w-[96rem]");
     const body = screen.getByText("body");
     expect(body.className).toContain("overflow-y-auto");
