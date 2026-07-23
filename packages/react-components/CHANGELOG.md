@@ -1,5 +1,18 @@
 # @bota-apps/react-components
 
+## 0.14.1
+
+### Patch Changes
+
+- b8a7e97: Restore rail-anchored content in the sidebar layout. The centered well
+  introduced in the previous release read as a floating left gutter next to the
+  fixed rail — the content well and capped `PageContent` widths are anchored to
+  the start edge again, with spare width staying on the right. The `wide` width
+  variant and the well's generous cap are unchanged; only `narrow` content
+  centers itself.
+- Updated dependencies [b8a7e97]
+  - @bota-apps/react-ui@0.19.2
+
 ## 0.14.0
 
 ### Minor Changes
