@@ -78,6 +78,13 @@ export type IssueReporterProps = {
   onCreateIssue: (payload: CreateIssuePayload) => Promise<void>;
   /** Feature preselected each time the sheet opens (e.g. the current page). */
   defaultFeatureId?: string;
+  /** Prefill for the description field each time the sheet opens (editable). */
+  defaultDescription?: string;
+  /**
+   * Prefill for the repro-steps field each time the sheet opens (editable) —
+   * e.g. technical context captured from an error state.
+   */
+  defaultReproSteps?: string;
   /** Controlled open state; omit to use the uncontrolled trigger. */
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -208,6 +215,8 @@ export function IssueReporter({
   featureTree,
   onCreateIssue,
   defaultFeatureId,
+  defaultDescription,
+  defaultReproSteps,
   open: openProp,
   onOpenChange,
   trigger,
@@ -251,8 +260,8 @@ export function IssueReporter({
   useEffect(() => {
     if (open && !previouslyOpen.current) {
       setFeatureId(defaultFeatureId);
-      setDescription("");
-      setReproSteps("");
+      setDescription(defaultDescription ?? "");
+      setReproSteps(defaultReproSteps ?? "");
       setFiles([]);
       setFileHint(undefined);
       setContactName("");
@@ -263,7 +272,7 @@ export function IssueReporter({
       setSubmitError(undefined);
     }
     previouslyOpen.current = open;
-  }, [open, defaultFeatureId]);
+  }, [open, defaultFeatureId, defaultDescription, defaultReproSteps]);
 
   useEffect(() => () => window.clearTimeout(closeTimer.current), []);
 
