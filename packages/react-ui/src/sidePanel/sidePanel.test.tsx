@@ -27,12 +27,17 @@ describe("SidePanel", () => {
         <input aria-label="Draft" defaultValue="typed text" />
       </SidePanel>,
     );
-    // Hidden (display: none) but still in the DOM with its state intact.
+    // Hidden but still in the DOM with its state intact.
     const input: HTMLInputElement = screen.getByLabelText("Draft", { hidden: true });
     expect(input.value).toBe("typed text");
-    expect(
-      screen.getByRole("complementary", { name: "Companion", hidden: true }).className,
-    ).toContain("hidden");
+    // Fully out of the accessibility tree and tab order while closed — the
+    // region must not shadow the page's own controls in role queries or for
+    // assistive tech.
+    expect(screen.queryByRole("complementary", { name: "Companion" })).toBeNull();
+    const region = document.querySelector('[data-state="closed"]');
+    expect(region?.hasAttribute("hidden")).toBe(true);
+    expect(region?.getAttribute("aria-hidden")).toBe("true");
+    expect(region?.hasAttribute("inert")).toBe(true);
   });
 
   it("closes via the close button", async () => {
