@@ -95,6 +95,7 @@ export * from "./select";
 export * from "./separator";
 export * from "./sheet";
 export * from "./sidePanel";
+export * from "./splitButton";
 export * from "./sidebar";
 export * from "./sidebarLayout";
 export * from "./sidebarNavLink";
