@@ -23,9 +23,9 @@ export const stepperLineVariants = cva("h-0.5 flex-1", {
   variants: {
     state: {
       upcoming: "bg-border",
-      warning: "bg-amber-500/40",
-      success: "bg-emerald-500/40",
-      info: "bg-blue-500/40",
+      warning: "bg-status-warning/40",
+      success: "bg-status-success/40",
+      info: "bg-status-info/40",
       active: "bg-primary/40",
       done: "bg-primary/40",
     },

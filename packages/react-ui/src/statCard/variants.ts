@@ -31,15 +31,15 @@ export const statCardVariants = cva(
     compoundVariants: [
       // `outlined` colors the left border accent by tone.
       { variant: "outlined", tone: "default", className: "border-l-primary" },
-      { variant: "outlined", tone: "success", className: "border-l-emerald-500" },
-      { variant: "outlined", tone: "warning", className: "border-l-amber-500" },
-      { variant: "outlined", tone: "info", className: "border-l-blue-500" },
+      { variant: "outlined", tone: "success", className: "border-l-status-success" },
+      { variant: "outlined", tone: "warning", className: "border-l-status-warning" },
+      { variant: "outlined", tone: "info", className: "border-l-status-info" },
       { variant: "outlined", tone: "destructive", className: "border-l-destructive" },
       // `filled` tints the background by tone.
       { variant: "filled", tone: "default", className: "bg-primary/5" },
-      { variant: "filled", tone: "success", className: "bg-emerald-500/5" },
-      { variant: "filled", tone: "warning", className: "bg-amber-500/5" },
-      { variant: "filled", tone: "info", className: "bg-blue-500/5" },
+      { variant: "filled", tone: "success", className: "bg-status-success/5" },
+      { variant: "filled", tone: "warning", className: "bg-status-warning/5" },
+      { variant: "filled", tone: "info", className: "bg-status-info/5" },
       { variant: "filled", tone: "destructive", className: "bg-destructive/5" },
     ],
     defaultVariants: {

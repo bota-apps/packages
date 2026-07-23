@@ -45,6 +45,8 @@ export const pageContentVariants = cva("mx-auto w-full", {
     maxWidth: {
       default: "max-w-7xl",
       narrow: "max-w-2xl",
+      /** Dense work surfaces (wide tables, boards) — fills the shell well's cap. */
+      wide: "max-w-[96rem]",
       full: "",
     },
     region: {

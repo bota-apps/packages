@@ -3,10 +3,10 @@ import { cva, type VariantProps } from "class-variance-authority";
 export const statusDotVariants = cva("inline-block rounded-full shrink-0", {
   variants: {
     status: {
-      green: "bg-emerald-500",
-      red: "bg-red-500",
-      yellow: "bg-amber-500",
-      gray: "bg-gray-400",
+      green: "bg-status-success",
+      red: "bg-status-danger",
+      yellow: "bg-status-warning",
+      gray: "bg-status-neutral",
     },
     size: {
       sm: "h-1.5 w-1.5",

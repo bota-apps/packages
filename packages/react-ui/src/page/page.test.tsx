@@ -23,11 +23,13 @@ describe("Page", () => {
       <div>
         <PageContent>default</PageContent>
         <PageContent variant="narrow">narrow</PageContent>
+        <PageContent variant="wide">wide</PageContent>
         <PageContent region="body">body</PageContent>
       </div>,
     );
     expect(screen.getByText("default").className).toContain("max-w-7xl");
     expect(screen.getByText("narrow").className).toContain("max-w-2xl");
+    expect(screen.getByText("wide").className).toContain("max-w-[96rem]");
     const body = screen.getByText("body");
     expect(body.className).toContain("overflow-y-auto");
     // The shell content well owns page gutters — PageContent adds none of its own.

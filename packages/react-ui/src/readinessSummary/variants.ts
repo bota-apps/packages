@@ -12,7 +12,7 @@ export const readinessIssueIconVariants = cva("mt-0.5 shrink-0 [&_svg]:size-4 [&
   variants: {
     severity: {
       error: "text-destructive",
-      warning: "text-amber-600 dark:text-amber-400",
+      warning: "text-status-warning",
       info: "text-muted-foreground",
     },
   },

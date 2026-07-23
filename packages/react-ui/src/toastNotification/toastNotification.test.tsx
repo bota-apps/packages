@@ -23,7 +23,7 @@ describe("ToastNotification", () => {
     const { container } = render(<ToastNotification variant="error" title="Error" />);
 
     const root = container.firstElementChild;
-    expect(root?.className).toContain("bg-red-500");
+    expect(root?.className).toContain("bg-status-danger");
     expect(root?.className).toContain("rounded-lg");
   });
 
