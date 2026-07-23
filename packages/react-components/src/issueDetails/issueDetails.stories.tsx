@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
-import { sampleFeatureLabel, sampleIssues } from "../issueReporter/fixtures";
+import { placeholderImage, sampleFeatureLabel, sampleIssues } from "../issueReporter/fixtures";
 import type { Issue } from "../issueReporter/types";
 import { IssueDetails } from "./index";
 
@@ -21,6 +21,23 @@ const statusOptions = [
 
 export const Full: Story = {
   render: () => <IssueDetails issue={sampleIssues[0]} featureLabel={sampleFeatureLabel} />,
+};
+
+/** Several previewable screenshots share one carousel dialog. */
+export const MultipleScreenshots: Story = {
+  render: () => (
+    <IssueDetails
+      issue={{
+        ...sampleIssues[0],
+        screenshots: [
+          { id: "shot-a", fileName: "step-1.png", url: placeholderImage("#64748b") },
+          { id: "shot-b", fileName: "step-2.png", url: placeholderImage("#0d9488") },
+          { id: "shot-c", fileName: "step-3.png", url: placeholderImage("#7c3aed") },
+        ],
+      }}
+      featureLabel={sampleFeatureLabel}
+    />
+  ),
 };
 
 export const Minimal: Story = {

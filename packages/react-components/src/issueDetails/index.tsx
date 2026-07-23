@@ -1,5 +1,4 @@
 import { useId, useState } from "react";
-import { Image as ImageIcon } from "lucide-react";
 import {
   Badge,
   Combobox,
@@ -16,6 +15,7 @@ import {
   type Issue,
   type IssueStatusAppearance,
 } from "../issueReporter/types";
+import { ScreenshotGallery } from "./screenshotGallery";
 
 export type IssueDetailsTranslations = {
   descriptionHeading: string;
@@ -23,6 +23,14 @@ export type IssueDetailsTranslations = {
   /** Heading for the machine-captured diagnostics attached at filing time. */
   technicalContextHeading: string;
   screenshotsHeading: string;
+  /** Accessible label for a screenshot thumbnail opening the full-size preview. */
+  previewScreenshotLabel: (fileName: string) => string;
+  /** Accessible label for the preview dialog close button. */
+  closePreviewLabel: string;
+  previousScreenshotLabel: string;
+  nextScreenshotLabel: string;
+  /** "n of m" readout while paging through the screenshots. */
+  screenshotPositionLabel: (position: number, total: number) => string;
   contactHeading: string;
   createdLabel: string;
   updatedLabel: string;
@@ -36,6 +44,11 @@ const defaultTranslations: IssueDetailsTranslations = {
   reproStepsHeading: "Steps to reproduce",
   technicalContextHeading: "Technical details",
   screenshotsHeading: "Screenshots",
+  previewScreenshotLabel: (fileName) => `Preview ${fileName}`,
+  closePreviewLabel: "Close",
+  previousScreenshotLabel: "Previous",
+  nextScreenshotLabel: "Next",
+  screenshotPositionLabel: (position, total) => `${position} of ${total}`,
   contactHeading: "Reported by",
   createdLabel: "Created",
   updatedLabel: "Updated",
@@ -66,7 +79,30 @@ export function IssueDetails<TIssue extends Issue = Issue>({
   onUpdateStatus,
   translations,
 }: IssueDetailsProps<TIssue>) {
-  const t = { ...defaultTranslations, ...translations };
+  // Per-key merge: an optional translator handing over explicitly-undefined
+  // keys must not clobber the defaults.
+  const t: IssueDetailsTranslations = {
+    descriptionHeading: translations?.descriptionHeading ?? defaultTranslations.descriptionHeading,
+    reproStepsHeading: translations?.reproStepsHeading ?? defaultTranslations.reproStepsHeading,
+    technicalContextHeading:
+      translations?.technicalContextHeading ?? defaultTranslations.technicalContextHeading,
+    screenshotsHeading: translations?.screenshotsHeading ?? defaultTranslations.screenshotsHeading,
+    previewScreenshotLabel:
+      translations?.previewScreenshotLabel ?? defaultTranslations.previewScreenshotLabel,
+    closePreviewLabel: translations?.closePreviewLabel ?? defaultTranslations.closePreviewLabel,
+    previousScreenshotLabel:
+      translations?.previousScreenshotLabel ?? defaultTranslations.previousScreenshotLabel,
+    nextScreenshotLabel:
+      translations?.nextScreenshotLabel ?? defaultTranslations.nextScreenshotLabel,
+    screenshotPositionLabel:
+      translations?.screenshotPositionLabel ?? defaultTranslations.screenshotPositionLabel,
+    contactHeading: translations?.contactHeading ?? defaultTranslations.contactHeading,
+    createdLabel: translations?.createdLabel ?? defaultTranslations.createdLabel,
+    updatedLabel: translations?.updatedLabel ?? defaultTranslations.updatedLabel,
+    statusLabel: translations?.statusLabel ?? defaultTranslations.statusLabel,
+    statusPlaceholder: translations?.statusPlaceholder ?? defaultTranslations.statusPlaceholder,
+    updatingStatus: translations?.updatingStatus ?? defaultTranslations.updatingStatus,
+  };
   const statusFieldId = useId();
   // The status being written by the host right now, if any — shown as the
   // interim selection and released when the handler's promise settles.
@@ -154,33 +190,14 @@ export function IssueDetails<TIssue extends Issue = Issue>({
           <Heading as="h3" size="xs">
             {t.screenshotsHeading}
           </Heading>
-          <Inline gap="sm" align="start" wrap>
-            {screenshots.map((screenshot) =>
-              screenshot.url !== undefined ? (
-                <a
-                  key={screenshot.id}
-                  href={screenshot.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="block overflow-hidden rounded-md border border-border"
-                >
-                  <img
-                    src={screenshot.url}
-                    alt={screenshot.fileName}
-                    className="h-24 w-24 object-cover"
-                  />
-                </a>
-              ) : (
-                <span
-                  key={screenshot.id}
-                  className="inline-flex items-center gap-1.5 rounded-md border border-border px-2 py-1 text-sm text-muted-foreground"
-                >
-                  <ImageIcon className="h-3.5 w-3.5" aria-hidden="true" />
-                  {screenshot.fileName}
-                </span>
-              ),
-            )}
-          </Inline>
+          <ScreenshotGallery
+            screenshots={screenshots}
+            previewLabel={t.previewScreenshotLabel}
+            closeLabel={t.closePreviewLabel}
+            previousLabel={t.previousScreenshotLabel}
+            nextLabel={t.nextScreenshotLabel}
+            positionLabel={t.screenshotPositionLabel}
+          />
         </Stack>
       )}
 
