@@ -1,5 +1,13 @@
 # @bota-apps/react-ui
 
+## 0.19.1
+
+### Patch Changes
+
+- 9faacc8: `Heading` (typography) now renders in the theme's display voice like the other
+  heading primitives — `font-display` falls back to the sans stack for brands
+  without a display face, so brands that don't set one are unaffected.
+
 ## 0.19.0
 
 ### Minor Changes
