@@ -117,7 +117,7 @@ The shipped brands are complete looks. Import the ones your app offers, after
 @import "@bota-apps/tailwind-preset/brands/terminal.css"; /* monospace, square corners, console chrome */
 @import "@bota-apps/tailwind-preset/brands/sorbet.css"; /* soft rounded corners, berry brights */
 @import "@bota-apps/tailwind-preset/brands/graphite.css"; /* charcoal chrome over a light page */
-@import "@bota-apps/tailwind-preset/brands/freight.css"; /* corridor blue, navy rail, signal orange, Inter */
+@import "@bota-apps/tailwind-preset/brands/freight.css"; /* corridor blue, navy rail, signal orange, signage headings */
 ```
 
 Or generate your own (authoring-time, check the output in). One or two colors
@@ -153,11 +153,11 @@ page background, radius), while identity tokens stay shared:
 ```js
 brandCss({
   name: "freight",
-  primary: "#15467A",
-  accent: "#D96830",
+  primary: "#175490",
+  accent: "#D0591C",
   // …tokens/darkTokens…
   surfaces: {
-    operations: { tokens: { border: "211 26% 79%" }, darkTokens: { border: "213 30% 23%" } },
+    operations: { tokens: { border: "212 28% 77%" }, darkTokens: { border: "213 32% 22%" } },
     customer: { tokens: { radius: "0.375rem" } },
   },
 });
