@@ -1,12 +1,16 @@
 import type { ReactNode } from "react";
 import type { PageState } from "./pageContainer";
+import { classifyPageError } from "./pageError";
 
 // The React Query slice list pages actually read — structural, so any
-// query-shaped object (useQueryPipeline result included) fits.
+// query-shaped object (useQueryPipeline result included) fits. `error` and
+// `refetch`, when provided, classify the failure and offer retry.
 type QueryState<T> = {
   isLoading: boolean;
   isError: boolean;
   data: readonly T[] | undefined;
+  error?: unknown;
+  refetch?: () => void;
 };
 
 type EmptyConfig = {
@@ -38,6 +42,16 @@ export function derivePageState<T>(
   }
 
   if (isError && !data) {
+    if (query.error !== undefined) {
+      const page = classifyPageError(query.error);
+      return {
+        kind: "error",
+        code: page.code,
+        detail: page.detail,
+        description: page.safeMessage,
+        onRetry: query.refetch,
+      };
+    }
     return { kind: "error" };
   }
 

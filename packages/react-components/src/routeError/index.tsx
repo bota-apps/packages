@@ -1,5 +1,6 @@
 import { AlertTriangle } from "lucide-react";
 import { PageContainer } from "../pageContainer";
+import { classifyPageError } from "../pageError";
 import { RouteLink, toRoutePath } from "../routeLink";
 
 // Structurally compatible with TanStack Router's ErrorComponentProps, so it
@@ -20,15 +21,20 @@ export function RouteError({
   homeTo = "/",
   homeLabel = "Go Home",
 }: RouteErrorProps) {
+  // Classify instead of echoing `error.message` — transport errors embed the
+  // whole serialized response, which must never reach the page.
+  const page = classifyPageError(error);
   return (
     <PageContainer
       title="Error"
       showHeaderWhen="ready-only"
       state={{
         kind: "error",
+        code: page.code,
+        detail: page.detail,
         icon: <AlertTriangle />,
-        title,
-        description: error.message || description,
+        title: page.code === "unknown" ? title : undefined,
+        description: page.safeMessage ?? (page.code === "unknown" ? description : undefined),
         actions: (
           <RouteLink
             variant="text"

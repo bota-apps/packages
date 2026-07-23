@@ -18,11 +18,11 @@ function renderRouteError(error: Error) {
 }
 
 describe("RouteError", () => {
-  it("renders the thrown error's message and a home link", async () => {
+  it("renders neutral copy without echoing the raw error message", async () => {
     renderRouteError(new Error("Loader blew up"));
 
     expect(await screen.findByText("Something went wrong")).toBeTruthy();
-    expect(screen.getByText("Loader blew up")).toBeTruthy();
+    expect(screen.queryByText(/Loader blew up/)).toBeNull();
     expect(screen.getByRole("link", { name: /Go Home/ })).toBeTruthy();
   });
 

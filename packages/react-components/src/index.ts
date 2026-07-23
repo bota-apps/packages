@@ -28,6 +28,7 @@ export * from "./routeError";
 
 // Page machinery
 export * from "./pageContainer";
+export * from "./pageError";
 export * from "./derivePageState";
 export * from "./suspensePageContainer";
 

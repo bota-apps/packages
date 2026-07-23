@@ -17,6 +17,12 @@ import {
 import { RefreshCw } from "lucide-react";
 import { FeatureScopeProvider } from "@bota-apps/fm";
 import { Breadcrumbs } from "../breadcrumbs";
+import {
+  defaultPageErrorCopy,
+  isRetryablePageError,
+  usePageErrorConfig,
+  type PageErrorCode,
+} from "../pageError";
 import { pageStateContentVariants } from "./variants";
 
 export * from "./variants";
@@ -32,6 +38,10 @@ export type PageState =
   | { kind: "loading" }
   | {
       kind: "error";
+      /** Failure class — drives default copy and which call-to-actions appear. */
+      code?: PageErrorCode;
+      /** Technical detail for diagnostics/reports — never rendered on the page. */
+      detail?: string;
       title?: string;
       description?: string;
       icon?: ReactNode;
@@ -88,6 +98,8 @@ function PageStateContent({ children }: { children: ReactNode }) {
 }
 
 function PageBodyContent({ state, children }: { state: PageState; children?: ReactNode }) {
+  const errorConfig = usePageErrorConfig();
+
   switch (state.kind) {
     case "loading":
       return (
@@ -97,20 +109,29 @@ function PageBodyContent({ state, children }: { state: PageState; children?: Rea
       );
 
     case "error": {
-      const retryButton = state.onRetry ? (
-        <Button variant="outline" onClick={state.onRetry}>
-          <Inline gap="xs">
-            <RefreshCw />
-            {state.retryLabel ?? "Try Again"}
-          </Inline>
-        </Button>
-      ) : null;
+      const code = state.code ?? "unknown";
+      const copy = errorConfig.copy?.[code] ?? defaultPageErrorCopy[code];
+
+      // Retry is offered only where retrying can change the outcome —
+      // authorization and missing-content failures re-fail identically.
+      const retryButton =
+        state.onRetry && isRetryablePageError(code) ? (
+          <Button variant="outline" onClick={state.onRetry}>
+            <Inline gap="xs">
+              <RefreshCw />
+              {state.retryLabel ?? "Try Again"}
+            </Inline>
+          </Button>
+        ) : null;
+
+      const appActions = errorConfig.renderActions?.({ code, detail: state.detail });
 
       const action =
-        retryButton || state.actions ? (
+        retryButton || state.actions || appActions ? (
           <ButtonGroup>
             {retryButton}
             {state.actions}
+            {appActions}
           </ButtonGroup>
         ) : undefined;
 
@@ -118,8 +139,8 @@ function PageBodyContent({ state, children }: { state: PageState; children?: Rea
         <PageStateContent>
           <ErrorState
             icon={state.icon}
-            title={state.title ?? "Something went wrong"}
-            description={state.description ?? "Please try again later"}
+            title={state.title ?? copy.title}
+            description={state.description ?? copy.description}
             action={action}
           />
         </PageStateContent>
