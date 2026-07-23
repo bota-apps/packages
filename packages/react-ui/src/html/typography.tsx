@@ -13,7 +13,9 @@ import { cn } from "../lib/utils";
 /* Heading — semantic headings with size and tone variants             */
 /* ------------------------------------------------------------------ */
 
-export const headingVariants = cva("", {
+// Headings speak in the theme's display voice: --font-display falls back to
+// the sans stack for brands without a display face, so this is a no-op there.
+export const headingVariants = cva("font-display", {
   variants: {
     size: {
       inherit: "",
