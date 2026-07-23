@@ -72,7 +72,7 @@ export function sampleFeatureLabel(featureId: string): string {
   return labelById.get(featureId) ?? featureId;
 }
 
-function placeholderImage(background: string): string {
+export function placeholderImage(background: string): string {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="160" height="120"><rect width="160" height="120" fill="${background}"/><circle cx="60" cy="50" r="18" fill="white" opacity="0.7"/><rect x="30" y="80" width="100" height="10" rx="5" fill="white" opacity="0.7"/></svg>`;
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 }
