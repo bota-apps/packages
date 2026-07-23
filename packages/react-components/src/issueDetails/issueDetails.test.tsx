@@ -33,9 +33,22 @@ describe("IssueDetails", () => {
     expect(screen.getByText("alex@example.com")).toBeTruthy();
   });
 
+  it("renders attached technical context in its own triage section", () => {
+    render(
+      <IssueDetails
+        issue={{ ...sampleIssues[1], technicalContext: '{"errors":[{"message":"boom"}]}' }}
+        featureLabel={sampleFeatureLabel}
+      />,
+    );
+
+    expect(screen.getByRole("heading", { name: "Technical details" })).toBeTruthy();
+    expect(screen.getByText('{"errors":[{"message":"boom"}]}')).toBeTruthy();
+  });
+
   it("hides the optional sections when the issue has no data for them", () => {
     render(<IssueDetails issue={sampleIssues[1]} featureLabel={sampleFeatureLabel} />);
 
+    expect(screen.queryByRole("heading", { name: "Technical details" })).toBeNull();
     expect(screen.queryByRole("heading", { name: "Steps to reproduce" })).toBeNull();
     expect(screen.queryByRole("heading", { name: "Screenshots" })).toBeNull();
     expect(screen.queryByRole("heading", { name: "Reported by" })).toBeNull();

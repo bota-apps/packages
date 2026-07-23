@@ -10,5 +10,11 @@ export type AppShellSlots = {
   headerLeft?: ReactNode;
   /** Header controls (theme/brand/layout toggles, sign out). */
   headerRight?: ReactNode;
+  /**
+   * Companion panel docked at the right edge of the content row (e.g. a
+   * SidePanel). Sits beside the content well, below the header — it pushes
+   * content instead of covering it, and the app stays navigable around it.
+   */
+  panel?: ReactNode;
   children: ReactNode;
 };

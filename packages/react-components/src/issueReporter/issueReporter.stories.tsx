@@ -93,3 +93,38 @@ function ControlledReporter() {
 export const Controlled: Story = {
   render: () => <ControlledReporter />,
 };
+
+// Panel variant: non-modal, docked beside the content — the app stays
+// navigable while the report is being written, and closing keeps the draft.
+function PanelReporter() {
+  const [open, setOpen] = useState(true);
+  return (
+    <div className="flex min-h-screen">
+      <main className="min-w-0 flex-1 space-y-3 p-8">
+        <p className="text-sm text-muted-foreground">
+          The page stays interactive while the panel is open. Close and reopen — the draft
+          survives. The header chevrons resize the panel.
+        </p>
+        <Button type="button" onClick={() => setOpen(true)} disabled={open}>
+          Report an issue
+        </Button>
+      </main>
+      <IssueReporter
+        variant="panel"
+        featureTree={sampleFeatureTree}
+        open={open}
+        onOpenChange={setOpen}
+        defaultFeatureId="projects.create"
+        defaultTechnicalContext='{"status":500,"path":"/reports"}'
+        onCreateIssue={async () => {
+          await delay(900);
+        }}
+      />
+    </div>
+  );
+}
+
+export const DockedPanel: Story = {
+  parameters: { layout: "fullscreen" },
+  render: () => <PanelReporter />,
+};

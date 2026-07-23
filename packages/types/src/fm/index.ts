@@ -36,6 +36,8 @@ export type FeatureNodeDef<Id extends string = string> = {
   /** Dotted, globally-unique id (e.g. "projects:create"). */
   id: Id;
   label?: string;
+  /** One-line summary of what the feature does — surfaced by pickers (e.g. an issue reporter's feature list). */
+  description?: string;
   target?: FeatureTarget;
   route?: string;
   /** Lifecycle badges (beta, new, …) passed through to the resolved feature for UI surfaces. */

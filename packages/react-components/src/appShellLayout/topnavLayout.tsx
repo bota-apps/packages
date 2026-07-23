@@ -2,7 +2,7 @@ import type { AppShellSlots } from "./types";
 import { appShellLayoutVariants } from "./variants";
 
 /** Single top bar (brand + horizontal nav + header slots) over a full-width content well. */
-export function TopnavLayout({ brand, nav, headerLeft, headerRight, children }: AppShellSlots) {
+export function TopnavLayout({ brand, nav, headerLeft, headerRight, panel, children }: AppShellSlots) {
   return (
     <div className={appShellLayoutVariants({ layout: "topnav" })}>
       {/* The bar is chrome (the topnav counterpart of the sidebar rail): it
@@ -20,9 +20,14 @@ export function TopnavLayout({ brand, nav, headerLeft, headerRight, children }: 
         <div className="flex shrink-0 items-center gap-1 sm:gap-2">{headerRight}</div>
       </header>
 
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:px-6 sm:py-8 min-[1800px]:max-w-7xl">
-        {children}
-      </main>
+      {/* The optional docked panel shares the content row below the bar — it
+          pushes the well narrower instead of overlaying it. */}
+      <div className="flex min-w-0 flex-1 items-stretch">
+        <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:px-6 sm:py-8 min-[1800px]:max-w-7xl">
+          {children}
+        </main>
+        {panel}
+      </div>
     </div>
   );
 }

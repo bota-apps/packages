@@ -13,6 +13,12 @@ export type CreateIssuePayload = {
   featureId: string;
   description: string;
   reproSteps?: string;
+  /**
+   * Machine-captured diagnostics (e.g. a classified error's raw detail).
+   * Attached by the opener, carried through for triage — never edited or
+   * displayed as user-facing form content.
+   */
+  technicalContext?: string;
   /** Raw browser files — uploading/storage is the host's concern. */
   screenshots: readonly File[];
   contactName?: string;
@@ -40,6 +46,8 @@ export type Issue = {
   featureId: string;
   description: string;
   reproSteps?: string | null;
+  /** Machine-captured diagnostics attached at filing time (triage-facing). */
+  technicalContext?: string | null;
   /** Raw status code (e.g. an API enum value); presentation is mapped separately. */
   status: string;
   createdAt: string | Date;
