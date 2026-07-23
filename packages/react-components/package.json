@@ -1,6 +1,6 @@
 {
   "name": "@bota-apps/react-components",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "The app-runtime React layer for @bota-apps apps: theme/toast/error-boundary providers, the AppShell chrome, page containers with unified page state, typed route links, breadcrumbs, feature-tree navigation, the feature bridge (FeaturePageGuard/FeatureCard), a generic entity audit log, and createAppRoot — the shared provider stack wiring auth, data, and feature management around @bota-apps/react-ui primitives.",
   "keywords": [
     "bota-apps",

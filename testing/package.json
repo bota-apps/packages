@@ -1,6 +1,6 @@
 {
   "name": "@bota-apps/testing",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Page-level integration-test harness for @bota-apps hosts: mount the real app with only the @bota-apps/mocks auth + graphql doubles injected, a data-driven route smoke engine (shell / error / 404 terminal surfaces, flag-gate assertions), a route-catalog coverage guard, and jsdom environment setup with a missing-translation gate.",
   "license": "MIT",
   "author": "bota-apps",
