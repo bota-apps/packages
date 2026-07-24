@@ -1,6 +1,6 @@
 {
   "name": "@bota-apps/extension-sdk",
-  "version": "0.2.20",
+  "version": "0.2.21",
   "description": "The runtime contract for embeddable @bota-apps extension apps: the host↔iframe bridge (isEmbedded/notifyHost, install-context parsing), the standalone ExtensionShell chrome, and createExtensionApp — the bootstrap factory that renders an extension bare when embedded in a host and shell-wrapped when run standalone.",
   "keywords": [
     "bota-apps",
