@@ -1,14 +1,19 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
+  Anchor,
   BookOpenText,
   Container,
   DraftingCompass,
   Droplet,
   IceCreamCone,
   Layers,
+  Leaf,
   Package,
+  Sparkles,
   SquareTerminal,
   Stamp,
+  Sun,
+  Waves,
 } from "lucide-react";
 import { AppearanceProvider, type AppearancePreset } from "../appearanceProvider";
 import { PresetSelect } from "./index";
@@ -84,6 +89,44 @@ const shippedPresets: readonly AppearancePreset[] = [
     icon: Container,
     description: "Corridor blue, signage headings, signal orange",
     brand: "freight",
+  },
+  // The bright logistics collection — five high-key looks sharing one
+  // structure (bright canvas, white cards, crisp borders) with distinct
+  // identity hues.
+  {
+    value: "freightOcean",
+    label: "Ocean Blue",
+    icon: Anchor,
+    description: "Professional blue, saturated sidebar",
+    brand: "freightOcean",
+  },
+  {
+    value: "freightSky",
+    label: "Bright Sky",
+    icon: Sun,
+    description: "Airy near-white chrome, light sidebar",
+    brand: "freightSky",
+  },
+  {
+    value: "freightTeal",
+    label: "Teal Horizon",
+    icon: Waves,
+    description: "Calm operational teal",
+    brand: "freightTeal",
+  },
+  {
+    value: "freightEmerald",
+    label: "Emerald Route",
+    icon: Leaf,
+    description: "Grounded emerald green",
+    brand: "freightEmerald",
+  },
+  {
+    value: "freightViolet",
+    label: "Violet Focus",
+    icon: Sparkles,
+    description: "Bold premium violet",
+    brand: "freightViolet",
   },
 ];
 
