@@ -5,7 +5,16 @@ import type { AppShellSlots } from "./types";
 import { appShellLayoutVariants } from "./variants";
 
 /** Sidebar navigation + top bar + content well anchored to the rail. */
-export function SidebarLayout({ brand, nav, headerLeft, headerRight, panel, children }: AppShellSlots) {
+export function SidebarLayout({
+  brand,
+  nav,
+  headerLeft,
+  headerRight,
+  panel,
+  sidebarFooter,
+  footer,
+  children,
+}: AppShellSlots) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   return (
@@ -17,6 +26,7 @@ export function SidebarLayout({ brand, nav, headerLeft, headerRight, panel, chil
       <aside className="hidden w-60 shrink-0 flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground px-4 py-6 md:flex">
         <div className="px-2">{brand}</div>
         <nav className="mt-8 flex flex-col gap-1">{nav}</nav>
+        {sidebarFooter && <div className="mt-auto pt-6">{sidebarFooter}</div>}
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
@@ -35,18 +45,23 @@ export function SidebarLayout({ brand, nav, headerLeft, headerRight, panel, chil
               description=""
               className="w-72 border-sidebar-border bg-sidebar text-sidebar-foreground"
             >
-              <div className="px-6 py-6">{brand}</div>
-              {/* Navigating closes the sheet — group toggles (buttons) keep it open. */}
-              <nav
-                className="flex flex-col gap-1 px-4 pb-6"
-                onClickCapture={(event) => {
-                  if (event.target instanceof HTMLElement && event.target.closest("a")) {
-                    setMobileNavOpen(false);
-                  }
-                }}
-              >
-                {nav}
-              </nav>
+              <div className="flex h-full flex-col">
+                <div className="px-6 py-6">{brand}</div>
+                {/* Navigating closes the sheet — group toggles (buttons) keep it open. */}
+                <nav
+                  className="flex flex-col gap-1 px-4 pb-6"
+                  onClickCapture={(event) => {
+                    if (event.target instanceof HTMLElement && event.target.closest("a")) {
+                      setMobileNavOpen(false);
+                    }
+                  }}
+                >
+                  {nav}
+                </nav>
+                {/* Below md the rail is hidden, so the sheet is the only home
+                    for the rail-foot content (identity card / sign out). */}
+                {sidebarFooter && <div className="mt-auto px-4 pb-6">{sidebarFooter}</div>}
+              </div>
             </SheetContent>
           </Sheet>
 
@@ -69,6 +84,7 @@ export function SidebarLayout({ brand, nav, headerLeft, headerRight, panel, chil
           </main>
           {panel}
         </div>
+        {footer}
       </div>
     </div>
   );

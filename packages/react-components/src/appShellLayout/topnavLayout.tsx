@@ -2,7 +2,15 @@ import type { AppShellSlots } from "./types";
 import { appShellLayoutVariants } from "./variants";
 
 /** Single top bar (brand + horizontal nav + header slots) over a full-width content well. */
-export function TopnavLayout({ brand, nav, headerLeft, headerRight, panel, children }: AppShellSlots) {
+export function TopnavLayout({
+  brand,
+  nav,
+  headerLeft,
+  headerRight,
+  panel,
+  footer,
+  children,
+}: AppShellSlots) {
   return (
     <div className={appShellLayoutVariants({ layout: "topnav" })}>
       {/* The bar is chrome (the topnav counterpart of the sidebar rail): it
@@ -28,6 +36,7 @@ export function TopnavLayout({ brand, nav, headerLeft, headerRight, panel, child
         </main>
         {panel}
       </div>
+      {footer}
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { Palette } from "lucide-react";
 import {
   Button,
+  type ButtonProps,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuRadioGroup,
@@ -13,6 +14,8 @@ import { useAppearance } from "../appearanceProvider";
 type PresetSelectProps = {
   /** Accessible name for the icon-only trigger. */
   label?: string;
+  /** Trigger button variant — pass "chrome" when mounted on the shell chrome. */
+  variant?: ButtonProps["variant"];
 };
 
 /**
@@ -22,7 +25,10 @@ type PresetSelectProps = {
  * which case nothing shows as checked. Renders nothing for single-preset apps,
  * so shells can mount it unconditionally.
  */
-export function PresetSelect({ label = "Change theme" }: PresetSelectProps = {}) {
+export function PresetSelect({
+  label = "Change theme",
+  variant = "outline",
+}: PresetSelectProps = {}) {
   const { presets, preset, applyPreset } = useAppearance();
 
   if (presets.length < 2) {
@@ -32,7 +38,7 @@ export function PresetSelect({ label = "Change theme" }: PresetSelectProps = {})
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant={variant} size="icon">
           <Palette />
           <VisuallyHidden>{label}</VisuallyHidden>
         </Button>

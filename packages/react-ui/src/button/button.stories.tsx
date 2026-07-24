@@ -23,6 +23,20 @@ export const Variants: Story = {
     </div>
   ),
 };
+/** Chrome-surface controls: styled from the sidebar-* tokens so they stay legible on the shell chrome. */
+export const Chrome: Story = {
+  render: () => (
+    <div className="flex flex-wrap items-center gap-3 rounded-lg bg-sidebar p-4 text-sidebar-foreground">
+      <Button variant="chrome">Chrome</Button>
+      <Button variant="chrome" size="sm">
+        Small
+      </Button>
+      <Button variant="chrome" size="icon" aria-label="Icon action">
+        ✳
+      </Button>
+    </div>
+  ),
+};
 export const Sizes: Story = {
   render: () => (
     <div className="flex items-center gap-3">

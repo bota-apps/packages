@@ -19,6 +19,8 @@ export * from "./densityToggle";
 export * from "./languageToggle";
 export * from "./userMenu";
 export * from "./orgSwitcherMenu";
+export * from "./notificationsMenu";
+export * from "./appFooter";
 
 // Routing surfaces
 export * from "./routeLink";
