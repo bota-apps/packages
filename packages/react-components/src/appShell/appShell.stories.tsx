@@ -7,6 +7,7 @@ import {
   RouterProvider,
 } from "@tanstack/react-router";
 import {
+  Anchor,
   BookOpenText,
   Container,
   Droplet,
@@ -18,6 +19,7 @@ import {
   ScrollText,
   Settings,
   SquareTerminal,
+  Sun,
   Users,
 } from "lucide-react";
 import { AppearanceProvider, type AppearancePreset } from "../appearanceProvider";
@@ -142,6 +144,20 @@ const shippedPresets: readonly AppearancePreset[] = [
     icon: Container,
     description: "Corridor blue, signage headings, signal orange",
     brand: "freight",
+  },
+  {
+    value: "freightOcean",
+    label: "Ocean Blue",
+    icon: Anchor,
+    description: "Professional blue, saturated sidebar",
+    brand: "freightOcean",
+  },
+  {
+    value: "freightSky",
+    label: "Bright Sky",
+    icon: Sun,
+    description: "Airy near-white chrome, light sidebar",
+    brand: "freightSky",
   },
 ];
 

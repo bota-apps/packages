@@ -118,7 +118,18 @@ The shipped brands are complete looks. Import the ones your app offers, after
 @import "@bota-apps/tailwind-preset/brands/sorbet.css"; /* soft rounded corners, berry brights */
 @import "@bota-apps/tailwind-preset/brands/graphite.css"; /* charcoal chrome over a light page */
 @import "@bota-apps/tailwind-preset/brands/freight.css"; /* corridor blue, navy rail, signal orange, signage headings */
+@import "@bota-apps/tailwind-preset/brands/freightOcean.css"; /* bright canvas, professional blue, saturated sidebar */
+@import "@bota-apps/tailwind-preset/brands/freightSky.css"; /* airy near-white chrome, light sidebar */
+@import "@bota-apps/tailwind-preset/brands/freightTeal.css"; /* calm operational teal, blue accent */
+@import "@bota-apps/tailwind-preset/brands/freightEmerald.css"; /* grounded emerald, blue accent */
+@import "@bota-apps/tailwind-preset/brands/freightViolet.css"; /* bold premium violet, blue accent */
 ```
+
+The five `freight*` brands form the bright logistics collection: one shared
+structural language (bright hue-tinted page canvas, white cards, crisp
+borders, restrained shadows, complete dark variants, `operations` +
+`customer` surfaces, map/chart tokens) with five identity hues. Status
+tokens stay untouched — semantic state colors are durable across brands.
 
 Or generate your own (authoring-time, check the output in). One or two colors
 make an accent-swap brand; add shape, typeface, and token overrides to build a
@@ -184,13 +195,13 @@ never color alone.
 
 ## Subpaths
 
-| Import                                    | What                                                                                                                     |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `@bota-apps/tailwind-preset/preset`       | Tailwind preset (`darkMode: class`, color tokens, radii, typography + animate plugins)                                   |
-| `@bota-apps/tailwind-preset/theme.css`    | CSS variables for light + `.dark`, plus the `@tailwind` layers                                                           |
-| `@bota-apps/tailwind-preset/brands/*.css` | Shipped complete-look brands (`ledger`, `kraft`, `blueprint`, `manuscript`, `terminal`, `sorbet`, `graphite`, `freight`) |
-| `@bota-apps/tailwind-preset/brand`        | `brandCss` / `colorRamp` / `darkColorRamp` / `hexToHslChannels` brand generators                                         |
-| `@bota-apps/tailwind-preset/fonts/*.css`  | Typeface pairings (`inter`) — token-only, fonts load via `@fontsource`                                                   |
-| `@bota-apps/tailwind-preset/postcss`      | `{ tailwindcss, autoprefixer }` PostCSS config                                                                           |
+| Import                                    | What                                                                                                                                                                                                     |
+| ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@bota-apps/tailwind-preset/preset`       | Tailwind preset (`darkMode: class`, color tokens, radii, typography + animate plugins)                                                                                                                   |
+| `@bota-apps/tailwind-preset/theme.css`    | CSS variables for light + `.dark`, plus the `@tailwind` layers                                                                                                                                           |
+| `@bota-apps/tailwind-preset/brands/*.css` | Shipped complete-look brands (`ledger`, `kraft`, `blueprint`, `manuscript`, `terminal`, `sorbet`, `graphite`, `freight`, `freightOcean`, `freightSky`, `freightTeal`, `freightEmerald`, `freightViolet`) |
+| `@bota-apps/tailwind-preset/brand`        | `brandCss` / `colorRamp` / `darkColorRamp` / `hexToHslChannels` brand generators                                                                                                                         |
+| `@bota-apps/tailwind-preset/fonts/*.css`  | Typeface pairings (`inter`) — token-only, fonts load via `@fontsource`                                                                                                                                   |
+| `@bota-apps/tailwind-preset/postcss`      | `{ tailwindcss, autoprefixer }` PostCSS config                                                                                                                                                           |
 
 Part of the [`@bota-apps` packages monorepo](https://github.com/bota-apps/packages).
