@@ -600,7 +600,8 @@ const shippedBrands: readonly { file: string; options: BrandCssOptions }[] = [
       // Ocean blue: confident primary for actions, links, focus, selection.
       primary: "#2563EB",
       // Harbor teal: secondary emphasis that never impersonates a status.
-      accent: "#0EA5A4",
+      // Deep enough (L 27%) for white text to hold AA on accent fills.
+      accent: "#0B7F7E",
       radius: "0.375rem",
       fontSans:
         '"Inter Variable", Inter, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
@@ -664,6 +665,8 @@ const shippedBrands: readonly { file: string; options: BrandCssOptions }[] = [
       },
       darkTokens: {
         primary: "217 91% 65%",
+        // Lifted dark primaries carry dark text — white would fail AA.
+        primaryForeground: "218 40% 8%",
         ring: "217 91% 65%",
         background: "218 40% 8%",
         foreground: "214 32% 90%",
@@ -744,9 +747,10 @@ const shippedBrands: readonly { file: string; options: BrandCssOptions }[] = [
     options: {
       name: "freightSky",
       // Bright sky blue: the airiest look in the collection — near-white
-      // canvas, light sidebar, tinted (not painted) chrome.
-      primary: "#1677FF",
-      accent: "#14B8A6",
+      // canvas, light sidebar, tinted (not painted) chrome. Primary and
+      // accent sit deep enough for white text to hold AA on fills.
+      primary: "#0064F0",
+      accent: "#0E8174",
       radius: "0.375rem",
       fontSans:
         '"Inter Variable", Inter, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
@@ -806,6 +810,8 @@ const shippedBrands: readonly { file: string; options: BrandCssOptions }[] = [
       },
       darkTokens: {
         primary: "212 100% 64%",
+        // Lifted dark primaries carry dark text — white would fail AA.
+        primaryForeground: "216 36% 8%",
         ring: "212 100% 64%",
         background: "216 36% 8%",
         foreground: "213 30% 90%",
@@ -885,8 +891,10 @@ const shippedBrands: readonly { file: string; options: BrandCssOptions }[] = [
     file: "freightTeal.css",
     options: {
       name: "freightTeal",
-      // Teal horizon: calm operational teal with a blue accent.
-      primary: "#0F9E9A",
+      // Teal horizon: calm operational teal with a blue accent. Teal has
+      // high luminance for its lightness, so the primary sits at L 28% to
+      // keep white text at AA on fills.
+      primary: "#0C827F",
       accent: "#2563EB",
       radius: "0.375rem",
       fontSans:
@@ -905,14 +913,14 @@ const shippedBrands: readonly { file: string; options: BrandCssOptions }[] = [
         secondary: "174 42% 92%",
         secondaryForeground: "184 38% 20%",
         muted: "174 30% 92%",
-        mutedForeground: "181 15% 40%",
+        mutedForeground: "181 15% 37%",
         border: "176 27% 82%",
         input: "176 27% 82%",
-        sidebarBackground: "179 83% 31%",
+        sidebarBackground: "179 83% 26%",
         sidebarForeground: "0 0% 100%",
-        sidebarAccent: "181 85% 23%",
+        sidebarAccent: "181 85% 19%",
         sidebarAccentForeground: "0 0% 100%",
-        sidebarBorder: "179 74% 27%",
+        sidebarBorder: "179 74% 22%",
         sidebarPrimary: "0 0% 100%",
         sidebarRing: "173 80% 85%",
         // Teal slot shifts to sky; the primary already owns teal.
@@ -947,6 +955,8 @@ const shippedBrands: readonly { file: string; options: BrandCssOptions }[] = [
       },
       darkTokens: {
         primary: "175 65% 48%",
+        // Lifted dark primaries carry dark text — white would fail AA.
+        primaryForeground: "185 38% 7.5%",
         ring: "175 65% 48%",
         background: "185 38% 7.5%",
         foreground: "178 25% 90%",
@@ -1026,8 +1036,9 @@ const shippedBrands: readonly { file: string; options: BrandCssOptions }[] = [
     file: "freightEmerald.css",
     options: {
       name: "freightEmerald",
-      // Emerald route: grounded green with a blue accent.
-      primary: "#059669",
+      // Emerald route: grounded green with a blue accent. Deep emerald
+      // (L 26%) keeps white text at AA on fills.
+      primary: "#04805A",
       accent: "#2563EB",
       radius: "0.375rem",
       fontSans:
@@ -1046,7 +1057,7 @@ const shippedBrands: readonly { file: string; options: BrandCssOptions }[] = [
         secondary: "150 35% 92%",
         secondaryForeground: "158 35% 20%",
         muted: "150 25% 92%",
-        mutedForeground: "156 14% 40%",
+        mutedForeground: "156 14% 37%",
         border: "151 24% 82%",
         input: "151 24% 82%",
         sidebarBackground: "160 84% 28%",
@@ -1086,6 +1097,8 @@ const shippedBrands: readonly { file: string; options: BrandCssOptions }[] = [
       },
       darkTokens: {
         primary: "158 64% 47%",
+        // Lifted dark primaries carry dark text — white would fail AA.
+        primaryForeground: "165 30% 7.5%",
         ring: "158 64% 47%",
         background: "165 30% 7.5%",
         foreground: "152 22% 90%",
@@ -1227,6 +1240,8 @@ const shippedBrands: readonly { file: string; options: BrandCssOptions }[] = [
       },
       darkTokens: {
         primary: "262 83% 70%",
+        // Lifted dark primaries carry dark text — white would fail AA.
+        primaryForeground: "258 32% 8.5%",
         ring: "262 83% 70%",
         background: "258 32% 8.5%",
         foreground: "255 28% 91%",
