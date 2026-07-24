@@ -120,6 +120,12 @@ export type IssueReporterProps = {
   onOpenChange?: (open: boolean) => void;
   /** Uncontrolled mode: content for a built-in sheet trigger (sheet variant only). */
   trigger?: ReactNode;
+  /**
+   * When set, the actions row gains a button with this label that discards
+   * the draft (back to the current defaults). Pair it with the panel
+   * variant, whose draft otherwise survives close/reopen indefinitely.
+   */
+  clearDraftLabel?: string;
   /** Show the optional contact fields. Default true. */
   collectContact?: boolean;
   /** Default 5. */
@@ -272,6 +278,7 @@ export function IssueReporter({
   open: openProp,
   onOpenChange,
   trigger,
+  clearDraftLabel,
   collectContact = true,
   maxScreenshots = defaultMaxScreenshots,
   maxScreenshotSizeBytes = defaultMaxScreenshotSizeBytes,
@@ -441,6 +448,17 @@ export function IssueReporter({
   // they stay visible however long the form scrolls.
   const actions = (
     <Inline gap="sm" justify="end">
+      {clearDraftLabel !== undefined && (
+        <Button
+          type="button"
+          variant="ghost"
+          disabled={pending}
+          onClick={resetForm}
+          className="mr-auto"
+        >
+          {clearDraftLabel}
+        </Button>
+      )}
       <Button type="button" variant="outline" disabled={pending} onClick={() => setOpen(false)}>
         {t.cancelLabel}
       </Button>

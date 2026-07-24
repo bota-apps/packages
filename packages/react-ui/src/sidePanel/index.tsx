@@ -7,14 +7,21 @@
  *
  * Children stay mounted while the panel is closed (`hidden`), so in-progress
  * form state survives close/reopen cycles by construction.
+ *
+ * Under a SidePanelDockProvider (see ./dock), open panels stack vertically in
+ * one shared dock column instead of sitting side by side.
  */
-import { useState, type ReactNode } from "react";
+import { useEffect, useId, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { ChevronsLeft, ChevronsRight, X } from "lucide-react";
 import { Button } from "../button";
 import { Text } from "../html/typography";
+import { cn } from "../lib/utils";
 import { VisuallyHidden } from "../visuallyHidden";
+import { useSidePanelDock } from "./dock";
 import { sidePanelVariants, sidePanelWidths, type SidePanelWidth } from "./variants";
 
+export * from "./dock";
 export * from "./variants";
 
 export type SidePanelProps = {
@@ -60,17 +67,37 @@ export function SidePanel({
   children,
 }: SidePanelProps) {
   const [uncontrolledWidth, setUncontrolledWidth] = useState<SidePanelWidth>(defaultWidth);
-  const width = widthProp ?? uncontrolledWidth;
+
+  // Under a SidePanelDockProvider the panel joins the shared dock column:
+  // it reports its open state (so the dock can show/hide and count), portals
+  // into the dock container, and defers width to the dock's shared preset.
+  const dock = useSidePanelDock();
+  const dockId = useId();
+  const reportOpen = dock?.reportOpen;
+  const forget = dock?.forget;
+  useEffect(() => {
+    if (!reportOpen || !forget) {
+      return;
+    }
+    reportOpen(dockId, open);
+    return () => forget(dockId);
+  }, [reportOpen, forget, dockId, open]);
+
+  const dockNode = dock?.node ?? null;
+  const stacked = dockNode !== null;
+  const width = stacked && dock ? dock.width : (widthProp ?? uncontrolledWidth);
 
   const widthIndex = sidePanelWidths.indexOf(width);
   const setWidth = (next: SidePanelWidth) => {
-    if (widthProp === undefined) {
+    if (stacked) {
+      dock?.setWidth(next);
+    } else if (widthProp === undefined) {
       setUncontrolledWidth(next);
     }
     onWidthChange?.(next);
   };
 
-  return (
+  const panel = (
     <aside
       role="complementary"
       aria-label={title}
@@ -81,11 +108,14 @@ export function SidePanel({
       hidden={!open}
       aria-hidden={!open || undefined}
       inert={!open || undefined}
-      className={sidePanelVariants({ width, open })}
+      className={sidePanelVariants({ width, open, stacked })}
     >
-      {/* Sticky wrapper: the panel column spans the whole content row, but the
-          visible chrome pins itself to the viewport while the page scrolls. */}
-      <div className="flex h-full max-h-dvh flex-col md:sticky md:top-0">
+      {/* Sticky wrapper: a standalone panel column spans the whole content
+          row, but the visible chrome pins itself to the viewport while the
+          page scrolls. In a dock the container is the sticky part. */}
+      <div
+        className={cn("flex h-full flex-col", stacked ? "min-h-0" : "max-h-dvh md:sticky md:top-0")}
+      >
         <header className="flex items-start gap-1 border-b border-border px-4 py-3">
           <div className="min-w-0 flex-1">
             <Text as="h2" size="md" weight="semibold" className="truncate">
@@ -139,4 +169,9 @@ export function SidePanel({
       </div>
     </aside>
   );
+
+  if (dockNode) {
+    return createPortal(panel, dockNode);
+  }
+  return panel;
 }
