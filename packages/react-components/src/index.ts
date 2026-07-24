@@ -4,6 +4,8 @@
 // in, so a fix here applies everywhere instead of being copied into each app.
 
 // App-context providers (appearance / toast / error boundary)
+export * from "./appearanceColor";
+export * from "./appearancePanel";
 export * from "./appearanceProvider";
 export * from "./toast";
 export * from "./errorBoundary";
@@ -20,6 +22,7 @@ export * from "./languageToggle";
 export * from "./userMenu";
 export * from "./orgSwitcherMenu";
 export * from "./notificationsMenu";
+export * from "./notificationsPanel";
 export * from "./appFooter";
 
 // Routing surfaces

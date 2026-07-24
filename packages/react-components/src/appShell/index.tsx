@@ -55,9 +55,17 @@ type AppShellProps = {
   userDescription?: string;
   /**
    * Companion panel docked at the right edge of the content row (typically a
-   * SidePanel) — non-modal, so the app stays navigable while it is open.
+   * SidePanel or a SidePanelDock) — non-modal, so the app stays navigable
+   * while it is open.
    */
   panel?: ReactNode;
+  /**
+   * Built-in header appearance controls. "builtin" (default) renders
+   * PresetSelect + ThemeToggle; "none" omits them for apps that mount their
+   * own appearance UI (e.g. an AppearancePanel behind a headerActions
+   * trigger).
+   */
+  appearanceControls?: "builtin" | "none";
   /** App-wide footer (typically an <AppFooter>) rendered below the content row. */
   footer?: ReactNode;
   children: ReactNode;
@@ -75,6 +83,7 @@ export function AppShell({
   headerActions,
   userDescription,
   panel,
+  appearanceControls = "builtin",
   footer,
   children,
 }: AppShellProps) {
@@ -158,8 +167,12 @@ export function AppShell({
       headerRight={
         <>
           {headerActions}
-          <PresetSelect variant="chrome" />
-          <ThemeToggle variant="chrome" />
+          {appearanceControls === "builtin" && (
+            <>
+              <PresetSelect variant="chrome" />
+              <ThemeToggle variant="chrome" />
+            </>
+          )}
           {layout === "topnav" && (
             <Button variant="chrome" size="sm" onClick={handleSignOut}>
               <LogOut />

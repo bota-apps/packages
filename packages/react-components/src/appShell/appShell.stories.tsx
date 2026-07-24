@@ -20,6 +20,7 @@ import {
   Settings,
   SquareTerminal,
   Sun,
+  Sunrise,
   Users,
 } from "lucide-react";
 import { AppearanceProvider, type AppearancePreset } from "../appearanceProvider";
@@ -158,6 +159,13 @@ const shippedPresets: readonly AppearancePreset[] = [
     icon: Sun,
     description: "Airy near-white chrome, light sidebar",
     brand: "freightSky",
+  },
+  {
+    value: "freightSunrise",
+    label: "Sunrise Orange",
+    icon: Sunrise,
+    description: "Vibrant orange, warm sand neutrals",
+    brand: "freightSunrise",
   },
 ];
 

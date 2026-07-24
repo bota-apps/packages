@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
-import { SidePanel } from "./index";
+import { SidePanel, SidePanelDock, SidePanelDockProvider } from "./index";
 
 describe("SidePanel", () => {
   it("renders an accessible complementary region with title and description", () => {
@@ -110,5 +110,69 @@ describe("SidePanel", () => {
     );
     expect(screen.queryByRole("button", { name: "Widen panel" })).toBeNull();
     expect(screen.queryByRole("button", { name: "Narrow panel" })).toBeNull();
+  });
+});
+
+describe("SidePanelDock", () => {
+  function DockedPanels({ firstOpen, secondOpen }: { firstOpen: boolean; secondOpen: boolean }) {
+    return (
+      <SidePanelDockProvider>
+        <SidePanelDock />
+        {/* Panels can live anywhere under the provider — they portal in. */}
+        <SidePanel open={firstOpen} title="First">
+          <p>First body</p>
+        </SidePanel>
+        <SidePanel open={secondOpen} title="Second">
+          <input aria-label="Second draft" defaultValue="kept" />
+        </SidePanel>
+      </SidePanelDockProvider>
+    );
+  }
+
+  it("stacks every open panel inside the one dock container", () => {
+    render(<DockedPanels firstOpen secondOpen />);
+    const first = screen.getByRole("complementary", { name: "First" });
+    const second = screen.getByRole("complementary", { name: "Second" });
+    expect(first.parentElement).not.toBeNull();
+    expect(first.parentElement).toBe(second.parentElement);
+    expect(first.parentElement?.getAttribute("data-state")).toBe("open");
+    // Stacked panels defer sizing/position to the dock column.
+    expect(first.className).toContain("md:w-full");
+    expect(first.className).not.toContain("md:w-[26rem]");
+  });
+
+  it("hides the dock while no panel is open, keeping closed panels mounted", () => {
+    const { rerender } = render(<DockedPanels firstOpen secondOpen />);
+    rerender(<DockedPanels firstOpen={false} secondOpen={false} />);
+    const dock = document.querySelector('[data-state="closed"].contents');
+    expect(dock).not.toBeNull();
+    expect(dock?.className).toContain("md:hidden");
+    // The draft survives inside the hidden dock.
+    const input: HTMLInputElement = screen.getByLabelText("Second draft", { hidden: true });
+    expect(input.value).toBe("kept");
+    expect(screen.queryByRole("complementary", { name: "Second" })).toBeNull();
+  });
+
+  it("shares one width across stacked panels via the dock", async () => {
+    const user = userEvent.setup();
+    render(<DockedPanels firstOpen secondOpen />);
+    const dock = screen.getByRole("complementary", { name: "First" }).parentElement;
+    expect(dock?.className).toContain("md:w-[26rem]");
+    // Widening from either panel resizes the shared column.
+    await user.click(screen.getAllByRole("button", { name: "Widen panel" })[1]);
+    expect(dock?.className).toContain("md:w-[34rem]");
+    await user.click(screen.getAllByRole("button", { name: "Narrow panel" })[0]);
+    expect(dock?.className).toContain("md:w-[26rem]");
+  });
+
+  it("keeps standalone behavior without a provider", () => {
+    render(
+      <SidePanel open title="Alone">
+        <p>Body</p>
+      </SidePanel>,
+    );
+    expect(screen.getByRole("complementary", { name: "Alone" }).className).toContain(
+      "md:w-[26rem]",
+    );
   });
 });

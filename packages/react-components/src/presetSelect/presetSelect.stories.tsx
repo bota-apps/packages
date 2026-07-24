@@ -13,6 +13,7 @@ import {
   SquareTerminal,
   Stamp,
   Sun,
+  Sunrise,
   Waves,
 } from "lucide-react";
 import { AppearanceProvider, type AppearancePreset } from "../appearanceProvider";
@@ -127,6 +128,13 @@ const shippedPresets: readonly AppearancePreset[] = [
     icon: Sparkles,
     description: "Bold premium violet",
     brand: "freightViolet",
+  },
+  {
+    value: "freightSunrise",
+    label: "Sunrise Orange",
+    icon: Sunrise,
+    description: "Vibrant orange, warm sand neutrals",
+    brand: "freightSunrise",
   },
 ];
 

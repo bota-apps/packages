@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import type { LucideIcon } from "lucide-react";
+import { customColorTokenNames, customColorTokens, isHexColor } from "./appearanceColor";
 import { appShellLayoutKinds, type AppShellLayoutKind } from "./appShellLayout";
 
 // App-agnostic appearance provider. Apps configure PRESETS — pre-assembled
@@ -46,6 +47,12 @@ export type AppearancePreset = {
   icon?: LucideIcon;
   /** One-line hint of what the look changes, shown under the label. */
   description?: string;
+  /**
+   * Representative color swatches (any CSS color values, e.g. the look's
+   * chrome/primary/accent) — pickers with room to spare render them as a
+   * visual hint of the look; compact pickers may ignore them.
+   */
+  preview?: readonly string[];
   /** `data-brand` token set (a brands/*.css block or the app's own). */
   brand?: string;
   layout?: AppShellLayoutKind;
@@ -60,7 +67,15 @@ type AppearanceState = {
   brand: string;
   layout: AppShellLayoutKind;
   density: AppearanceDensity;
+  /** Six-digit hex overriding the active brand's primary/chrome, or null. */
+  customColor: string | null;
 };
+
+/**
+ * The axes a caller may hydrate from an external store (e.g. server-side
+ * user preferences). Every axis is optional and re-validated on the way in.
+ */
+export type AppearanceSnapshot = Partial<AppearanceState>;
 
 type AppearanceContextValue = AppearanceState & {
   toggleMode: () => void;
@@ -77,6 +92,18 @@ type AppearanceContextValue = AppearanceState & {
   setDensity: (density: AppearanceDensity) => void;
   /** Cycle to the next density step — the one-click density flip. */
   toggleDensity: () => void;
+  /**
+   * Tint the active look with a picked color (six-digit hex) — the primary
+   * ramp and shell chrome re-derive from it in both modes, on top of the
+   * active brand. null returns to the brand's own colors.
+   */
+  setCustomColor: (color: string | null) => void;
+  /**
+   * Merge externally stored axes (each individually validated; invalid or
+   * unknown values are ignored) — how an app applies server-side preferences
+   * over the local state.
+   */
+  hydrateAppearance: (snapshot: AppearanceSnapshot) => void;
 };
 
 const AppearanceContext = createContext<AppearanceContextValue | undefined>(undefined);
@@ -134,6 +161,7 @@ function getInitialAppearance(
     const brand: unknown = "brand" in stored ? stored.brand : undefined;
     const layout: unknown = "layout" in stored ? stored.layout : undefined;
     const density: unknown = "density" in stored ? stored.density : undefined;
+    const customColor: unknown = "customColor" in stored ? stored.customColor : undefined;
     if (mode === "light" || mode === "dark") {
       state.mode = mode;
     }
@@ -146,6 +174,9 @@ function getInitialAppearance(
     }
     if (isAppearanceDensity(density)) {
       state.density = density;
+    }
+    if (isHexColor(customColor)) {
+      state.customColor = customColor;
     }
   } catch {
     // localStorage can throw (privacy mode, blocked storage) — fall through.
@@ -186,15 +217,34 @@ export function AppearanceProvider({
   const [appearance, setAppearance] = useState<AppearanceState>(() =>
     getInitialAppearance(
       storageKey,
-      { mode: defaultMode, ...resolvePreset(initialPreset) },
+      { mode: defaultMode, customColor: null, ...resolvePreset(initialPreset) },
       knownBrands,
     ),
   );
 
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", appearance.mode === "dark");
-    document.documentElement.dataset.brand = appearance.brand;
-    document.documentElement.dataset.density = appearance.density;
+    const root = document.documentElement;
+    root.classList.toggle("dark", appearance.mode === "dark");
+    root.dataset.brand = appearance.brand;
+    root.dataset.density = appearance.density;
+    // The custom color layers inline token overrides over the brand CSS
+    // (inline styles out-specify any stylesheet); clearing it must remove
+    // every property it may have set, in either mode.
+    if (appearance.customColor) {
+      const tokens = customColorTokens(appearance.customColor, appearance.mode);
+      for (const name of customColorTokenNames) {
+        const value = tokens[name];
+        if (value !== undefined) {
+          root.style.setProperty(name, value);
+        } else {
+          root.style.removeProperty(name);
+        }
+      }
+    } else {
+      for (const name of customColorTokenNames) {
+        root.style.removeProperty(name);
+      }
+    }
     try {
       localStorage.setItem(storageKey, JSON.stringify(appearance));
     } catch {
@@ -215,9 +265,47 @@ export function AppearanceProvider({
       if (!preset) {
         throw new Error(`Unknown preset "${value}" — not in the AppearanceProvider presets`);
       }
-      setAppearance((current) => ({ mode: current.mode, ...resolvePreset(preset) }));
+      // Picking a preset re-baselines the look — a lingering custom color
+      // would repaint the fresh preset in the old tint.
+      setAppearance((current) => ({
+        mode: current.mode,
+        customColor: null,
+        ...resolvePreset(preset),
+      }));
     },
     [presets, resolvePreset],
+  );
+
+  const setCustomColor = useCallback((color: string | null) => {
+    if (color !== null && !isHexColor(color)) {
+      throw new Error(`Custom color must be a six-digit hex value like "#2563EB", got "${color}"`);
+    }
+    setAppearance((current) => ({ ...current, customColor: color }));
+  }, []);
+
+  const hydrateAppearance = useCallback(
+    (snapshot: AppearanceSnapshot) => {
+      setAppearance((current) => {
+        const next = { ...current };
+        if (snapshot.mode === "light" || snapshot.mode === "dark") {
+          next.mode = snapshot.mode;
+        }
+        if (typeof snapshot.brand === "string" && knownBrands.includes(snapshot.brand)) {
+          next.brand = snapshot.brand;
+        }
+        if (isAppShellLayoutKind(snapshot.layout)) {
+          next.layout = snapshot.layout;
+        }
+        if (isAppearanceDensity(snapshot.density)) {
+          next.density = snapshot.density;
+        }
+        if (snapshot.customColor === null || isHexColor(snapshot.customColor)) {
+          next.customColor = snapshot.customColor ?? null;
+        }
+        return next;
+      });
+    },
+    [knownBrands],
   );
 
   const setBrand = useCallback(
@@ -285,6 +373,8 @@ export function AppearanceProvider({
       toggleLayout,
       setDensity,
       toggleDensity,
+      setCustomColor,
+      hydrateAppearance,
     }),
     [
       appearance,
@@ -297,6 +387,8 @@ export function AppearanceProvider({
       toggleLayout,
       setDensity,
       toggleDensity,
+      setCustomColor,
+      hydrateAppearance,
     ],
   );
 

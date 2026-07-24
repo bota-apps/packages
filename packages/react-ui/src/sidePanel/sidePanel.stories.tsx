@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { SidePanel } from "./index";
+import { SidePanel, SidePanelDock, SidePanelDockProvider } from "./index";
 import { Button } from "../button";
 import { Text } from "../html/typography";
 
@@ -54,6 +54,58 @@ export const BesideContent: Story = {
           </div>
         </SidePanel>
       </div>
+    );
+  },
+};
+
+/**
+ * Under a SidePanelDockProvider, open panels stack vertically in one shared
+ * dock column instead of sitting side by side — each keeps its own header,
+ * scroll region, and close button, and the width chevrons resize the shared
+ * column. The dock hides itself while every panel is closed.
+ */
+export const StackedInADock: Story = {
+  render: function Render() {
+    const [notesOpen, setNotesOpen] = useState(true);
+    const [detailsOpen, setDetailsOpen] = useState(true);
+    return (
+      <SidePanelDockProvider>
+        <div className="flex min-h-screen">
+          <main className="min-w-0 flex-1 space-y-3 p-8">
+            <Text as="h1" size="lg" weight="semibold">
+              Page content
+            </Text>
+            <Text as="p" tone="muted">
+              Two companion panels share the one docked column on the right. Open and close them
+              independently — the column stays a single stack, never a second sidebar.
+            </Text>
+            <div className="flex gap-2">
+              <Button variant="outline" onClick={() => setNotesOpen((current) => !current)}>
+                Toggle notes
+              </Button>
+              <Button variant="outline" onClick={() => setDetailsOpen((current) => !current)}>
+                Toggle details
+              </Button>
+            </div>
+          </main>
+          <SidePanelDock />
+        </div>
+        <SidePanel open={notesOpen} onOpenChange={setNotesOpen} title="Notes">
+          <Text as="p" size="sm" tone="muted">
+            Draft state survives closing — the dock keeps closed panels mounted.
+          </Text>
+          <input
+            aria-label="Draft note"
+            placeholder="Type, close, reopen…"
+            className="mt-3 w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+          />
+        </SidePanel>
+        <SidePanel open={detailsOpen} onOpenChange={setDetailsOpen} title="Details">
+          <Text as="p" size="sm" tone="muted">
+            Each stacked panel scrolls its own body and shares the column height evenly.
+          </Text>
+        </SidePanel>
+      </SidePanelDockProvider>
     );
   },
 };

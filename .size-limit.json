@@ -34,7 +34,7 @@
   {
     "name": "react-components",
     "path": "packages/react-components/dist/index.js",
-    "limit": "128 kB"
+    "limit": "132 kB"
   },
   {
     "name": "schema-utils",

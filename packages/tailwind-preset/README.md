@@ -123,9 +123,10 @@ The shipped brands are complete looks. Import the ones your app offers, after
 @import "@bota-apps/tailwind-preset/brands/freightTeal.css"; /* calm operational teal, blue accent */
 @import "@bota-apps/tailwind-preset/brands/freightEmerald.css"; /* grounded emerald, blue accent */
 @import "@bota-apps/tailwind-preset/brands/freightViolet.css"; /* bold premium violet, blue accent */
+@import "@bota-apps/tailwind-preset/brands/freightSunrise.css"; /* vibrant sunrise orange, warm sand neutrals */
 ```
 
-The five `freight*` brands form the bright logistics collection: one shared
+The `freight*` brands form the bright logistics collection: one shared
 structural language (bright hue-tinted page canvas, white cards, crisp
 borders, restrained shadows, complete dark variants, `operations` +
 `customer` surfaces, map/chart tokens) with five identity hues. Status
