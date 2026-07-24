@@ -30,10 +30,26 @@ export const Default: Story = {
       headerRight={
         <button
           type="button"
-          className="rounded-md border border-border px-3 py-1.5 text-sm font-medium"
+          className="rounded-md border border-sidebar-border px-3 py-1.5 text-sm font-medium"
         >
           Sign out
         </button>
+      }
+      sidebarFooter={
+        <div className="flex items-center gap-3 rounded-md px-2 py-2">
+          <span className="flex size-8 items-center justify-center rounded-full bg-sidebar-accent text-xs font-semibold text-sidebar-accent-foreground">
+            JD
+          </span>
+          <span className="flex min-w-0 flex-col">
+            <span className="truncate text-sm font-semibold">Jane Doe</span>
+            <span className="truncate text-xs">Administrator</span>
+          </span>
+        </div>
+      }
+      footer={
+        <footer className="border-t border-border px-6 py-4 text-xs text-muted-foreground">
+          © 2026 Bota Console · Terms · Privacy
+        </footer>
       }
     >
       <div className="rounded-lg border border-dashed border-border p-8 text-muted-foreground">

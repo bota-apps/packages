@@ -16,5 +16,17 @@ export type AppShellSlots = {
    * content instead of covering it, and the app stays navigable around it.
    */
   panel?: ReactNode;
+  /**
+   * Bottom-anchored rail content (typically the signed-in identity card).
+   * Sidebar layout renders it at the foot of the rail and of the mobile nav
+   * sheet; the topnav layout has no rail and ignores it, so anything vital
+   * must also be reachable from the header in that layout.
+   */
+  sidebarFooter?: ReactNode;
+  /**
+   * App-wide footer (legal links, copyright) rendered below the content row —
+   * spans the content column, not the rail, and scrolls with the page.
+   */
+  footer?: ReactNode;
   children: ReactNode;
 };

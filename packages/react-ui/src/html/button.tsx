@@ -36,6 +36,14 @@ export const buttonVariants = cva(
           "flex-shrink-0 text-white opacity-70 hover:opacity-100 hover:bg-transparent hover:text-white",
         /** Card-style button (schema selector, interactive tiles). */
         card: "w-full text-left rounded-lg border bg-card p-4 shadow-raised hover:shadow-floating hover:border-primary/50 cursor-pointer",
+        /**
+         * Control rendered on the shell chrome (header bar / sidebar rail):
+         * styled from the sidebar-* token set so it stays legible on brands
+         * whose chrome diverges from the page surface — the page-token
+         * variants (outline/secondary) go white-on-white there.
+         */
+        chrome:
+          "border border-sidebar-border bg-transparent text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-sidebar-ring/60",
       },
       size: {
         default: "h-9 px-4 py-2",

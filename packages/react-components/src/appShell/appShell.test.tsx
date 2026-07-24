@@ -41,10 +41,19 @@ const navItems: NavItemDef[] = [
 
 // AppShell renders router-backed nav links, so the test hosts it in a minimal
 // in-memory router alongside the stubbed auth client and the appearance provider.
-function renderAppShell(presets?: readonly AppearancePreset[], headerActions?: ReactNode) {
+function renderAppShell(
+  presets?: readonly AppearancePreset[],
+  headerActions?: ReactNode,
+  shellProps?: { userDescription?: string; footer?: ReactNode },
+) {
   const rootRoute = createRootRoute({
     component: () => (
-      <AppShell title="Bota Console" navItems={navItems} headerActions={headerActions}>
+      <AppShell
+        title="Bota Console"
+        navItems={navItems}
+        headerActions={headerActions}
+        {...shellProps}
+      >
         <p>Page content</p>
       </AppShell>
     ),
@@ -80,12 +89,24 @@ describe("AppShell", () => {
     expect(screen.getByRole("main").textContent).toContain("Page content");
   });
 
-  it("exposes the mode toggle and sign-out controls, hiding the preset picker for single-preset apps", async () => {
+  it("exposes the mode toggle, hiding the preset picker for single-preset apps", async () => {
     renderAppShell();
 
     expect(await screen.findByRole("button", { name: "Toggle theme" })).toBeTruthy();
-    expect(screen.getByRole("button", { name: "Sign out" })).toBeTruthy();
     expect(screen.queryByRole("button", { name: "Change theme" })).toBeNull();
+  });
+
+  it("anchors the identity card to the rail with sign-out in its menu", async () => {
+    renderAppShell(undefined, undefined, { userDescription: "Operations" });
+
+    // The card lives in the rail (<aside>), not the header.
+    const rail = await screen.findByRole("complementary");
+    expect(rail.textContent).toContain("Jane Doe");
+    expect(rail.textContent).toContain("Operations");
+    expect(screen.queryByRole("button", { name: "Sign out" })).toBeNull();
+
+    await userEvent.click(screen.getByRole("button", { name: /Jane Doe/ }));
+    expect(await screen.findByRole("menuitem", { name: "Sign out" })).toBeTruthy();
   });
 
   it("renders app-provided headerActions alongside the built-in controls", async () => {
@@ -93,7 +114,13 @@ describe("AppShell", () => {
 
     expect(await screen.findByRole("button", { name: "My language toggle" })).toBeTruthy();
     // Built-in controls still present.
-    expect(screen.getByRole("button", { name: "Sign out" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Toggle theme" })).toBeTruthy();
+  });
+
+  it("renders the app footer below the content row", async () => {
+    renderAppShell(undefined, undefined, { footer: <footer>Footer strip</footer> });
+
+    expect(await screen.findByText("Footer strip")).toBeTruthy();
   });
 
   it("re-styles the whole shell — including the layout — from one preset pick", async () => {
@@ -111,5 +138,7 @@ describe("AppShell", () => {
     expect(screen.queryByRole("complementary")).toBeNull();
     expect(screen.getByRole("banner").textContent).toContain("Home");
     expect(document.documentElement.dataset.brand).toBe("manuscript");
+    // No rail means no identity card — sign-out returns to the header.
+    expect(screen.getByRole("button", { name: "Sign out" })).toBeTruthy();
   });
 });

@@ -1,6 +1,7 @@
 import { Languages } from "lucide-react";
 import {
   Button,
+  type ButtonProps,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuRadioGroup,
@@ -21,6 +22,8 @@ type LanguageToggleProps<TLanguage extends string> = {
   onChange: (value: TLanguage) => void;
   /** Accessible name for the icon-only trigger. */
   label?: string;
+  /** Trigger button variant — pass "chrome" when mounted on the shell chrome. */
+  variant?: ButtonProps["variant"];
 };
 
 /**
@@ -33,11 +36,12 @@ export function LanguageToggle<TLanguage extends string>({
   value,
   onChange,
   label = "Change language",
+  variant = "outline",
 }: LanguageToggleProps<TLanguage>) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant={variant} size="icon">
           <Languages />
           <VisuallyHidden>{label}</VisuallyHidden>
         </Button>
